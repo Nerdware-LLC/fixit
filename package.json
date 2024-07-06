@@ -1,0 +1,30 @@
+{
+  "name": "fixit",
+  "version": "0.0.1",
+  "description": "Simplify Work Orders, Invoices, and Payments",
+  "author": {
+    "name": "Trevor Anderson",
+    "email": "Trevor@Nerdware.cloud"
+  },
+  "license": "LicenseRef-LICENSE",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Nerdware-LLC/fixit.git"
+  },
+  "private": true,
+  "homepage": "https://github.com/Nerdware-LLC/fixit#readme",
+  "bugs": {
+    "url": "https://github.com/Nerdware-LLC/fixit/issues"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "type": "module",
+  "scripts": {
+    "test": "test"
+  },
+  "nx": {},
+  "devDependencies": {
+    "nx": "19.4.1"
+  }
+}
