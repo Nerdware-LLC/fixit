@@ -1,14 +1,17 @@
 ###############################################################################
-# NodeJS gitignore template:
-# https://github.com/github/gitignore/blob/main/Node.gitignore
+# GIT IGNORE
 
-# Packages/npm/yarn/lerna
+# Packages/npm/pnpm/yarn
 node_modules
 .npm
 npm-*.log*
+pnpm-*.log*
 yarn-*.log*
+
+# Nx/Lerna
+.nx/cache
+.nx/workspace-data
 lerna-*.log*
-.pnpm-*.log*
 
 # Build files
 build/
@@ -99,8 +102,3 @@ schema.json
 .vscode-test
 
 ###############################################################################
-
-
-
-.nx/cache
-.nx/workspace-data
