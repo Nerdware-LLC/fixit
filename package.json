@@ -23,7 +23,7 @@
   "scripts": {
     "test": "test"
   },
-  "nx": {},
+  "dependencies": {},
   "devDependencies": {
     "nx": "19.4.1"
   }
