@@ -1,0 +1,8 @@
+*
+
+!package*.json
+!tsconfig*.json
+!npm-shrinkwrap.json
+!.swcrc
+
+!src/**/*

@@ -1,0 +1,101 @@
+###############################################################################
+# NodeJS gitignore template:
+# https://github.com/github/gitignore/blob/main/Node.gitignore
+
+# Packages/npm/yarn/lerna
+node_modules
+.npm
+npm-*.log*
+yarn-*.log*
+lerna-*.log*
+.pnpm-*.log*
+
+# Build files
+build/
+dist/
+
+# TypeScript cache
+*.tsbuildinfo
+
+# Optional eslint cache
+.eslintcache
+
+# Test/coverage files
+coverage
+lib-cov
+*.lcov
+
+# Logs
+logs
+*.log
+
+# Diagnostic reports (https://nodejs.org/api/report.html)
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Microbundle cache
+.rpt2_cache/
+.rts2_cache_cjs/
+.rts2_cache_es/
+.rts2_cache_umd/
+
+# Optional REPL history
+.node_repl_history
+
+# Output of 'npm pack'
+*.tgz
+
+# vuepress v2.x temp and cache directory
+.temp
+.cache
+
+# Serverless directories
+.serverless/
+
+# DynamoDB-local files
+.dynamodb/
+
+#------------------------------------------------------------------------------
+# Nerdware gitignore entries
+
+# Notes
+NOTE*
+TODO*
+FIXME*
+
+# Security
+*.bak
+*.ca
+*.crt
+*.csr
+*.der
+*.env
+*.env*
+*.env.*
+*.env.*.*
+*.kdb
+*.mwb
+*.org
+*.p12
+*.pem
+*.rnd
+*.smime
+*.sql
+*.ssleay
+schema.json
+
+# VSCode-related
+.vscode/*
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+.history/
+.vscode-test
+
+###############################################################################

@@ -1,0 +1,32 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.4.0
+    hooks:
+      # Git Style
+      - id: check-added-large-files # prevent large files from commit (default=500kb)
+      - id: check-merge-conflict # check for merge conflict strings
+      - id: check-vcs-permalinks
+      - id: forbid-new-submodules
+      - id: no-commit-to-branch # main branch can only be updated via PR
+        args: [--branch, main]
+
+      # Common Errors
+      - id: check-executables-have-shebangs
+      - id: check-yaml # validate yaml file syntax
+      - id: end-of-file-fixer # ensure files end in newline char
+        exclude: src/.*/__codegen__/.* # don't modify codegen'd content
+        exclude_types: [graphql, svg, json]
+      - id: trailing-whitespace
+        exclude: src/.*/__codegen__/.* # don't modify codegen'd content
+        args: [--markdown-linebreak-ext=md]
+
+      # Security
+      - id: detect-aws-credentials
+        args: ["--allow-missing-credentials"]
+      - id: detect-private-key
+
+  - repo: https://github.com/hadolint/hadolint
+    rev: v2.12.0
+    hooks:
+      - id: hadolint-docker # lint dockerfiles using the hadolint docker image
+        args: ["--ignore", "DL3008"]

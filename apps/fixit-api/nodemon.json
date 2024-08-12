@@ -1,0 +1,8 @@
+{
+  "execMap": {
+    "ts": "node -r ts-node/register --loader ./loader.js --no-warnings"
+  },
+  "ext": "ts,js",
+  "watch": ["src"],
+  "delay": 2500
+}
