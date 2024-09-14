@@ -1,0 +1,43 @@
+{
+  "include": ["apps/**/*", "libs/**/*", "tools/**/*", "./*.js"],
+
+  "exclude": ["node_modules", "dist", "tmp"],
+
+  "ts-node": {
+    "esm": true,
+    "swc": true,
+    "experimentalSpecifierResolution": "node",
+    "require": [
+      "tsconfig-paths/register",
+      "@fixit/tsconfig-paths-esm-loader/transpile-only"
+    ]
+  },
+
+  "compilerOptions": {
+    "baseUrl": ".",
+    "declaration": true,
+    "declarationMap": true,
+    "esModuleInterop": true,
+    "exactOptionalPropertyTypes": true,
+    "forceConsistentCasingInFileNames": true,
+    "lib": ["ESNext"],
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "noEmitOnError": true,
+    "noErrorTruncation": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitOverride": true,
+    "noUncheckedIndexedAccess": true,
+    "noUnusedLocals": true,
+    "paths": {
+      "@fixit/*": ["libs/*"],
+      "@fixit-tools/*": ["tools/*"]
+    },
+    "removeComments": true,
+    "resolveJsonModule": true,
+    "rootDir": ".",
+    "skipLibCheck": false,
+    "strict": true,
+    "target": "ESNext"
+  }
+}
