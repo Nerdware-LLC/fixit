@@ -1,0 +1,9 @@
+{
+  "name": "@fixit/ts-generic-util-types",
+  "type": "module",
+  "private": true,
+  "exports": {
+    ".": "./src/index.js",
+    "./*": "./src/*"
+  }
+}
