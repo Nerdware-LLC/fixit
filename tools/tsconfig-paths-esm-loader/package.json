@@ -1,0 +1,26 @@
+{
+  "name": "@fixit/tsconfig-paths-esm-loader",
+  "version": "0.0.0",
+  "description": "NodeJS loader that allows tsconfig-paths to work with ESM for ts-node",
+  "private": true,
+  "engines": {
+    "node": ">=20.17.0"
+  },
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./register.js",
+      "require": "./register-cjs.cjs"
+    },
+    "./transpile-only": {
+      "import": "./register-transpile-only.js",
+      "require": "./register-cjs-transpile-only.cjs"
+    },
+    "./resolve/ts-node-esm": "./resolve/ts-node-esm.js",
+    "./resolve/ts-node-esm-transpile-only": "./resolve/ts-node-esm-transpile-only.js"
+  },
+  "peerDependencies": {
+    "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0"
+  }
+}
