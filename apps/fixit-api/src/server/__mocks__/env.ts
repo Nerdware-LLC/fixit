@@ -1,4 +1,4 @@
-import { createEnvObject } from "../helpers.js";
+import type { EnvObject } from "../env.js";
 
 /*
   The default values below are for unit-testing contexts wherein the underlying
@@ -16,7 +16,7 @@ const {
   VITE_WEB_CLIENT_URL: WEB_CLIENT_URL = "http://localhost:3000",
   // AWS
   VITE_AWS_REGION: AWS_REGION = "local",
-  VITE_DYNAMODB_REGION: DYNAMODB_REGION = "local",
+  VITE_DYNAMODB_REGION: DYNAMODB_REGION = AWS_REGION,
   VITE_DYNAMODB_TABLE_NAME: DYNAMODB_TABLE_NAME = "fixit-db-test",
   VITE_DYNAMODB_ENDPOINT: DYNAMODB_ENDPOINT = "http://localhost:8000",
   VITE_PINPOINT_PROJECT_ID: PINPOINT_PROJECT_ID = "TestTestTest",
@@ -38,32 +38,43 @@ const {
   // GOOGLE
   VITE_GOOGLE_OAUTH_CLIENT_ID: GOOGLE_OAUTH_CLIENT_ID = "TestTestTest.apps.googleusercontent.com",
   VITE_GOOGLE_OAUTH_CLIENT_SECRET: GOOGLE_OAUTH_CLIENT_SECRET = "TestTestTest",
-} = process.env; // eslint-disable-line node/no-process-env
+} = process.env; // eslint-disable-line n/no-process-env
 
-export const ENV = createEnvObject({
-  ...(!!npm_package_version && { npm_package_version }),
+export const ENV = {
   NODE_ENV: "test",
+  IS_DEV: false,
+  IS_PROD: false,
+  IS_DEPLOYED_ENV: false,
+  ...(!!npm_package_version && { PROJECT_VERSION: `v${npm_package_version}` }),
   PROTOCOL,
   DOMAIN,
-  PORT,
+  PORT: Number(PORT),
+  API_BASE_URL: `${PROTOCOL}://${DOMAIN}`,
+  API_FULL_URL: `${PROTOCOL}://${DOMAIN}:${PORT}/api`,
+  // WEB CLIENT
   WEB_CLIENT_URL,
+  // AWS
   AWS_REGION,
   DYNAMODB_REGION,
   DYNAMODB_TABLE_NAME,
   DYNAMODB_ENDPOINT,
   PINPOINT_PROJECT_ID,
   SES_EMAIL_ADDRESS,
+  // AUTH
   JWT_PRIVATE_KEY,
-  JWT_ALGORITHM,
+  JWT_ALGORITHM: JWT_ALGORITHM as EnvObject["JWT_ALGORITHM"],
   JWT_ISSUER,
   JWT_EXPIRES_IN,
-  BCRYPT_SALT_ROUNDS,
+  BCRYPT_SALT_ROUNDS: Number(BCRYPT_SALT_ROUNDS),
   UUID_NAMESPACE,
+  // SENTRY
   SENTRY_DSN,
-  STRIPE_API_VERSION,
+  // STRIPE
+  STRIPE_API_VERSION: STRIPE_API_VERSION as EnvObject["STRIPE_API_VERSION"],
   STRIPE_PUBLISHABLE_KEY,
   STRIPE_SECRET_KEY,
   STRIPE_WEBHOOKS_SECRET,
+  // GOOGLE
   GOOGLE_OAUTH_CLIENT_ID,
   GOOGLE_OAUTH_CLIENT_SECRET,
-});
+} as const satisfies EnvObject;
