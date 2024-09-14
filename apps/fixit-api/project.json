@@ -1,0 +1,46 @@
+{
+  "name": "fixit-api",
+  "sourceRoot": "apps/fixit-api/src",
+  "projectType": "application",
+  "tags": [],
+  "targets": {
+    "start": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "docker compose up --abort-on-container-exit"
+      },
+      "configurations": {
+        "dist": {
+          "command": "API_COMMAND='node -r source-map-support/register dist/apps/fixit-api/index.js' docker compose up --abort-on-container-exit"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "options": {
+        "lintFilePatterns": ["apps/fixit-api/**/*"]
+      }
+    },
+    "lint-types": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "apps/fixit-api"
+      }
+    },
+    "test": {
+      "executor": "@nx/vite:test",
+      "options": {
+        "vitestConfig": "apps/fixit-api/vitest.config.ts"
+      }
+    },
+    "build": {
+      "executor": "@nx/esbuild:esbuild",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/fixit-api",
+        "main": "apps/fixit-api/src/index.ts",
+        "tsConfig": "apps/fixit-api/tsconfig.build.json"
+      }
+    }
+  }
+}
