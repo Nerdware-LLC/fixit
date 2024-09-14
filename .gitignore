@@ -11,6 +11,7 @@ yarn-*.log*
 # Nx/Lerna
 .nx/cache
 .nx/workspace-data
+tmp
 lerna-*.log*
 
 # Build files
@@ -63,8 +64,12 @@ pids
 # DynamoDB-local files
 .dynamodb/
 
-#------------------------------------------------------------------------------
-# Nerdware gitignore entries
+# Backup files
+**/*.backup.*
+**/*.back.*
+
+# macOS devs (Desktop Services Store)
+.DS_*
 
 # Notes
 NOTE*
@@ -94,6 +99,7 @@ schema.json
 
 # VSCode-related
 .vscode/*
+!.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
