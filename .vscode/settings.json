@@ -1,0 +1,48 @@
+{
+  // debugger
+  "debug.toolBarLocation": "commandCenter",
+
+  // prettier
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+
+  // eslint
+  "editor.codeActionsOnSave": { "source.fixAll.eslint": "explicit" },
+  "eslint.codeActionsOnSave.mode": "all",
+  "eslint.codeActionsOnSave.rules": ["!prefer-const", "*"],
+  "eslint.format.enable": false,
+  "eslint.useFlatConfig": true,
+
+  "editor.bracketPairColorization.enabled": false,
+
+  "git.ignoreLimitWarning": true,
+
+  "json.schemas": [
+    {
+      "fileMatch": ["project.json"],
+      "url": "https://raw.githubusercontent.com/nrwl/nx/master/packages/nx/schemas/project-schema.json"
+    }
+  ],
+
+  "typescript.tsdk": "node_modules/typescript/lib",
+
+  // vscode-icons
+  "vsicons.associations.files": [
+    {
+      "icon": "nx",
+      "extensions": [],
+      "filenamesGlob": ["nx", "project"],
+      "extensionsGlob": ["json"],
+      "filename": true,
+      "light": true,
+      "format": "FileFormat.svg"
+    },
+    {
+      "icon": "vitest",
+      "filenamesGlob": ["vitest.config", "vitest.*", "vitest.shared-configs"],
+      "extensions": [],
+      "extensionsGlob": ["js", "mjs", "ts", "cjs", "mts", "cts"],
+      "filename": true,
+      "format": "FileFormat.svg"
+    }
+  ]
+}
