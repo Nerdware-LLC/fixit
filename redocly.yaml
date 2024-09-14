@@ -1,0 +1,8 @@
+# See https://redocly.com/docs/cli/configuration/
+
+extends:
+  - recommended
+
+apis:
+  fixit:
+    root: "libs/api-schemas/OpenAPI/schema/open-api-schema.yaml"
