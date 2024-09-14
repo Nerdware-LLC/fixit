@@ -1,7 +1,11 @@
 {
-  "$schema": "./node_modules/nx/schemas/nx-schema.json",
+  "$schema": "node_modules/nx/schemas/nx-schema.json",
   "defaultBase": "main",
+  "workspaceLayout": { "appsDir": "apps", "libsDir": "libs" },
+
   "plugins": [
+    "@nx/js",
+    "@nx/node",
     {
       "plugin": "@nx/eslint/plugin",
       "options": {
@@ -11,12 +15,136 @@
     {
       "plugin": "@nx/vite/plugin",
       "options": {
-        "buildTargetName": "build",
+        "buildTargetName": "vite-build",
         "testTargetName": "test",
-        "previewTargetName": "preview",
-        "serveTargetName": "serve",
-        "serveStaticTargetName": "serve-static"
+        "previewTargetName": "vite-preview",
+        "serveTargetName": "vite-serve",
+        "serveStaticTargetName": "vite-serve-static"
       }
     }
-  ]
+  ],
+
+  "namedInputs": {
+    "sharedGlobals": [
+      "{workspaceRoot}/package-lock.json",
+      {
+        "runtime": "node --version"
+      }
+    ],
+    "default": ["{projectRoot}/**/*", "sharedGlobals"],
+    "production": [
+      "default",
+      "!{projectRoot}/**/*.test.[tj]s?(x)?(.snap)",
+      "!{projectRoot}/**/tests/**/*",
+      "!{projectRoot}/**/__mocks__/**/*",
+      "!{projectRoot}/vitest.*.[tj]s"
+    ]
+  },
+
+  "targetDefaults": {
+    "lint": {
+      "cache": true,
+      "inputs": ["default"]
+    },
+    "@nx/eslint:lint": {
+      "dependsOn": ["lint-types"],
+      "cache": true,
+      "inputs": ["default", "{workspaceRoot}/eslint.config.js"],
+      "options": {
+        "lintFilePatterns": ["{apps,libs,tools}/**/*.?([cm])[tj]s?(x)"],
+        "eslintConfig": "eslint.config.js",
+        "hasTypeAwareRules": true
+      }
+    },
+    "lint-types": {
+      "executor": "nx:run-commands",
+      "cache": true,
+      "inputs": ["default", "{workspaceRoot}/tsconfig.base.json"],
+      "options": {
+        "command": ["npx tsc --project tsconfig.json --noEmit --skipLibCheck"],
+        "color": true
+      }
+    },
+    "test": {
+      "cache": true,
+      "inputs": [
+        "default",
+        "^production",
+        "{workspaceRoot}/vitest.shared-configs.ts"
+      ],
+      "outputs": ["{projectRoot}/coverage"]
+    },
+    "@nx/vite:test": {
+      "cache": true,
+      "inputs": [
+        "default",
+        "^production",
+        "{workspaceRoot}/vitest.shared-configs.ts"
+      ],
+      "outputs": ["{projectRoot}/coverage"]
+    },
+    "build": {
+      "dependsOn": ["^build"],
+      "cache": true,
+      "inputs": ["production", "^production"]
+    },
+    "@nx/esbuild:esbuild": {
+      "dependsOn": ["^build"],
+      "cache": true,
+      "inputs": ["production", "^production"],
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "bundle": true,
+        "generatePackageJson": true,
+        "minify": true
+      },
+      "configurations": {
+        "staging": {
+          "declaration": true,
+          "sourcemap": true
+        },
+        "prod": {
+          "declaration": false,
+          "sourcemap": false
+        }
+      },
+      "defaultConfiguration": "prod"
+    }
+  },
+
+  "release": {
+    "projects": ["*"],
+    "projectsRelationship": "independent",
+    "releaseTagPattern": "{projectName}@{version}",
+    "conventionalCommits": {
+      "types": {
+        "feat": { "semverBump": "minor" },
+        "fix": { "semverBump": "patch" },
+        "build": { "semverBump": "patch" },
+        "ci": { "semverBump": "patch" },
+        "docs": { "semverBump": "patch", "changelog": false },
+        "perf": { "semverBump": "patch" },
+        "refactor": { "semverBump": "patch" },
+        "revert": { "semverBump": "patch" },
+        "style": { "semverBump": "patch" },
+        "test": { "semverBump": "patch" },
+        "chore": { "semverBump": "none", "changelog": false }
+      }
+    },
+    "version": {
+      "conventionalCommits": true
+    },
+    "changelog": {
+      "workspaceChangelog": {
+        "createRelease": "github"
+      },
+      "projectChangelogs": {
+        "renderOptions": {
+          "authors": false,
+          "commitReferences": true,
+          "versionTitleDate": false
+        }
+      }
+    }
+  }
 }
