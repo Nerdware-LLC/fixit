@@ -1,48 +1,13 @@
 {
-  "include": ["src", "__mocks__"],
+  "extends": "../../tsconfig.base.json",
 
-  "ts-node": {
-    "esm": true,
-    "swc": true,
-    "experimentalSpecifierResolution": "node",
-    "require": ["tsconfig-paths/register"]
-  },
+  "include": ["./*", "src", "__mocks__"],
 
   "compilerOptions": {
-    // Language and Environment:
-    "target": "ESNext",
-    "lib": ["ESNext"],
-
-    // Modules:
-    "module": "ESNext",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "types": ["node", "vitest/globals", "stripe-event-types"],
-    "baseUrl": ".",
+    "types": ["node", "stripe-event-types", "vitest/globals"],
     "paths": {
-      "@/*": ["src/*"]
-    },
-
-    // Type Checking:
-    "exactOptionalPropertyTypes": true,
-    "noFallthroughCasesInSwitch": true,
-    "noImplicitOverride": true,
-    "noUncheckedIndexedAccess": true,
-    "noUnusedLocals": true,
-    "strict": true,
-
-    // Emit:
-    "noEmitOnError": true,
-    "removeComments": true,
-
-    // Interop Constraints:
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-
-    // Output Formatting:
-    "noErrorTruncation": true,
-
-    // Completeness:
-    "skipLibCheck": false
+      "@fixit/*": ["libs/*"],
+      "@/*": ["apps/fixit-api/src/*"]
+    }
   }
 }
