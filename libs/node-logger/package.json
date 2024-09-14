@@ -1,0 +1,8 @@
+{
+  "name": "@fixit/node-logger",
+  "type": "module",
+  "private": true,
+  "exports": {
+    ".": "./src/index.js"
+  }
+}

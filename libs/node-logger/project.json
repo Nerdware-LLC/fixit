@@ -1,0 +1,19 @@
+{
+  "name": "node-logger",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "options": {
+        "lintFilePatterns": ["libs/node-logger/**/*"]
+      }
+    },
+    "lint-types": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "libs/node-logger"
+      }
+    }
+  }
+}
