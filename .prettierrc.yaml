@@ -1,0 +1,37 @@
+################################################################################
+# PRETTIER BASE CONFIGS
+
+tabWidth: 2
+semi: true
+singleQuote: false
+quoteProps: "consistent"
+jsxSingleQuote: false
+trailingComma: "es5"
+bracketSpacing: true
+bracketSameLine: false
+arrowParens: "always"
+htmlWhitespaceSensitivity: "css"
+embeddedLanguageFormatting: "auto"
+singleAttributePerLine: false
+plugins: ["@serverless-guru/prettier-plugin-import-order"]
+
+################################################################################
+# PRETTIER PLUGIN CONFIGS: @serverless-guru/prettier-plugin-import-order
+
+# This plugin will sort imports in accordance with the rules below.
+# Note: this plugin will not move side-effect imports.
+
+importOrderMergeDuplicateImports: true
+importOrderBuiltinModulesToTop: true
+importOrderTypeImportsToBottom: true
+importOrder: [
+    # External modules at the top under any builtins (keyword is plugin-specific)
+    "<THIRD_PARTY_MODULES>",
+    # Then nx-workspace path aliases (@fixit = libs/)
+    "^@fixit/",
+    # Then Project path aliases
+    "^@/",
+    # Relative imports at the bottom
+    "^./",
+    "^../",
+  ]

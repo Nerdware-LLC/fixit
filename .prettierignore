@@ -1,0 +1,7 @@
+/.nx/cache
+/.nx/workspace-data
+
+**/dist/**/*
+**/coverage/**/*
+
+**/__codegen__/**/*
