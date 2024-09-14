@@ -1,0 +1,8 @@
+{
+  "$schema": "https://json.schemastore.org/nodemon.json",
+  "execMap": {
+    "ts": "ts-node"
+  },
+  "ext": "ts,js,json,env",
+  "delay": 2500
+}
