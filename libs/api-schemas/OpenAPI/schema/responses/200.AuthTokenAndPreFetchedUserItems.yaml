@@ -1,0 +1,12 @@
+description: |
+  [200 OK][mdn-docs] — Response for a successful authentication request. This
+  response includes an authentication token, as well as pre-fetched user items
+  to be stored in the client cache.
+
+  [mdn-docs]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/200
+content:
+  application/json:
+    schema:
+      allOf:
+        - $ref: "../open-api-schema.yaml#/components/schemas/AuthTokenResponseField"
+        - $ref: "../open-api-schema.yaml#/components/schemas/PreFetchedUserItemsResponseField"

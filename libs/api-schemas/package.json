@@ -1,0 +1,10 @@
+{
+  "name": "@fixit/api-schemas",
+  "type": "module",
+  "private": true,
+  "exports": {
+    "./OpenAPI/types": "./OpenAPI/types/index.js",
+    "./GraphQL/typeDefs": "./GraphQL/typeDefs/index.js",
+    "./GraphQL/types": "./GraphQL/types/index.js"
+  }
+}

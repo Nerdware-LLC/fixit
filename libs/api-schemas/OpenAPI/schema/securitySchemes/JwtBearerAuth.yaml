@@ -1,0 +1,5 @@
+# REST Schema: JwtBearerAuth
+
+type: http
+scheme: bearer
+bearerFormat: JWT

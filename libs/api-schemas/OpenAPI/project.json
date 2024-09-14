@@ -1,0 +1,24 @@
+{
+  "name": "OpenAPI-schema",
+  "sourceRoot": "libs/api-schemas/OpenAPI",
+  "projectType": "library",
+  "tags": ["api", "schema", "openapi"],
+  "targets": {
+    "lint": {
+      "executor": "nx:run-script",
+      "cache": true,
+      "inputs": ["default", "{workspaceRoot}/redocly.yaml"],
+      "options": {
+        "script": "schema:open-api:validate"
+      }
+    },
+    "build": {
+      "dependsOn": ["lint"],
+      "executor": "nx:run-script",
+      "cache": true,
+      "options": {
+        "script": "schema:open-api:codegen"
+      }
+    }
+  }
+}

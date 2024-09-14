@@ -1,0 +1,15 @@
+# POST /auth/token
+
+post:
+  operationId: RefreshToken
+  summary: Refreshes an existing user's auth token.
+  security: [{ JwtBearerAuth: [] }]
+  tags: [auth]
+  requestBody:
+    $ref: "../open-api-schema.yaml#/components/requestBodies/RefreshAuthTokenRequest"
+  responses:
+    "200":
+      { $ref: "../open-api-schema.yaml#/components/responses/200AuthTokenAndPreFetchedUserItems" }
+    "401": { $ref: "../open-api-schema.yaml#/components/responses/401AuthenticationRequired" }
+    "5XX": { $ref: "../open-api-schema.yaml#/components/responses/5xxInternalServerError" }
+    "default": { $ref: "../open-api-schema.yaml#/components/responses/UnexpectedResponse" }

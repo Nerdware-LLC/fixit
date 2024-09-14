@@ -1,0 +1,10 @@
+# REST Schema: PromoCodeInfoResponseField
+
+type: object
+description: |
+  An object which contains `promoCode` info under the key `promoCodeInfo`.
+properties:
+  promoCodeInfo:
+    $ref: "../open-api-schema.yaml#/components/schemas/PromoCodeInfo"
+required:
+  - promoCodeInfo

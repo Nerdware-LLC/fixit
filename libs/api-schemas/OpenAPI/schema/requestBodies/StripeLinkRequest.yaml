@@ -1,0 +1,11 @@
+# req.body for endpoints which return a `stripeLink`
+
+required: true
+content:
+  application/json:
+    schema:
+      type: object
+      properties:
+        returnURL: { $ref: "../open-api-schema.yaml#/components/schemas/ReturnURL" }
+      required:
+        - returnURL

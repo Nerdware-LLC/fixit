@@ -1,0 +1,5 @@
+description: |
+  [204 No Content][mdn-docs] — Generic success response which does not
+  include a response body.
+
+  [mdn-docs]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/204

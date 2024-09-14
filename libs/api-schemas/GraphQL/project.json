@@ -1,0 +1,24 @@
+{
+  "name": "GraphQL-schema",
+  "sourceRoot": "libs/api-schemas/GraphQL",
+  "projectType": "library",
+  "tags": ["api", "schema", "graphql"],
+  "targets": {
+    "lint": {
+      "executor": "nx:run-script",
+      "cache": true,
+      "inputs": ["default"],
+      "options": {
+        "script": "schema:graphql:validate"
+      }
+    },
+    "build": {
+      "dependsOn": ["lint"],
+      "executor": "nx:run-script",
+      "cache": true,
+      "options": {
+        "script": "schema:graphql:codegen"
+      }
+    }
+  }
+}

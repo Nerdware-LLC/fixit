@@ -1,0 +1,7 @@
+# req.body for /auth/login
+
+required: true
+content:
+  application/json:
+    schema:
+      $ref: "../open-api-schema.yaml#/components/schemas/LoginParams"

@@ -1,0 +1,10 @@
+# REST Schema: GoogleIDTokenField
+
+type: object
+description: |
+  An object which contains a base64-encoded JSON JWT from GoogleID services
+  under the key "googleIDToken".
+properties:
+  googleIDToken: { $ref: "../open-api-schema.yaml#/components/schemas/GoogleIDToken" }
+required:
+  - googleIDToken

@@ -1,0 +1,5 @@
+# REST Schema: LoginParams
+
+allOf:
+  - $ref: "../open-api-schema.yaml#/components/schemas/LoginCredentials"
+  - $ref: "../open-api-schema.yaml#/components/schemas/ExpoPushTokenField"

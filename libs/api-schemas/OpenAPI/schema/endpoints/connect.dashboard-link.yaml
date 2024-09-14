@@ -1,0 +1,12 @@
+# GET /connect/dashboard-link
+
+get:
+  operationId: ConnectDashboardLink
+  summary: Provides a link to the Stripe Connect Account dashboard portal.
+  security: [{ JwtBearerAuth: [] }]
+  tags: [stripe, stripe-connect, stripe-link]
+  responses:
+    "201": { $ref: "../open-api-schema.yaml#/components/responses/201StripeLink" }
+    "401": { $ref: "../open-api-schema.yaml#/components/responses/401AuthenticationRequired" }
+    "5XX": { $ref: "../open-api-schema.yaml#/components/responses/5xxInternalServerError" }
+    "default": { $ref: "../open-api-schema.yaml#/components/responses/UnexpectedResponse" }

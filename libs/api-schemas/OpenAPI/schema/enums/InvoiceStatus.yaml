@@ -1,0 +1,8 @@
+# REST Schema: InvoiceStatus
+
+type: string
+description: The Invoice's status.
+enum:
+  - OPEN
+  - CLOSED
+  - DISPUTED

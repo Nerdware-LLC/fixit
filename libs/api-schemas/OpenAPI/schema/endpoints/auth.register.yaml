@@ -1,0 +1,14 @@
+# POST /auth/register
+
+post:
+  operationId: Register
+  summary: Registers a new user.
+  security: []
+  tags: [auth]
+  requestBody:
+    $ref: "../open-api-schema.yaml#/components/requestBodies/UserRegistrationRequest"
+  responses:
+    "201": { $ref: "../open-api-schema.yaml#/components/responses/201AuthToken" }
+    "400": { $ref: "../open-api-schema.yaml#/components/responses/400InvalidUserInput" }
+    "5XX": { $ref: "../open-api-schema.yaml#/components/responses/5xxInternalServerError" }
+    "default": { $ref: "../open-api-schema.yaml#/components/responses/UnexpectedResponse" }

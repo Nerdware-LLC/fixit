@@ -1,0 +1,10 @@
+# REST Schema: CheckoutCompletionInfoResponseField
+
+type: object
+description: |
+  An object which contains data used for completing checkout/payment flows.
+properties:
+  checkoutCompletionInfo:
+    $ref: "../open-api-schema.yaml#/components/schemas/CheckoutCompletionInfo"
+required:
+  - checkoutCompletionInfo

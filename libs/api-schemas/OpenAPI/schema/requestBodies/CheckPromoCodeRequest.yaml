@@ -1,0 +1,11 @@
+# req.body for /subscriptions/check-promo-code
+
+required: true
+content:
+  application/json:
+    schema:
+      type: object
+      properties:
+        promoCode: { $ref: "../open-api-schema.yaml#/components/schemas/PromoCode" }
+      required:
+        - promoCode

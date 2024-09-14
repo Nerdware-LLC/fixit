@@ -1,0 +1,10 @@
+# REST Schema: PreFetchedUserItemsResponseField
+
+type: object
+description: |
+  An object which contains pre-fetched user items under the key `userItems`.
+properties:
+  userItems:
+    $ref: "../open-api-schema.yaml#/components/schemas/PreFetchedUserItems"
+required:
+  - userItems

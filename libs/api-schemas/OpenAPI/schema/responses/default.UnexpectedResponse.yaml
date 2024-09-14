@@ -1,0 +1,4 @@
+description: |
+  [Unexpected Response] The server encountered an unexpected condition that
+  prevented it from fulfilling the request. This fallback applies if no defined
+  response status codes match the response.
