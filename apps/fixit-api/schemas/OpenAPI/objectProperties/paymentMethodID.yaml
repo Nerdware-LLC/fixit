@@ -1,3 +1,0 @@
-type: string
-description: The Stripe PaymentMethod ID of the user's chosen payment method.
-pattern: "^pm_[a-zA-Z0-9]{10,150}$"
