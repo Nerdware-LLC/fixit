@@ -1,0 +1,24 @@
+{
+  "name": "uuid",
+  "projectType": "library",
+
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "options": {
+        "lintFilePatterns": ["libs/uuid/**/*"]
+      }
+    },
+    "lint-types": {
+      "options": {
+        "cwd": "libs/uuid"
+      }
+    },
+    "test": {
+      "executor": "@nx/vite:test",
+      "options": {
+        "vitestConfig": "libs/uuid/vitest.config.ts"
+      }
+    }
+  }
+}
