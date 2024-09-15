@@ -6,7 +6,6 @@
   "ts-node": {
     "esm": true,
     "swc": true,
-    "experimentalSpecifierResolution": "node",
     "require": [
       "tsconfig-paths/register",
       "@fixit/tsconfig-paths-esm-loader/transpile-only"
