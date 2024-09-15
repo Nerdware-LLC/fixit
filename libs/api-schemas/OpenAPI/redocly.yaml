@@ -5,4 +5,4 @@ extends:
 
 apis:
   fixit:
-    root: "libs/api-schemas/OpenAPI/schema/open-api-schema.yaml"
+    root: "schema/open-api-schema.yaml"
