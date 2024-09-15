@@ -61,7 +61,7 @@
       "cache": true,
       "inputs": ["default", "{workspaceRoot}/tsconfig.base.json"],
       "options": {
-        "command": ["npx tsc --project tsconfig.json --noEmit --skipLibCheck"],
+        "command": "npx tsc --project tsconfig.json --noEmit --skipLibCheck",
         "color": true
       }
     },
