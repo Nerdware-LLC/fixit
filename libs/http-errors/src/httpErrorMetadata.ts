@@ -7,7 +7,15 @@ import type { HttpErrorClassParams } from "./createHttpErrorClass.js";
  * **Note:** This object only contains HTTP error status codes that are
  *           actually used/implemented by Fixit apps/libs/tools/etc.
  */
-export const HTTP_ERROR_METADATA = {
+export const HTTP_ERROR_METADATA: {
+  readonly 400: HttpErrorClassParams;
+  readonly 401: HttpErrorClassParams;
+  readonly 402: HttpErrorClassParams;
+  readonly 403: HttpErrorClassParams;
+  readonly 404: HttpErrorClassParams;
+  readonly 500: HttpErrorClassParams;
+  readonly [statusCode: number]: HttpErrorClassParams; // Allow lookups using any `number` key
+} = {
   400: {
     name: "UserInputError",
     statusCode: 400,
@@ -62,4 +70,4 @@ export const HTTP_ERROR_METADATA = {
       http: { status: 500 },
     },
   },
-} as const satisfies { readonly [statusCode: number]: HttpErrorClassParams };
+};
