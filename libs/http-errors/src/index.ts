@@ -1,6 +1,7 @@
 import { createHttpErrorClass, type BaseHttpError } from "./createHttpErrorClass.js";
 import { HTTP_ERROR_METADATA } from "./httpErrorMetadata.js";
 
+export { HTTP_ERROR_METADATA };
 export type { BaseHttpError };
 
 /**
