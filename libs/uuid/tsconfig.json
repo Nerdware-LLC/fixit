@@ -4,6 +4,6 @@
   "include": ["./*", "src"],
 
   "compilerOptions": {
-    "types": ["node", "vitest/globals"]
+    "types": ["vitest/globals"]
   }
 }
