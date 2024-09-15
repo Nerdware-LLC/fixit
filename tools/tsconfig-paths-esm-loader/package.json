@@ -1,6 +1,5 @@
 {
-  "name": "@fixit/tsconfig-paths-esm-loader",
-  "version": "0.0.0",
+  "name": "@fixit-tools/tsconfig-paths-esm-loader",
   "description": "NodeJS loader that allows tsconfig-paths to work with ESM for ts-node",
   "private": true,
   "engines": {
