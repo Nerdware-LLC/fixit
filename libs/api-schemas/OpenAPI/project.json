@@ -5,19 +5,20 @@
   "tags": ["api", "schema", "openapi"],
   "targets": {
     "lint": {
-      "executor": "nx:run-script",
+      "executor": "nx:run-commands",
       "cache": true,
-      "inputs": ["default", "{workspaceRoot}/redocly.yaml"],
+      "inputs": ["default"],
       "options": {
-        "script": "schema:open-api:validate"
+        "command": "redocly lint --config libs/api-schemas/OpenAPI/redocly.yaml"
       }
     },
     "build": {
       "dependsOn": ["lint"],
-      "executor": "nx:run-script",
+      "executor": "nx:run-commands",
       "cache": true,
+      "inputs": ["default"],
       "options": {
-        "script": "schema:open-api:codegen"
+        "command": "ts-node libs/api-schemas/OpenAPI/scripts/codegenOpenApiSchemaTypes.js"
       }
     }
   }

@@ -1,23 +1,23 @@
 {
   "name": "GraphQL-schema",
-  "sourceRoot": "libs/api-schemas/GraphQL",
   "projectType": "library",
   "tags": ["api", "schema", "graphql"],
   "targets": {
     "lint": {
-      "executor": "nx:run-script",
+      "executor": "nx:run-commands",
       "cache": true,
       "inputs": ["default"],
       "options": {
-        "script": "schema:graphql:validate"
+        "command": "ts-node libs/api-schemas/GraphQL/scripts/validateGqlSchema.js"
       }
     },
     "build": {
       "dependsOn": ["lint"],
-      "executor": "nx:run-script",
+      "executor": "nx:run-commands",
       "cache": true,
+      "inputs": ["default"],
       "options": {
-        "script": "schema:graphql:codegen"
+        "command": "graphql-codegen-esm --config libs/api-schemas/GraphQL/codegen.ts"
       }
     }
   }
