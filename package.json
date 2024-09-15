@@ -30,6 +30,7 @@
     "eslint-inspector:start": "npx @eslint/config-inspector@latest",
     "fixit-api:start": "docker compose up --abort-on-container-exit",
     "schema:open-api:validate": "redocly lint --config libs/api-schemas/OpenAPI/redocly.yaml",
+    "schema:open-api:codegen": "ts-node libs/api-schemas/OpenAPI/scripts/codegenOpenApiSchemaTypes.js",
   },
   "dependencies": {},
   "devDependencies": {
