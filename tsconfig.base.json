@@ -8,7 +8,7 @@
     "swc": true,
     "require": [
       "tsconfig-paths/register",
-      "@fixit/tsconfig-paths-esm-loader/transpile-only"
+      "@fixit-tools/tsconfig-paths-esm-loader/transpile-only"
     ]
   },
 
