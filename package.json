@@ -27,7 +27,7 @@
     "tools/*"
   ],
   "scripts": {
-    "test": "test"
+    "eslint-inspector:start": "npx @eslint/config-inspector@latest",
   },
   "dependencies": {},
   "devDependencies": {
