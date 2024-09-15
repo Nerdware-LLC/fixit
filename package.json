@@ -31,6 +31,7 @@
     "fixit-api:start": "docker compose up --abort-on-container-exit",
     "schema:open-api:validate": "redocly lint --config libs/api-schemas/OpenAPI/redocly.yaml",
     "schema:open-api:codegen": "ts-node libs/api-schemas/OpenAPI/scripts/codegenOpenApiSchemaTypes.js",
+    "schema:graphql:validate": "ts-node libs/api-schemas/GraphQL/scripts/validateGqlSchema.js",
   },
   "dependencies": {},
   "devDependencies": {
