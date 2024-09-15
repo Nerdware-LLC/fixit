@@ -28,6 +28,7 @@
   ],
   "scripts": {
     "eslint-inspector:start": "npx @eslint/config-inspector@latest",
+    "fixit-api:start": "docker compose up --abort-on-container-exit",
   },
   "dependencies": {},
   "devDependencies": {
