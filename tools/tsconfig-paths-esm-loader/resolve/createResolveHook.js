@@ -1,4 +1,4 @@
-import path from "node:path";
+import { resolve as pathResolve } from "node:path";
 import { pathToFileURL } from "node:url";
 import * as tsConfigPaths from "tsconfig-paths";
 
@@ -6,8 +6,8 @@ import * as tsConfigPaths from "tsconfig-paths";
 const { TS_NODE_PROJECT } = process.env;
 
 const absPathToDirWithTsConfig = TS_NODE_PROJECT
-  ? path.resolve(process.cwd(), TS_NODE_PROJECT)
-  : path.resolve();
+  ? pathResolve(process.cwd(), TS_NODE_PROJECT)
+  : pathResolve();
 
 const { resultType, absoluteBaseUrl, paths } = tsConfigPaths.loadConfig(
   absPathToDirWithTsConfig
