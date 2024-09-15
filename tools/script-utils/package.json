@@ -1,0 +1,10 @@
+{
+  "name": "@fixit-tools/script-utils",
+  "private": true,
+  "type": "module",
+  "main": "./index.js",
+  "exports": {
+    ".": "./index.js",
+    "./*": "./nodejs/*"
+  }
+}
