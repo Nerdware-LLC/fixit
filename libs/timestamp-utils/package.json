@@ -1,0 +1,9 @@
+{
+  "name": "@fixit/timestamp-utils",
+  "type": "module",
+  "private": true,
+  "exports": {
+    ".": "./src/index.js",
+    "./*": "./src/*"
+  }
+}
