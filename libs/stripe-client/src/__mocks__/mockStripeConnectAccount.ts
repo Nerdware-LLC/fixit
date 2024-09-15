@@ -1,44 +1,30 @@
-import dayjs from "dayjs";
-import type { UserItem } from "@/models/User";
-import type { UserStripeConnectAccountItem } from "@/models/UserStripeConnectAccount";
 import type Stripe from "stripe";
 
 /**
- * Returns a mock Stripe Connect Account object.
- * @see https://stripe.com/docs/api/accounts/object
+ * Default mock Stripe Connect Account object.
+ *
+ * @docs https://docs.stripe.com/api/accounts/object
  */
-export const mockStripeConnectAccount = ({
-  // SCA fields:
-  id: stripeConnectAccountID,
-  chargesEnabled,
-  payoutsEnabled,
-  detailsSubmitted,
-  createdAt,
-  // optional User fields:
-  email = "mock_user_email@gmail.com",
-  phone = "1234567890",
-  profile = { displayName: "Mock User" },
-}: UserStripeConnectAccountItem &
-  Partial<Pick<UserItem, "email" | "phone" | "profile">>): Stripe.Account => ({
+export const mockStripeConnectAccount: Stripe.Account = {
   object: "account",
   type: "express",
-  id: stripeConnectAccountID,
-  charges_enabled: chargesEnabled,
-  details_submitted: payoutsEnabled,
-  payouts_enabled: detailsSubmitted,
-  email,
-  created: dayjs(createdAt).unix(),
+  id: "acct_TestTestTest",
+  charges_enabled: true,
+  details_submitted: true,
+  payouts_enabled: true,
+  email: "foo_email@gmail.com",
+  created: 1577836800, // 2020-01-01T00:00:00Z
   country: "US",
   default_currency: "usd",
   capabilities: { card_payments: "active", transfers: "active" },
   // The fields below are not currently used by the app, but are included here for completeness.
   business_profile: {
     mcc: null,
-    name: profile.businessName ?? null,
+    name: null,
     product_description: null,
     support_address: null,
-    support_email: email,
-    support_phone: phone,
+    support_email: "foo_email@gmail.com",
+    support_phone: "5555555555",
     support_url: null,
     url: null,
   },
@@ -46,7 +32,7 @@ export const mockStripeConnectAccount = ({
     object: "list",
     data: [],
     has_more: false,
-    url: `/v1/accounts/${stripeConnectAccountID}/external_accounts`,
+    url: "/v1/accounts/acct_TestTestTest/external_accounts",
   },
   future_requirements: {
     alternatives: [],
@@ -84,7 +70,7 @@ export const mockStripeConnectAccount = ({
       statement_descriptor_prefix_kanji: null,
       statement_descriptor_prefix_kana: null,
     },
-    dashboard: { display_name: profile.displayName, timezone: "US/Pacific" },
+    dashboard: { display_name: "Foo DisplayName", timezone: "US/Pacific" },
     payments: {
       statement_descriptor: null,
       statement_descriptor_kana: null,
@@ -104,4 +90,4 @@ export const mockStripeConnectAccount = ({
     ip: null,
     user_agent: null,
   },
-});
+};

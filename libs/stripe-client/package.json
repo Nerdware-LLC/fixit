@@ -1,0 +1,9 @@
+{
+  "name": "@fixit/stripe-client",
+  "type": "module",
+  "private": true,
+  "exports": {
+    ".": "./src/index.js",
+    "./*": "./src/*"
+  }
+}

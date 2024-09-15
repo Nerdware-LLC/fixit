@@ -1,10 +1,12 @@
-import dayjs from "dayjs";
 import type Stripe from "stripe";
 import type { SetRequired } from "type-fest";
 
 /**
- * Returns a mock [**Stripe Event object**](https://stripe.com/docs/api/events/object).
+ * Returns a mock Stripe Event object.
  *
+ * @docs https://docs.stripe.com/api/events/object
+ *
+ * --------------------------------------------------------
  * ### Mocking Webhook Events
  *
  * ```ts
@@ -34,7 +36,7 @@ export const mockStripeEvent = ({
 }: SetRequired<Partial<Stripe.Event>, "type" | "data">): Stripe.Event => ({
   object: "event",
   id: webhookEventID,
-  created: dayjs().unix(),
+  created: 1577836800, // 2020-01-01T00:00:00Z
   type,
   ...(connectAccountID && {
     account: connectAccountID,
