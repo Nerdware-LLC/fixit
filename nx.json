@@ -34,7 +34,7 @@
     "default": ["{projectRoot}/**/*", "sharedGlobals"],
     "production": [
       "default",
-      "!{projectRoot}/**/*.test.[tj]s?(x)?(.snap)",
+      "!{projectRoot}/**/?(*.)+(test|spec).[tj]s?(x)?(.snap)",
       "!{projectRoot}/**/tests/**/*",
       "!{projectRoot}/**/__mocks__/**/*",
       "!{projectRoot}/vitest.*.[tj]s"
