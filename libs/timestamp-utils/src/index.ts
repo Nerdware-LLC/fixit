@@ -1,2 +1,2 @@
 export * from "./isValidTimestamp.js";
-export * from "./unixTimestampRegex.js";
+export * from "./unixTimestamps.js";

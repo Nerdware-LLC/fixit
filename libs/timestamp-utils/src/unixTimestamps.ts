@@ -1,4 +1,9 @@
 /**
+ * Converts a Unix timestamp (<-- _**seconds**_) into a `Date` object.
+ */
+export const unixTimestampToDate = (unix: number) => new Date(unix * 1000);
+
+/**
  * Regex pattern for validating Unix timestamps of either 9 or 10 digits. The first
  * digit must be a non-zero integer. The 9-10 digit restriction results in the date
  * range shown below, which suits the needs of this application better than a more
