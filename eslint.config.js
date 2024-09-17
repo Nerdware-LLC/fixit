@@ -3,7 +3,8 @@ import nxPlugin from "@nx/eslint-plugin";
 import stylisticPlugin from "@stylistic/eslint-plugin";
 import stylisticPluginMigrate from "@stylistic/eslint-plugin-migrate";
 import eslintConfigPrettier from "eslint-config-prettier";
-import * as importPlugin from "eslint-plugin-import-x";
+import importPlugin from "eslint-plugin-import-x";
+import jsdocPlugin from "eslint-plugin-jsdoc";
 import nodePlugin from "eslint-plugin-n";
 import vitestPlugin from "eslint-plugin-vitest";
 import globals from "globals";
@@ -51,6 +52,7 @@ export default tsEslint.config(
       "@stylistic/migrate": stylisticPluginMigrate,
       "@typescript-eslint": tsEslint.plugin,
       "import-x": importPlugin,
+      "jsdoc": jsdocPlugin,
       "n": nodePlugin,
     },
     settings: {
@@ -88,6 +90,7 @@ export default tsEslint.config(
       ...eslintJS.configs.recommended.rules,
       ...importPlugin.configs.recommended.rules,
       ...nodePlugin.configs["flat/recommended-module"].rules,
+      ...jsdocPlugin.configs["flat/recommended-typescript"].rules,
       ...nxPlugin.configs.typescript.rules,
 
       ...[
@@ -129,6 +132,12 @@ export default tsEslint.config(
         "error",
         { allowExperimental: true }, // For module.register in tools/tsconfig-paths-esm-loader
       ],
+
+      // RULES: jsdoc (eslint-plugin-jsdoc)
+      "jsdoc/require-param": "off", // Don't require jsdoc @param tags (yet)
+      "jsdoc/require-property": "off", // Don't require jsdoc @property tags (yet)
+      "jsdoc/require-returns": "off", // Don't require jsdoc @returns tags (yet)
+      "jsdoc/tag-lines": "off", // Allow blank lines around jsdoc tags for readability
 
       // RULES: @nx (eslint-plugin-nx)
       "@nx/enforce-module-boundaries": [
@@ -293,6 +302,10 @@ export default tsEslint.config(
       // Add import-plugin rules that TS won't cover for JS files:
       ...importPlugin.configs.recommended.rules,
       "import-x/no-named-as-default-member": "off",
+      // jsdoc, stricter requirements when not using TypeScript
+      ...jsdocPlugin.configs["flat/recommended"].rules,
+      "jsdoc/require-param": "off", // Don't require jsdoc @param tags (yet)
+      "jsdoc/tag-lines": "off", // Allow blank lines around jsdoc tags for readability
     },
   },
   ////////////////////////////////////////////////////////////////
