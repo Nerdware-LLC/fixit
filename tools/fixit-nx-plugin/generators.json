@@ -1,0 +1,9 @@
+{
+  "generators": {
+    "lib-generator": {
+      "factory": "./generators/lib-generator/generator",
+      "schema": "./generators/lib-generator/schema.json",
+      "description": "fixit library project generator"
+    }
+  }
+}

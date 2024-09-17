@@ -1,0 +1,10 @@
+{
+  "name": "@fixit-tools/fixit-nx-plugin",
+  "type": "module",
+  "private": true,
+  "exports": {
+    "./package.json": "./package.json",
+    ".": "./index.js"
+  },
+  "generators": "./generators.json"
+}
