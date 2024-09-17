@@ -1,0 +1,24 @@
+{
+  "name": "node-cache",
+  "projectType": "library",
+
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "options": {
+        "lintFilePatterns": ["libs/node-cache/**/*"]
+      }
+    },
+    "lint-types": {
+      "options": {
+        "cwd": "libs/node-cache"
+      }
+    },
+    "test": {
+      "executor": "@nx/vite:test",
+      "options": {
+        "vitestConfig": "libs/node-cache/vitest.config.ts"
+      }
+    }
+  }
+}

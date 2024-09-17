@@ -22,8 +22,9 @@ export class Cache<StoredDataType = NonNullable<unknown>, CacheKeyType = string>
 
   /**
    * Converts arbitrary data to a cache entry object.
-   * @param {StoredDataType} data - The data to be stored.
-   * @param {number|undefined} ttl - The time-to-live in milliseconds. If not provided, the data will be stored indefinitely.
+   * @param data - The data to be stored.
+   * @param ttl - The time-to-live in milliseconds. If not provided, the data will be stored indefinitely.
+   * @returns The cache entry object.
    */
   protected readonly convertDataToCacheEntry = (
     data: StoredDataType,
@@ -37,9 +38,10 @@ export class Cache<StoredDataType = NonNullable<unknown>, CacheKeyType = string>
 
   /**
    * Checks if a cache entry has expired, and deletes it if it has.
-   * @param {CacheKeyType} key - The cache key of the entry to check.
-   * @param {CacheEntry<StoredDataType>} cacheEntry - The entry to check for TTL expiration.
-   * @returns {boolean} True if the entry has expired and been deleted, false otherwise.
+   * @param key - The cache key of the entry to check.
+   * @param cacheEntry - The entry to check for TTL expiration.
+   * @param cacheEntry.expiresAt - The expiration timestamp of the cache entry.
+   * @returns True if the entry has expired and been deleted, false otherwise.
    */
   protected readonly isExpiredAndDeleted = (
     key: CacheKeyType,
@@ -57,6 +59,9 @@ export class Cache<StoredDataType = NonNullable<unknown>, CacheKeyType = string>
    * into the shape returned by the provided `entryMapper` function. For example,
    * if the caller wants the keys of all non-expired cache entries, they could
    * pass `([entryKey, entryValue]) => entryKey` as the `entryMapper` function.
+   * @param entryMapper - A function that maps a cache entry into the desired shape.
+   * @param cacheEntries - An optional array of cache entries to filter and map.
+   * @returns An array of mapped cache entries.
    */
   protected readonly filterCacheEntries = <EntryMapperReturnType>(
     entryMapper: (entry: [CacheKeyType, StoredDataType]) => EntryMapperReturnType,
@@ -74,7 +79,7 @@ export class Cache<StoredDataType = NonNullable<unknown>, CacheKeyType = string>
 
   /**
    * Checks the cache for the existence of a key.
-   * @param {CacheKeyType} key - The cache key to check.
+   * @param key - The cache key to check.
    * @returns Boolean indicating whether an element with the specified key exists or not.
    */
   readonly has = (key: CacheKeyType | LiteralToPrimitive<CacheKeyType>): boolean => {
@@ -83,8 +88,8 @@ export class Cache<StoredDataType = NonNullable<unknown>, CacheKeyType = string>
 
   /**
    * Retrieves data from the cache.
-   * @param {CacheKeyType} key - The cache key to use to retrieve the data.
-   * @returns {StoredDataType|undefined} The data stored under the provided key, or undefined if no unexpired data is found.
+   * @param key - The cache key to use to retrieve the data.
+   * @returns The data stored under the provided key, or undefined if no unexpired data is found.
    */
   readonly get = (
     key: CacheKeyType | LiteralToPrimitive<CacheKeyType>
@@ -95,9 +100,9 @@ export class Cache<StoredDataType = NonNullable<unknown>, CacheKeyType = string>
 
   /**
    * Stores data in the cache.
-   * @param {CacheKeyType} key - The cache key under which the data is stored.
-   * @param {StoredDataType} data - The data to be stored.
-   * @param {number|undefined} ttl - The time-to-live in milliseconds. If not provided, the data will be stored indefinitely.
+   * @param key - The cache key under which the data is stored.
+   * @param data - The data to be stored.
+   * @param [ttl] - The time-to-live in milliseconds. If not provided, the data will be stored indefinitely.
    */
   readonly set = (key: CacheKeyType, data: StoredDataType, ttl?: number): void => {
     this._cache.set(key, this.convertDataToCacheEntry(data, ttl));
@@ -105,7 +110,7 @@ export class Cache<StoredDataType = NonNullable<unknown>, CacheKeyType = string>
 
   /**
    * Deletes data from the cache.
-   * @param {CacheKeyType} key - The key of the data to be deleted.
+   * @param key - The key of the data to be deleted.
    */
   readonly delete = (key: CacheKeyType): void => {
     this._cache.delete(key);
@@ -120,8 +125,8 @@ export class Cache<StoredDataType = NonNullable<unknown>, CacheKeyType = string>
 
   /**
    * Retrieves all cache keys as an array.
-   * @param {boolean=} shouldCheckTTL - False by default; if true, the cache will be checked for expired entries and they will be removed before returning the cache keys.
-   * @returns {CacheKeyType[]}
+   * @param shouldCheckTTL - False by default; if true, the cache will be checked for expired entries and they will be removed before returning the cache keys.
+   * @returns An array of cache keys.
    */
   readonly keys = (shouldCheckTTL: boolean = false): Array<CacheKeyType> => {
     return shouldCheckTTL
@@ -131,8 +136,8 @@ export class Cache<StoredDataType = NonNullable<unknown>, CacheKeyType = string>
 
   /**
    * Retrieves all cache values as an array.
-   * @param {boolean=} shouldCheckTTL - False by default; if true, the cache will be checked for expired entries and they will be removed before returning the cache values.
-   * @returns {StoredDataType[]}
+   * @param shouldCheckTTL - False by default; if true, the cache will be checked for expired entries and they will be removed before returning the cache values.
+   * @returns An array of cache values.
    */
   readonly values = (shouldCheckTTL: boolean = false): Array<StoredDataType> => {
     return shouldCheckTTL
@@ -142,8 +147,8 @@ export class Cache<StoredDataType = NonNullable<unknown>, CacheKeyType = string>
 
   /**
    * Retrieves the entire cache as an array of key-value pair tuples.
-   * @param {boolean=} shouldCheckTTL - False by default; if true, the cache will be checked for expired entries and they will be removed before returning the cache entries.
-   * @returns {[CacheKeyType,StoredDataType][]}
+   * @param shouldCheckTTL - False by default; if true, the cache will be checked for expired entries and they will be removed before returning the cache entries.
+   * @returns An array of cache entries.
    */
   readonly entries = (shouldCheckTTL: boolean = false): Array<[CacheKeyType, StoredDataType]> => {
     return shouldCheckTTL
@@ -153,6 +158,7 @@ export class Cache<StoredDataType = NonNullable<unknown>, CacheKeyType = string>
 
   /**
    * Returns the number of items in the cache.
+   * @returns The number of items in the cache.
    */
   get size(): number {
     return this._cache.size;
