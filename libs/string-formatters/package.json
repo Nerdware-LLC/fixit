@@ -1,0 +1,9 @@
+{
+  "name": "@fixit/string-formatters",
+  "type": "module",
+  "private": true,
+  "exports": {
+    ".": "./src/index.js",
+    "./*": "./src/*"
+  }
+}

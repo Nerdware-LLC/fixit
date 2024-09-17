@@ -53,6 +53,8 @@ export const currencyStrToInt = (currencyStr: string): number => {
  *
  * @param minorCurrencyUnitInteger - The integer representing the currency amount in the minor unit.
  * @param options - The options for formatting the currency string.
+ * @param options.locale - The locale to use for formatting the currency string.
+ * @param options.shouldRound - Whether to round the currency amount to the nearest whole number.
  * @returns The currency-formatted string.
  * @throws If the `minorCurrencyUnitInteger` is not a safe integer.
  */

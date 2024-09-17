@@ -1,6 +1,6 @@
 import { currencyStrToInt, intToCurrencyStr } from "./currency.js";
 
-describe("formatters/currency", () => {
+describe("string-formatters/currency", () => {
   /**
    * Regex for asserting the error msg thrown from currency formatter
    * functions when they're called with an invalid value.

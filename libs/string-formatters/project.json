@@ -1,0 +1,18 @@
+{
+  "name": "string-formatters",
+  "projectType": "library",
+
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "options": {
+        "lintFilePatterns": ["libs/string-formatters/**/*"]
+      }
+    },
+    "lint-types": {
+      "options": {
+        "cwd": "libs/string-formatters"
+      }
+    }
+  }
+}
