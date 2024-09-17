@@ -10,6 +10,6 @@ export const stripe = new Stripe(STRIPE_SECRET_KEY, {
   typescript: true,
   appInfo: {
     name: "fixit",
-    ...(!!PROJECT_VERSION && { version: PROJECT_VERSION }),
+    ...(PROJECT_VERSION && { version: PROJECT_VERSION }),
   },
 });

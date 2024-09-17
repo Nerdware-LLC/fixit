@@ -68,7 +68,7 @@ export const stripe = {
       return mockStripeApiResponse({
         ...mockStripeCustomer,
         id: stripeCustomerID,
-        ...(!!customerUpdateParams?.invoice_settings?.default_payment_method && {
+        ...(customerUpdateParams?.invoice_settings?.default_payment_method && {
           invoice_settings: {
             ...mockStripeCustomer.invoice_settings,
             default_payment_method: customerUpdateParams.invoice_settings.default_payment_method,
