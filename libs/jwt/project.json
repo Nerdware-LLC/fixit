@@ -1,0 +1,24 @@
+{
+  "name": "jwt",
+  "projectType": "library",
+
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "options": {
+        "lintFilePatterns": ["libs/jwt/**/*"]
+      }
+    },
+    "lint-types": {
+      "options": {
+        "cwd": "libs/jwt"
+      }
+    },
+    "test": {
+      "executor": "@nx/vite:test",
+      "options": {
+        "vitestConfig": "libs/jwt/vitest.config.ts"
+      }
+    }
+  }
+}

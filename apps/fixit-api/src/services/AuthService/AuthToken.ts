@@ -1,9 +1,9 @@
 import { isString } from "@nerdware/ts-type-safety-utils";
-import { AuthError, InternalServerError } from "@/utils/httpErrors.js";
-import { JWT } from "@/utils/jwt.js";
-import type { AuthTokenPayload } from "@/types/open-api.js";
+import { JWT } from "@fixit/jwt";
 import type { Request } from "express";
 import type { SetOptional } from "type-fest";
+
+const { JWT_PRIVATE_KEY } = ENV;
 
 /**
  * The AuthToken class is responsible for creating, validating, and decoding
@@ -22,7 +22,7 @@ export class AuthToken {
    * @returns The decoded auth token payload.
    */
   static readonly validateAndDecode = async (encodedAuthToken: string) => {
-    return await JWT.validateAndDecode<AuthTokenPayload>(encodedAuthToken, {
+    return await JWT.validateAndDecode<AuthTokenPayload>(encodedAuthToken, JWT_PRIVATE_KEY, {
       shouldStripInternalFields: true,
       decodeErrMsgs: {
         TokenExpiredError: "Your login credentials have expired — please sign in again.",
@@ -119,7 +119,7 @@ export class AuthToken {
       updatedAt,
     };
 
-    this.encodedTokenValue = JWT.signAndEncode(payload);
+    this.encodedTokenValue = JWT.signAndEncode(payload, JWT_PRIVATE_KEY);
   }
 }
 
