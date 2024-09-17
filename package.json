@@ -27,6 +27,7 @@
     "tools/*"
   ],
   "scripts": {
+    "gen:lib": "nx g @fixit-tools/fixit-nx-plugin:lib-generator",
     "eslint-inspector:start": "npx @eslint/config-inspector@latest",
     "fixit-api:start": "docker compose up --abort-on-container-exit",
     "schema:open-api:validate": "redocly lint --config libs/api-schemas/OpenAPI/redocly.yaml",
@@ -45,6 +46,7 @@
     "@nerdware/ddb-single-table": "^2.7.3",
     "@nerdware/ts-string-helpers": "^1.7.1",
     "@nerdware/ts-type-safety-utils": "^1.0.15",
+    "@nx/devkit": "19.7.3",
     "@sentry/node": "^7.119.0",
     "bcrypt": "^5.1.1",
     "chalk": "^5.3.0",
@@ -73,9 +75,9 @@
     "@nx/esbuild": "19.7.2",
     "@nx/eslint": "19.7.2",
     "@nx/eslint-plugin": "19.7.2",
-    "@nx/js": "19.7.2",
+    "@nx/js": "19.7.3",
     "@nx/node": "19.7.2",
-    "@nx/plugin": "^19.7.2",
+    "@nx/plugin": "19.7.3",
     "@nx/vite": "19.7.2",
     "@nx/web": "19.7.2",
     "@redocly/cli": "^1.25.2",
