@@ -30,8 +30,6 @@ export const createHttpErrorClass = ({
 
 /**
  * Base type for custom errors with HTTP status codes.
- *
- * @typedef {Object} BaseHttpError
  */
 export type BaseHttpError = Error & HttpErrorClassParams;
 
