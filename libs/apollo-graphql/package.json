@@ -1,0 +1,10 @@
+{
+  "name": "@fixit/apollo-graphql",
+  "type": "module",
+  "private": true,
+  "exports": {
+    ".": "./src/index.js",
+    "./*": "./src/*",
+    "./types": "./src/types/index.js"
+  }
+}

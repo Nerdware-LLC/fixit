@@ -1,0 +1,25 @@
+{
+  "name": "apollo-graphql",
+  "projectType": "library",
+  "sourceRoot": "libs/apollo-graphql/src",
+  "tags": [],
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "options": {
+        "lintFilePatterns": ["libs/apollo-graphql/**/*"]
+      }
+    },
+    "lint-types": {
+      "options": {
+        "cwd": "libs/apollo-graphql"
+      }
+    },
+    "test": {
+      "executor": "@nx/vite:test",
+      "options": {
+        "vitestConfig": "libs/apollo-graphql/vitest.config.ts"
+      }
+    }
+  }
+}
