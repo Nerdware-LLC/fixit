@@ -45,7 +45,7 @@ export const ENV = {
   IS_DEV: false,
   IS_PROD: false,
   IS_DEPLOYED_ENV: false,
-  ...(!!npm_package_version && { PROJECT_VERSION: `v${npm_package_version}` }),
+  ...(npm_package_version && { PROJECT_VERSION: `v${npm_package_version}` }),
   PROTOCOL,
   DOMAIN,
   PORT: Number(PORT),

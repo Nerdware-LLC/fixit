@@ -68,7 +68,7 @@ export const ENV = {
   IS_DEV: NODE_ENV === "development",
   IS_PROD: NODE_ENV === "production",
   IS_DEPLOYED_ENV: /^(production|staging)$/.test(NODE_ENV),
-  ...(!!npm_package_version && { PROJECT_VERSION: `v${npm_package_version}` }),
+  ...(npm_package_version && { PROJECT_VERSION: `v${npm_package_version}` }),
   PROTOCOL,
   DOMAIN,
   PORT: Number(PORT),
