@@ -1,6 +1,6 @@
-import { pinpointClient } from "@/lib/pinpointClient";
+import { pinpointClient } from "@/lib/pinpointClient/index.js";
 import { sendWelcomeEmail } from "./sendWelcomeEmail.js";
-import type { UserItem } from "@/models/User";
+import type { UserItem } from "@fixit/dynamodb-models/User/index.js";
 
 describe("sendWelcomeEmail", () => {
   test("invokes pinpointClient with correct arguments when newUser is valid", async () => {

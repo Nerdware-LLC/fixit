@@ -1,11 +1,9 @@
-import { ENV } from "@/server/env";
-import type { UserItem } from "@/models/User";
+import { ENV } from "@/server/env.js";
+import type { UserItem } from "@fixit/dynamodb-models/User/index.js";
 import type { Primitive } from "type-fest";
 
 /**
  * Represents a push notification.
- * @category Events
- * @subcategory PushNotification
  */
 export class PushNotification {
   /** The recipient's Expo push token. */
@@ -24,10 +22,11 @@ export class PushNotification {
 
   /**
    * Creates a new instance of PushNotification.
-   * @param pushEventName - The name of the push event.
-   * @param recipientUser - An object containing the recipient's User ID and Expo push token.
-   * @param title - The title of the push notification.
-   * @param body - The body/content of the push notification.
+   * @param pnParams - Push notification parameters.
+   * @param pnParams.pushEventName - The name of the push event.
+   * @param pnParams.recipientUser - An object containing the recipient's User ID and Expo push token.
+   * @param pnParams.title - The title of the push notification.
+   * @param pnParams.body - The body/content of the push notification.
    */
   constructor({
     pushEventName,

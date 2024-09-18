@@ -1,13 +1,12 @@
-import { WorkOrderPushNotification } from "@/events/pushNotifications";
-import { lambdaClient } from "@/lib/lambdaClient";
-import { User } from "@/models/User";
-import type { WorkOrderItem } from "@/models/WorkOrder";
+import { User } from "@fixit/dynamodb-models/User/index.js";
+import { WorkOrderPushNotification } from "@/events/pushNotifications/index.js";
+import { lambdaClient } from "@/lib/lambdaClient/index.js";
+import type { WorkOrderItem } from "@fixit/dynamodb-models/WorkOrder/index.js";
 
 /**
  * Notify assignor of completed WorkOrder when `WorkOrderCompleted` event is emitted.
  * @event WorkOrderCompleted
- * @param {WorkOrderItem} completedWO - The completed WorkOrder
- * @category events
+ * @param completedWO - The completed WorkOrder
  */
 export const notifyAssignorCompletedWO = async (completedWO?: WorkOrderItem) => {
   if (!completedWO) return;

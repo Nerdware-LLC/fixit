@@ -1,11 +1,8 @@
 import { PushNotification, type PushNotificationRecipient } from "./PushNotification.js";
-import type { InvoiceItem } from "@/models/Invoice";
+import type { InvoiceItem } from "@fixit/dynamodb-models/Invoice/index.js";
 
 /**
  * This class represents a push notification for an Invoice event.
- * @extends PushNotification
- * @category Events
- * @subcategory PushNotification
  */
 export class InvoicePushNotification extends PushNotification {
   static PUSH_EVENTS = {

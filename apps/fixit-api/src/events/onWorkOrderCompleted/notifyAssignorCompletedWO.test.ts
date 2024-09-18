@@ -1,8 +1,8 @@
-import { WorkOrderPushNotification } from "@/events/pushNotifications";
-import { lambdaClient } from "@/lib/lambdaClient";
-import { User, type UserItem } from "@/models/User";
+import { User, type UserItem } from "@fixit/dynamodb-models/User/index.js";
+import { WorkOrderPushNotification } from "@/events/pushNotifications/index.js";
+import { lambdaClient } from "@/lib/lambdaClient/index.js";
 import { notifyAssignorCompletedWO } from "./notifyAssignorCompletedWO.js";
-import type { WorkOrderItem } from "@/models/WorkOrder";
+import type { WorkOrderItem } from "@fixit/dynamodb-models/WorkOrder/index.js";
 
 describe("notifyAssignorCompletedWO", () => {
   test("sends a push notification to the assignor when the assignor has an expoPushToken", async () => {

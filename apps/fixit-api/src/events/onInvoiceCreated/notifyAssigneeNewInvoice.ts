@@ -1,13 +1,12 @@
+import { User } from "@fixit/dynamodb-models/User/index.js";
 import { InvoicePushNotification } from "@/events/pushNotifications/InvoicePushNotification.js";
 import { lambdaClient } from "@/lib/lambdaClient/lambdaClient.js";
-import { User } from "@/models/User";
-import type { InvoiceItem } from "@/models/Invoice";
+import type { InvoiceItem } from "@fixit/dynamodb-models/Invoice/index.js";
 
 /**
  * Notify assignee of new Invoice when `NewInvoice` event is emitted.
  * @event NewInvoice
- * @param {InvoiceItem} newInvoice - The new Invoice
- * @category events
+ * @param newInvoice - The new Invoice
  */
 export const notifyAssigneeNewInvoice = async (newInvoice?: InvoiceItem) => {
   if (!newInvoice) return;

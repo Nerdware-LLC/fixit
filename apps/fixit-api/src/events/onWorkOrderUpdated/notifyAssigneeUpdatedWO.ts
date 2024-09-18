@@ -1,7 +1,7 @@
-import { WorkOrderPushNotification } from "@/events/pushNotifications";
-import { lambdaClient } from "@/lib/lambdaClient";
-import { User } from "@/models/User";
-import type { WorkOrderItem } from "@/models/WorkOrder";
+import { User } from "@fixit/dynamodb-models/User/index.js";
+import { WorkOrderPushNotification } from "@/events/pushNotifications/WorkOrderPushNotification.js";
+import { lambdaClient } from "@/lib/lambdaClient/index.js";
+import type { WorkOrderItem } from "@fixit/dynamodb-models/WorkOrder/index.js";
 
 /**
  * Sends push notifications to Users when a WorkOrder is updated. Determines which Users

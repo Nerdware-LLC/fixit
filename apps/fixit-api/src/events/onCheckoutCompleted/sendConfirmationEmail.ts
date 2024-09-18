@@ -1,15 +1,20 @@
 import { isString } from "@nerdware/ts-type-safety-utils";
-import { pinpointClient } from "@/lib/pinpointClient";
-import { SUBSCRIPTION_PRODUCT_NAMES } from "@/models/UserSubscription/enumConstants.js";
-import { intToCurrencyStr } from "@/utils/formatters/currency.js";
-import { capitalize } from "@/utils/formatters/strings.js";
-import type { SubscriptionPriceName } from "@/types/graphql.js";
-import type { AuthTokenPayload } from "@/types/open-api.js";
+import { SUBSCRIPTION_PRODUCT_NAMES } from "@fixit/dynamodb-models/UserSubscription/enumConstants.js";
+import { intToCurrencyStr, capitalize } from "@fixit/string-formatters";
+import { pinpointClient } from "@/lib/pinpointClient/index.js";
+import type { SubscriptionPriceName } from "@fixit/api-schemas/GraphQL/types";
+import type { AuthTokenPayload } from "@fixit/api-schemas/OpenAPI/types";
+
+export type CheckoutConfirmationData = {
+  user: AuthTokenPayload;
+  priceName: SubscriptionPriceName;
+  paymentIntentID: string | null | undefined;
+  amountPaid: string | number;
+};
 
 /**
  * Send confirmation email to User when `CheckoutCompleted` event is emitted.
  * @event CheckoutCompleted
- * @category events
  */
 export const sendConfirmationEmail = async ({
   user,
@@ -39,11 +44,4 @@ export const sendConfirmationEmail = async ({
       },
     },
   });
-};
-
-export type CheckoutConfirmationData = {
-  user: AuthTokenPayload;
-  priceName: SubscriptionPriceName;
-  paymentIntentID: string | null | undefined;
-  amountPaid: string | number;
 };

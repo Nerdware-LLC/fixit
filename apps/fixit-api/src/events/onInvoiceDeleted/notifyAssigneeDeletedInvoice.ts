@@ -1,13 +1,12 @@
-import { InvoicePushNotification } from "@/events/pushNotifications";
-import { lambdaClient } from "@/lib/lambdaClient";
-import { User } from "@/models/User";
-import type { InvoiceItem } from "@/models/Invoice";
+import { User } from "@fixit/dynamodb-models/User/index.js";
+import { InvoicePushNotification } from "@/events/pushNotifications/index.js";
+import { lambdaClient } from "@/lib/lambdaClient/index.js";
+import type { InvoiceItem } from "@fixit/dynamodb-models/Invoice/index.js";
 
 /**
  * Notify assignee of deleted Invoice when `InvoiceDeleted` event is emitted.
  * @event InvoiceDeleted
- * @param {InvoiceItem} deletedInvoice - The deleted Invoice
- * @category events
+ * @param deletedInvoice - The deleted Invoice
  */
 export const notifyAssigneeDeletedInvoice = async (deletedInvoice?: InvoiceItem) => {
   if (!deletedInvoice) return;

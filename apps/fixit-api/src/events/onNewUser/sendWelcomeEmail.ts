@@ -1,11 +1,10 @@
-import { pinpointClient } from "@/lib/pinpointClient";
-import type { UserItem } from "@/models/User";
+import { pinpointClient } from "@/lib/pinpointClient/index.js";
+import type { UserItem } from "@fixit/dynamodb-models/User/index.js";
 
 /**
  * Send welcome email to new User when `NewUser` event is emitted.
  * @event NewUser
- * @param {UserItem} newUser - The new User
- * @category events
+ * @param newUser - The new User
  */
 export const sendWelcomeEmail = async (newUser?: UserItem) => {
   if (!newUser) return;
