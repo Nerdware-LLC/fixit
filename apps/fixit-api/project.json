@@ -1,7 +1,7 @@
 {
   "name": "fixit-api",
-  "sourceRoot": "apps/fixit-api/src",
   "projectType": "application",
+  "sourceRoot": "apps/fixit-api/src",
   "tags": [],
   "targets": {
     "start": {
