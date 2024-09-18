@@ -8,7 +8,8 @@ import { ApolloServerPluginDrainHttpServer } from "@apollo/server/plugin/drainHt
 import { addMocksToSchema } from "@graphql-tools/mock";
 import { formatApolloError } from "@/graphql/GraphQLError/helpers.js";
 import { schema } from "@/graphql/schema.js";
-import type { ApolloServerContext, ApolloServerWithContext } from "@/apolloServer.js";
+import type { ApolloServerWithContext } from "@/apolloServer.js";
+import type { ApolloServerContext } from "@fixit/apollo-graphql/types";
 
 /**
  * ### MOCK APOLLO SERVER

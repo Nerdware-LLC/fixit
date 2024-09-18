@@ -1,13 +1,13 @@
-import { ApolloServer, type ContextFunction, type BaseContext } from "@apollo/server";
+import { ApolloServer, type ContextFunction } from "@apollo/server";
 import { ApolloServerPluginDrainHttpServer } from "@apollo/server/plugin/drainHttpServer";
 import { getTypeSafeError } from "@nerdware/ts-type-safety-utils";
 import { GraphQLError } from "graphql";
+import { HTTP_ERROR_METADATA, type BaseHttpError } from "@fixit/http-errors";
 import { formatApolloError } from "@/graphql/GraphQLError/helpers.js";
 import { schema } from "@/graphql/schema.js";
-import { ENV } from "@/server/env";
-import { AuthService } from "@/services/AuthService";
-import { HTTP_ERROR_CONFIGS, type HttpError } from "@/utils/httpErrors.js";
-import type { AuthTokenPayload } from "@/types/open-api.js";
+import { ENV } from "@/server/env.js";
+import { AuthService } from "@/services/AuthService/index.js";
+import type { ApolloServerContext } from "@fixit/apollo-graphql/types";
 import type { Request } from "express";
 import type { Server as HttpServer } from "node:http";
 
@@ -39,22 +39,6 @@ apolloServer.configurePlugins = async ({ httpServer }) => {
 
 ///////////////////////////////////////////////////////////////////////////////
 // ApolloServer Context
-
-/**
- * The `context` object available to all ApolloServer resolvers and plugins.
- */
-export type ApolloServerContext = BaseContext & {
-  req: ApolloServerContextRequestFields;
-  user: AuthTokenPayload;
-};
-
-/**
- * ApolloServer `context.req` — contains properties from the Express `req` object.
- */
-export type ApolloServerContextRequestFields = Pick<
-  Request<Record<string, string>, unknown, Record<string, unknown>>,
-  "body" | "hostname" | "ip" | "ips" | "method" | "originalUrl" | "path" | "protocol" | "subdomains"
->;
 
 /**
  * This function is an [ApolloServer `context` function][apollo-context-fn]
@@ -101,9 +85,9 @@ export const getAuthenticatedApolloContext: ContextFunction<
   } catch (err) {
     const error = getTypeSafeError(err);
     // Expected error.statusCode values: 401 or 403 (default to 401 if undefined for whatever reason)
-    const errorStatusCode = (error as Partial<HttpError>).statusCode ?? 401;
+    const errorStatusCode = (error as Partial<BaseHttpError>).statusCode ?? 401;
     // Get the HTTP-error-config for the statusCode
-    const httpErrorConfig = HTTP_ERROR_CONFIGS[errorStatusCode] ?? HTTP_ERROR_CONFIGS[401];
+    const httpErrorConfig = HTTP_ERROR_METADATA[errorStatusCode] ?? HTTP_ERROR_METADATA[401];
     // Re-throw as GraphQLError (ApolloServer's formatError fn is not called for ctx-fn errors)
     throw new GraphQLError(httpErrorConfig.defaultErrorMsg, {
       extensions: httpErrorConfig.gqlErrorExtensions,
