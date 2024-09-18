@@ -1,6 +1,5 @@
 import checklist from "./Checklist.js";
 import contact from "./Contact.js";
-import graphQLError from "./GraphQLError.js";
 import invite from "./Invite.js";
 import invoice from "./Invoice.js";
 import location from "./Location.js";
@@ -18,11 +17,10 @@ import customScalars from "./_scalars.js";
  * Fixit API — GraphQL Schema TypeDefs
  */
 export const typeDefs: Array<string> = [
-  // ROOTS, SCALARS, RESPONSES, & OTHER META TYPES:
+  // ROOTS, SCALARS, & RESPONSES:
   root,
   customScalars,
   responses,
-  graphQLError,
   // CORE ITEM INTERFACES:
   publicUserFields,
   // CORE ITEMS:

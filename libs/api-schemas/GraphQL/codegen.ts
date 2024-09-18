@@ -1,5 +1,8 @@
 import type { CodegenConfig } from "@graphql-codegen/cli";
 
+const GQL_TYPES_DIR = "libs/api-schemas/GraphQL/types";
+const DDB_MODELS_SRC_DIR = "libs/dynamodb-models/src";
+
 /**
  * ### `@graphql-codegen` config file
  *
@@ -14,49 +17,39 @@ import type { CodegenConfig } from "@graphql-codegen/cli";
  *   - https://the-guild.dev/graphql/codegen/plugins/typescript/typescript-resolvers
  */
 const codegenConfig: CodegenConfig = {
+  schema: "libs/api-schemas/GraphQL/typeDefs/**",
   require: ["ts-node/register"],
   emitLegacyCommonJSImports: false,
   generates: {
-    // GQL Schema Types:
-    "libs/api-schemas/GraphQL/types/__codegen__/graphqlSchemaTypes.ts": {
-      schema: "libs/api-schemas/GraphQL/typeDefs/**",
-      // TODO Maybe move 'schema' to upper/outer level if they stay the same
-      plugins: ["typescript"],
+    [`${GQL_TYPES_DIR}/__codegen__/graphqlSchemaTypes.ts`]: {
+      plugins: ["typescript", "typescript-resolvers"],
       // Plugin configs:
       config: {
+        // typescript plugin configs:
         enumsAsTypes: true,
         useTypeImports: true,
-        namingConvention: "keep",
         scalars: {
           ID: "string",
-          DateTime: "Date",
           Email: "string",
+          DateTime: "Date",
+        },
+
+        // typescript-resolvers plugin configs:
+        useIndexSignature: true, // Adds an index signature to generated resolvers
+        contextType: "libs/apollo-graphql/src/types/ApolloServerContext.js#ApolloServerContext", // Resolver context type
+        defaultMapper: "Partial<{T}>",
+        mappers: {
+          // GQL types mapped to explicit overrides:
+          PublicUserFields: `${GQL_TYPES_DIR}/PublicUserFields.js#PublicUserFieldsCodegenInterface`,
+          // GQL types mapped to models:
+          Contact: `${DDB_MODELS_SRC_DIR}/Contact/Contact.js#ContactItem`,
+          Invoice: `${DDB_MODELS_SRC_DIR}/Invoice/Invoice.js#InvoiceItem`,
+          WorkOrder: `${DDB_MODELS_SRC_DIR}/WorkOrder/WorkOrder.js#WorkOrderItem`,
+          UserSubscription: `${DDB_MODELS_SRC_DIR}/UserSubscription/UserSubscription.js#UserSubscriptionItem`,
+          UserStripeConnectAccount: `${DDB_MODELS_SRC_DIR}/UserStripeConnectAccount/UserStripeConnectAccount.js#UserStripeConnectAccountItem`,
         },
       },
     },
-
-    // GQL Resolver Types:
-    // TODO Uncomment below and update values once ddb types are ready for mappers.
-
-    // "libs/api-schemas/GraphQL/types/__codegen__/graphqlResolverTypes.ts": {
-    //   schema: "libs/api-schemas/GraphQL/typeDefs/**",
-    //   plugins: ["typescript-resolvers"],
-    //   // Plugin configs:
-    //   config: {
-    //     useIndexSignature: true, // Adds an index signature to generated resolvers
-    //     contextType: "@/apolloServer.js#ApolloServerContext", // Resolver context type
-    //     defaultMapper: "Partial<{T}>",
-    //     mappers: {
-    //       Contact: "@/models/Contact/Contact.js#ContactItem",
-    //       PublicUserFields: "@/graphql/PublicUserFields/types.js#PublicUserFieldsCodegenInterface",
-    //       Invoice: "@/models/Invoice/Invoice.js#InvoiceItem",
-    //       WorkOrder: "@/models/WorkOrder/WorkOrder.js#WorkOrderItem",
-    //       UserSubscription: "@/models/UserSubscription/UserSubscription.js#UserSubscriptionItem",
-    //       UserStripeConnectAccount:
-    //         "@/models/UserStripeConnectAccount/UserStripeConnectAccount.js#UserStripeConnectAccountItem",
-    //     },
-    //   },
-    // },
   },
 };
 
