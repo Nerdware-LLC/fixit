@@ -98,4 +98,9 @@ export default async function libGenerator(tree: Tree, options: LibGeneratorSche
 
   // This fn runs Prettier on the files in the tree
   await formatFiles(tree);
+
+  console.log(
+    `🚀 Created library: ${projectName}
+   Don't forget to run "npm install" to symlink the lib into node_modules!\n`
+  );
 }
