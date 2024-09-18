@@ -142,8 +142,9 @@ export default tsEslint.config(
 
       // RULES: @nx (eslint-plugin-nx)
       "@nx/enforce-module-boundaries": [
-        "error", // TODO add nx tags to this rule once they're added to projects
+        "error",
         {
+          allow: ["@fixit/api-schemas/GraphQL/types"],
           depConstraints: [{ sourceTag: "*", onlyDependOnLibsWithTags: ["*"] }],
         },
       ],
