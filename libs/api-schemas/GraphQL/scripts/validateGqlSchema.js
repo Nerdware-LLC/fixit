@@ -17,4 +17,7 @@ logger.debug("Starting Script ...");
 
 validateExecContext();
 
-await generateGqlSchemaFile("fixit@current", { shouldValidate: true });
+await generateGqlSchemaFile("fixit@current", {
+  shouldValidate: true,
+  shouldCheckForBreakingChanges: false, // run `rover graph lint` instead of `rover graph check`
+});

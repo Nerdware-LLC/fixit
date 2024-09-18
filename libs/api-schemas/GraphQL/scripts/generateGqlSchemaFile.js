@@ -12,14 +12,19 @@ import { typeDefs } from "../typeDefs/index.js";
  * the absolute path to the schema file is returned.
  *
  * @param {"fixit@current"|"fixit@staging"|"fixit@prod"} graphRef The relevant graph ref.
- * @param {Object} [fnConfigs] Optional function configs.
- * @param {string} [fnConfigs.targetDir] The dir where the file should be saved (defaults to a tmp dir).
- * @param {boolean} [fnConfigs.shouldValidate] Whether to validate the resultant schema (default: false).
+ * @param {object} [fnConfigs] Optional function configs.
+ * @param {string} [fnConfigs.targetDir]
+ * The dir where the file should be saved (defaults to a tmp dir).
+ * @param {boolean} [fnConfigs.shouldValidate]
+ * Whether to validate the resultant schema (default: false).
+ * @param {boolean} [fnConfigs.shouldCheckForBreakingChanges]
+ * Whether to validate the schema using `rover graph check` instead of `rover graph lint` (default: false).
+ * This has no effect unless `shouldValidate` is true.
  * @returns {Promise<string>} The absolute path to the generated schema file.
  */
 export const generateGqlSchemaFile = async (
   graphRef,
-  { targetDir, shouldValidate } = {}
+  { targetDir, shouldValidate, shouldCheckForBreakingChanges } = {}
 ) => {
   // The type-defs are exported as an array of GraphQL-AST-node strings
   const typeDefsMerged = mergeTypeDefs(typeDefs);
@@ -89,9 +94,12 @@ export const generateGqlSchemaFile = async (
   if (shouldValidate) {
     logger.debug(`Validating the GraphQL schema for graph "${graphRef}" ...`);
 
-    apolloRoverCliWrapper.graph.check(graphRef, schemaFilePath);
+    // Use `check` if we're checking for breaking changes (it also lints syntax)
+    const roverValidationCmd = shouldCheckForBreakingChanges ? "check" : "lint";
 
-    // If the `rover graph check` cmd doesn't throw an error, the schema is valid.
+    apolloRoverCliWrapper.graph[roverValidationCmd](graphRef, schemaFilePath);
+
+    // If the rover cmd doesn't throw an error, the schema is valid.
     logger.debug("The GraphQL schema is valid! 🎉");
   }
 

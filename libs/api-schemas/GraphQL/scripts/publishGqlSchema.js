@@ -38,6 +38,7 @@ const graphRef = `fixit@${variantScriptArg}`;
 
 const schemaFilePath = await generateGqlSchemaFile(graphRef, {
   shouldValidate: true,
+  shouldCheckForBreakingChanges: false, // TODO Set to true once the schema is stable
 });
 
 if (isDryRun) {
