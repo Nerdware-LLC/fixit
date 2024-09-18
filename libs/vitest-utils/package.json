@@ -4,9 +4,6 @@
   "private": true,
   "exports": {
     "./common-configs/node": "./common-configs/vitest.node-configs.js",
-    "./custom-matchers": {
-      "types": "./src/types/custom-matchers.d.ts",
-      "import": "./src/custom-matchers.js"
-    }
+    "./custom-matchers": "./src/custom-matchers.js"
   }
 }
