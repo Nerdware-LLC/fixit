@@ -1,0 +1,26 @@
+{
+  "name": "dynamodb-models",
+  "projectType": "library",
+  "sourceRoot": "libs/dynamodb-models/src",
+  "tags": [],
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "options": {
+        "lintFilePatterns": ["libs/dynamodb-models/**/*"]
+      }
+    },
+    "lint-types": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "libs/dynamodb-models"
+      }
+    },
+    "test": {
+      "executor": "@nx/vite:test",
+      "options": {
+        "vitestConfig": "libs/dynamodb-models/vitest.config.ts"
+      }
+    }
+  }
+}
