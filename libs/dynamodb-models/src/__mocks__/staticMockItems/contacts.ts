@@ -1,6 +1,6 @@
-import { Contact, type ContactItem, type UnaliasedContactItem } from "@/models/Contact";
 import { MOCK_DATES } from "./dates.js";
 import { MOCK_USERS } from "./users.js";
+import { Contact, type ContactItem, type UnaliasedContactItem } from "../../Contact/index.js";
 
 const { USER_A, USER_B, USER_C } = MOCK_USERS;
 
@@ -34,7 +34,7 @@ export const MOCK_CONTACTS = {
   },
 } as const satisfies Record<string, ContactItem>;
 
-/** Unaliased mock Contacts for mocking `@aws-sdk/lib-dynamodb` responses. */
+/** Unaliased mock Contacts. */
 export const UNALIASED_MOCK_CONTACTS = Object.fromEntries(
   Object.entries(MOCK_CONTACTS).map(([key, { userID, id, contactUserID, ...contact }]) => [
     key,

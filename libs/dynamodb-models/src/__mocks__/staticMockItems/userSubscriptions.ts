@@ -1,10 +1,10 @@
+import { MOCK_DATES } from "./dates.js";
+import { MOCK_USERS } from "./users.js";
 import {
   UserSubscription,
   type UserSubscriptionItem,
   type UnaliasedUserSubscriptionItem,
-} from "@/models/UserSubscription";
-import { MOCK_DATES } from "./dates.js";
-import { MOCK_USERS } from "./users.js";
+} from "../../UserSubscription/index.js";
 
 const { USER_A, USER_B, USER_C } = MOCK_USERS;
 

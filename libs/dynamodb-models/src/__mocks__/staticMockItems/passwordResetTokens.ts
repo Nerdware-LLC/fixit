@@ -1,11 +1,11 @@
 import dayjs from "dayjs";
-import { passwordResetTokenModelHelpers } from "@/models/PasswordResetToken/helpers.js";
 import { MOCK_DATES } from "./dates.js";
 import { MOCK_USERS } from "./users.js";
-import type {
-  PasswordResetTokenItem,
-  UnaliasedPasswordResetTokenItem,
-} from "@/models/PasswordResetToken";
+import {
+  passwordResetTokenModelHelpers,
+  type PasswordResetTokenItem,
+  type UnaliasedPasswordResetTokenItem,
+} from "../../PasswordResetToken/index.js";
 
 const { USER_A, USER_B, USER_C } = MOCK_USERS;
 

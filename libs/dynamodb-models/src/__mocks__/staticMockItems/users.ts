@@ -1,7 +1,6 @@
 import { sanitizePhone } from "@nerdware/ts-string-helpers";
-import { userModelHelpers } from "@/models/User/helpers.js";
 import { MOCK_DATES } from "./dates.js";
-import type { UserItem, UnaliasedUserItem } from "@/models/User";
+import { userModelHelpers, type UserItem, type UnaliasedUserItem } from "../../User/index.js";
 
 const MOCK_USER_HANDLES = { USER_A: "@user_A", USER_B: "@user_B", USER_C: "@user_C" } as const;
 

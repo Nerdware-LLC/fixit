@@ -1,8 +1,11 @@
-import { invoiceModelHelpers } from "@/models/Invoice/helpers.js";
 import { MOCK_DATES } from "./dates.js";
 import { MOCK_USERS } from "./users.js";
 import { MOCK_WORK_ORDERS } from "./workOrders.js";
-import type { InvoiceItem, UnaliasedInvoiceItem } from "@/models/Invoice";
+import {
+  invoiceModelHelpers,
+  type InvoiceItem,
+  type UnaliasedInvoiceItem,
+} from "../../Invoice/index.js";
 
 const { USER_A, USER_B } = MOCK_USERS;
 
@@ -45,7 +48,7 @@ export const MOCK_INVOICES = {
   },
 } as const satisfies Record<string, InvoiceItem>;
 
-/** Unaliased mock Invoices for mocking `@aws-sdk/lib-dynamodb` responses. */
+/** Unaliased mock Invoices. */
 export const UNALIASED_MOCK_INVOICES = Object.fromEntries(
   Object.entries(MOCK_INVOICES).map(
     ([key, { id, createdByUserID, assignedToUserID, ...invoice }]) => [

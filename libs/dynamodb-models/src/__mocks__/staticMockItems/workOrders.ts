@@ -1,9 +1,12 @@
 import { sanitizePhone } from "@nerdware/ts-string-helpers";
-import { Location } from "@/models/Location";
-import { workOrderModelHelpers as woModelHelpers } from "@/models/WorkOrder/helpers.js";
 import { MOCK_DATES } from "./dates.js";
 import { MOCK_USERS } from "./users.js";
-import type { WorkOrderItem, UnaliasedWorkOrderItem } from "@/models/WorkOrder";
+import { Location } from "../../Location/index.js";
+import {
+  workOrderModelHelpers as woModelHelpers,
+  type WorkOrderItem,
+  type UnaliasedWorkOrderItem,
+} from "../../WorkOrder/index.js";
 
 const { USER_A, USER_B, USER_C } = MOCK_USERS;
 
