@@ -1,6 +1,7 @@
 {
   "name": "uuid",
   "projectType": "library",
+  "sourceRoot": "libs/uuid/src",
 
   "targets": {
     "lint": {

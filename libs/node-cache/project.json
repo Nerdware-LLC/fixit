@@ -1,6 +1,7 @@
 {
   "name": "node-cache",
   "projectType": "library",
+  "sourceRoot": "libs/node-cache/src",
 
   "targets": {
     "lint": {

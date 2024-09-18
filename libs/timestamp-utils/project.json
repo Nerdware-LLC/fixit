@@ -1,6 +1,7 @@
 {
   "name": "timestamp-utils",
   "projectType": "library",
+  "sourceRoot": "libs/timestamp-utils/src",
 
   "targets": {
     "lint": {

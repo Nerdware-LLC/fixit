@@ -1,6 +1,7 @@
 {
   "name": "ts-generic-util-types",
   "projectType": "library",
+  "sourceRoot": "libs/ts-generic-util-types/src",
 
   "targets": {
     "lint": {

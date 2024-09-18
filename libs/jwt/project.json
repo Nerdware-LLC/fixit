@@ -1,6 +1,7 @@
 {
   "name": "jwt",
   "projectType": "library",
+  "sourceRoot": "libs/jwt/src",
 
   "targets": {
     "lint": {

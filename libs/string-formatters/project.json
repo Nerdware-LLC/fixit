@@ -1,6 +1,7 @@
 {
   "name": "string-formatters",
   "projectType": "library",
+  "sourceRoot": "libs/string-formatters/src",
 
   "targets": {
     "lint": {

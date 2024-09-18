@@ -1,6 +1,7 @@
 {
   "name": "node-logger",
   "projectType": "library",
+  "sourceRoot": "libs/node-logger/src",
   "tags": [],
   "targets": {
     "lint": {

@@ -1,6 +1,7 @@
 {
   "name": "http-errors",
   "projectType": "library",
+  "sourceRoot": "libs/http-errors/src",
   "tags": [],
   "targets": {
     "lint": {

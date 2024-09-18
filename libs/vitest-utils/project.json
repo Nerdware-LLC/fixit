@@ -1,6 +1,7 @@
 {
   "name": "vitest-utils",
   "projectType": "library",
+  "sourceRoot": "libs/vitest-utils/src",
 
   "targets": {
     "lint": {
