@@ -134,6 +134,7 @@ export default tsEslint.config(
       ],
 
       // RULES: jsdoc (eslint-plugin-jsdoc)
+      "jsdoc/check-tag-names": ["error", { definedTags: ["docs"] }], // Add custom @docs tag
       "jsdoc/require-param": "off", // Don't require jsdoc @param tags (yet)
       "jsdoc/require-property": "off", // Don't require jsdoc @property tags (yet)
       "jsdoc/require-returns": "off", // Don't require jsdoc @returns tags (yet)
