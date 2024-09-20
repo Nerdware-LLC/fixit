@@ -1,6 +1,6 @@
 import { getErrorMessage } from "@nerdware/ts-type-safety-utils";
 import { logger } from "@fixit/node-logger";
-import type { GqlErrorExtensions } from "@fixit/api-schemas/GraphQL/types";
+import type { GraphQLErrorExtensions } from "@fixit/apollo-graphql/types";
 import type { Class } from "type-fest";
 
 /**
@@ -16,7 +16,7 @@ export const createHttpErrorClass = ({
     override readonly name: string = name; // 'name' is overridden to make it readonly
     readonly statusCode: number = statusCode;
     readonly defaultErrorMsg: string = defaultErrorMsg;
-    readonly gqlErrorExtensions: Required<GqlErrorExtensions> = gqlErrorExtensions;
+    readonly gqlErrorExtensions: GraphQLErrorExtensions = gqlErrorExtensions;
 
     constructor(message?: unknown) {
       super(getErrorMessage(message) || defaultErrorMsg);
@@ -40,5 +40,5 @@ export type HttpErrorClassParams = {
   readonly name: string;
   readonly statusCode: number;
   readonly defaultErrorMsg: string;
-  readonly gqlErrorExtensions: Required<GqlErrorExtensions>;
+  readonly gqlErrorExtensions: GraphQLErrorExtensions;
 };
