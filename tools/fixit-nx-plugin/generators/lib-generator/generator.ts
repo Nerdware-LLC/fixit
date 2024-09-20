@@ -52,18 +52,18 @@ export default async function libGenerator(tree: Tree, options: LibGeneratorSche
     sourceRoot: `${projectRootDir}/src`,
     tags: [],
     targets: {
-      "lint": {
+      lint: {
         executor: "@nx/eslint:lint",
         options: {
           lintFilePatterns: [`${projectRootDir}/**/*`],
         },
       },
-      "lint-types": {
+      typecheck: {
         options: {
           cwd: projectRootDir,
         },
       },
-      "test": {
+      test: {
         executor: "@nx/vite:test",
         options: {
           vitestConfig: `${projectRootDir}/vitest.config.ts`,
