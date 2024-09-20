@@ -4,6 +4,10 @@
   "private": true,
   "exports": {
     ".": "./src/index.js",
-    "./*": "./src/*"
+    "./caches/*": "./src/caches/*",
+    "./helpers": "./src/helpers.js",
+    "./types": "./src/types.js",
+    "./__mocks__": "./src/__mocks__/index.js",
+    "./__mocks__/*": "./src/__mocks__/*"
   }
 }
