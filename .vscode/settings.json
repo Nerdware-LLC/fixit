@@ -29,7 +29,7 @@
   "vsicons.associations.files": [
     {
       "icon": "nx",
-      "extensions": [".nxignore"],
+      "extensions": [],
       "filenamesGlob": ["nx", "project"],
       "extensionsGlob": ["json"],
       "filename": true,
