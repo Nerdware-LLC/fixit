@@ -44,7 +44,7 @@
       "inputs": ["default"]
     },
     "@nx/eslint:lint": {
-      "dependsOn": ["lint-types"],
+      "dependsOn": ["typecheck"],
       "cache": true,
       "inputs": ["default", "{workspaceRoot}/eslint.config.js"],
       "options": {
@@ -53,7 +53,7 @@
         "hasTypeAwareRules": true
       }
     },
-    "lint-types": {
+    "typecheck": {
       "executor": "nx:run-commands",
       "cache": true,
       "inputs": ["default", "{workspaceRoot}/tsconfig.base.json"],

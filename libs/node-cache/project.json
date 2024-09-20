@@ -10,7 +10,7 @@
         "lintFilePatterns": ["libs/node-cache/**/*"]
       }
     },
-    "lint-types": {
+    "typecheck": {
       "options": {
         "cwd": "libs/node-cache"
       }

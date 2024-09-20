@@ -10,7 +10,7 @@
         "lintFilePatterns": ["libs/ts-generic-util-types/**/*"]
       }
     },
-    "lint-types": {
+    "typecheck": {
       "options": {
         "cwd": "libs/ts-generic-util-types"
       }

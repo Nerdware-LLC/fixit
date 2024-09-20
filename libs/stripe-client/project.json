@@ -10,7 +10,7 @@
         "lintFilePatterns": ["libs/stripe-client/**/*"]
       }
     },
-    "lint-types": {
+    "typecheck": {
       "executor": "nx:run-commands",
       "options": {
         "cwd": "libs/stripe-client"

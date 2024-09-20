@@ -10,7 +10,7 @@
         "lintFilePatterns": ["libs/dynamodb-models/**/*"]
       }
     },
-    "lint-types": {
+    "typecheck": {
       "executor": "nx:run-commands",
       "options": {
         "cwd": "libs/dynamodb-models"

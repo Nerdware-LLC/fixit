@@ -10,7 +10,7 @@
         "lintFilePatterns": ["libs/uuid/**/*"]
       }
     },
-    "lint-types": {
+    "typecheck": {
       "options": {
         "cwd": "libs/uuid"
       }

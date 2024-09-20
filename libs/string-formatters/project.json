@@ -10,7 +10,7 @@
         "lintFilePatterns": ["libs/string-formatters/**/*"]
       }
     },
-    "lint-types": {
+    "typecheck": {
       "options": {
         "cwd": "libs/string-formatters"
       }

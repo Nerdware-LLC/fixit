@@ -10,7 +10,7 @@
         "lintFilePatterns": ["libs/jwt/**/*"]
       }
     },
-    "lint-types": {
+    "typecheck": {
       "options": {
         "cwd": "libs/jwt"
       }

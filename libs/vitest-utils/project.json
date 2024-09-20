@@ -10,7 +10,7 @@
         "lintFilePatterns": ["libs/vitest-utils/**/*"]
       }
     },
-    "lint-types": {
+    "typecheck": {
       "options": {
         "cwd": "libs/vitest-utils"
       }

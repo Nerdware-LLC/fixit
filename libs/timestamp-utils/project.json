@@ -10,7 +10,7 @@
         "lintFilePatterns": ["libs/timestamp-utils/**/*"]
       }
     },
-    "lint-types": {
+    "typecheck": {
       "options": {
         "cwd": "libs/timestamp-utils"
       }

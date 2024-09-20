@@ -10,7 +10,7 @@
         "lintFilePatterns": ["libs/http-errors/**/*"]
       }
     },
-    "lint-types": {
+    "typecheck": {
       "executor": "nx:run-commands",
       "options": {
         "cwd": "libs/http-errors"

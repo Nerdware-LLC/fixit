@@ -10,7 +10,7 @@
         "lintFilePatterns": ["libs/apollo-graphql/**/*"]
       }
     },
-    "lint-types": {
+    "typecheck": {
       "options": {
         "cwd": "libs/apollo-graphql"
       }

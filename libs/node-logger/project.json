@@ -10,7 +10,7 @@
         "lintFilePatterns": ["libs/node-logger/**/*"]
       }
     },
-    "lint-types": {
+    "typecheck": {
       "executor": "nx:run-commands",
       "options": {
         "cwd": "libs/node-logger"

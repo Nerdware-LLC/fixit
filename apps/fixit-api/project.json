@@ -21,7 +21,7 @@
         "lintFilePatterns": ["apps/fixit-api/**/*"]
       }
     },
-    "lint-types": {
+    "typecheck": {
       "executor": "nx:run-commands",
       "options": {
         "cwd": "apps/fixit-api"
