@@ -105,6 +105,23 @@ export default tsEslint.config(
       "default-case-last": "error", // switch-case statements' default case must be last
       "eqeqeq": ["error", "always"],
       "no-console": "warn",
+      "no-restricted-imports": [
+        "error",
+        {
+          patterns: [
+            {
+              group: [
+                "@fixit/**/_circularDependencyFix.*",
+                "@fixit/**/_circularDependencyFix/**",
+              ],
+              message:
+                "Files which ameliorate circular dependency issues are for internal " +
+                "use only by the project in which the file(s) reside, and may not be " +
+                "imported into other projects.",
+            },
+          ],
+        },
+      ],
       "prefer-const": ["warn", { destructuring: "all" }],
       "prefer-object-has-own": "error",
       "prefer-promise-reject-errors": "error",
