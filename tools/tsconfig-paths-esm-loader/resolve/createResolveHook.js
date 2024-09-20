@@ -19,17 +19,27 @@ if (resultType !== "success") throw new Error("Failed to load tsconfig.");
 const matchPath = tsConfigPaths.createMatchPath(absoluteBaseUrl, paths);
 
 /**
- * This function creates a [NodeJS `resolve` hook][docs] that wraps the
- * `resolve` function from `ts-node/esm`. It resolves specifiers using the
+ * @typedef {import('ts-node').NodeLoaderHooksAPI2.ResolveHook} ResolveHook
+ */
+
+/**
+ * This function creates a [NodeJS `resolve` hook][node-resolve-docs] that wraps
+ * the `resolve` function from `ts-node/esm`. It resolves specifiers using the
  * `matchPath` function from `tsconfig-paths` before passing them to `ts-node`.
  *
- * > ### `TS_NODE_PROJECT`
- * > If the `tsconfig` file is not in the CWD, set the `TS_NODE_PROJECT` env var
- * > to the relative path to the directory containing the `tsconfig` file.
+ * ## `tsconfig` File Location
  *
- * [docs]: https://nodejs.org/docs/latest-v20.x/api/module.html#resolvespecifier-context-nextresolve
+ * By default, the `tsconfig` file is expected to be in the current working
+ * directory. If the `tsconfig` file is in a different directory, you can set
+ * the **`TS_NODE_PROJECT`** environment variable to the relative path to the
+ * directory containing the `tsconfig` file.
+ *
+ * [node-resolve-docs]: https://nodejs.org/docs/latest-v20.x/api/module.html#resolvespecifier-context-nextresolve
+ *
+ * @param {ResolveHook} tsNodeEsmResolve The `resolve` function from `ts-node/esm`.
+ * @returns {ResolveHook} A custom `resolve` hook that resolves path aliases.
  */
-export const createResolveHook = (resolveTS) => {
+export const createResolveHook = (tsNodeEsmResolve) => {
   return function (specifier, ctx, defaultResolve) {
     // See if the specifier ends with .js
     const specifierHasJsExtension = specifier.endsWith(".js");
@@ -46,6 +56,6 @@ export const createResolveHook = (resolveTS) => {
       ? pathToFileURL(specifierHasJsExtension ? `${match}.js` : match).href
       : specifier;
 
-    return resolveTS(fileUrl, ctx, defaultResolve);
+    return tsNodeEsmResolve(fileUrl, ctx, defaultResolve);
   };
 };
