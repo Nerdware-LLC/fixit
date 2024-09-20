@@ -3,8 +3,7 @@
   "type": "module",
   "private": true,
   "exports": {
-    ".": "./src/index.js",
-    "./*": "./src/*",
+    "./responses": "./src/responses/index.js",
     "./types": "./src/types/index.js"
   }
 }
