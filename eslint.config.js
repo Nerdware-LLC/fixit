@@ -20,7 +20,7 @@ import tsEslint from "typescript-eslint";
  * [eslint-config-inspector]: https://github.com/eslint/config-inspector
  */
 export default tsEslint.config(
-  ////////////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////
   // GLOBAL CONFIGS
   {
     name: "global/ignores",
@@ -74,7 +74,7 @@ export default tsEslint.config(
       },
     },
   },
-  ////////////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////
   // ALL TS+JS FILES
   {
     name: "files:all/base",
@@ -162,7 +162,11 @@ export default tsEslint.config(
         "error",
         {
           allow: ["@fixit/api-schemas/GraphQL/types"],
-          depConstraints: [{ sourceTag: "*", onlyDependOnLibsWithTags: ["*"] }],
+          depConstraints: [
+            // TODO Update 1st dep constraint after tags are added to projects
+            // https://nx.dev/nx-api/eslint-plugin/documents/enforce-module-boundaries
+            { sourceTag: "*", onlyDependOnLibsWithTags: ["*"] },
+          ],
         },
       ],
 
@@ -308,7 +312,7 @@ export default tsEslint.config(
       "@stylistic/type-named-tuple-spacing": "off",
     },
   },
-  ////////////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////
   // ALL JS+JSX FILES
   {
     name: "files:all-js/disable-type-checked",
@@ -327,7 +331,7 @@ export default tsEslint.config(
       "jsdoc/tag-lines": "off", // Allow blank lines around jsdoc tags for readability
     },
   },
-  ////////////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////
   // ALL CommonJS FILES (requires explicit .cjs or .cts extension)
   {
     name: "files:all-commonjs/disable-esm-rules",
@@ -337,7 +341,7 @@ export default tsEslint.config(
       "@typescript-eslint/no-require-imports": "off",
     },
   },
-  ////////////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////
   // TS+JS CONFIG FILES
   {
     name: "files:config-files/allow-unpublished-imports",
@@ -352,7 +356,7 @@ export default tsEslint.config(
       "@nx/enforce-module-boundaries": "off",
     },
   },
-  ////////////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////
   // TS+JS NodeJS SCRIPTS
   {
     name: "files:nodejs-scripts/allow-script-utils",
@@ -363,7 +367,7 @@ export default tsEslint.config(
       "n/no-process-exit": "off",
     },
   },
-  ////////////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////
   // REACT FILES
   /* TODO add config object for tsx files
 
@@ -403,7 +407,7 @@ export default tsEslint.config(
 
   */
 
-  ////////////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////
   // TESTS AND MOCKS
   {
     name: "files:tests-and-mocks/base",
@@ -430,18 +434,20 @@ export default tsEslint.config(
       "@typescript-eslint/no-unsafe-member-access": "off",
     },
   },
-  ////////////////////////////////////////////////////////////////
-  // DISALLOW TEST IMPORTS IN NON-TEST FILES
+  ///////////////////////////////////////////////////////////////////
+  // BAN TEST/MOCK IMPORTS IN NON-TEST/MOCK FILES
   {
     name: "files:non-test-files/no-importing-from-tests-or-mocks",
     ignores: ["**/*.test.ts?(x)", "**/tests/**", "**/__mocks__/**"],
     rules: {
       "no-restricted-imports": [
-        "warn",
+        "error",
         {
           patterns: [
             {
-              group: ["**/tests/*"],
+              /* The dir-name patterns below don't end in / to catch both
+              "foo/__mocks__/bar.ts" AND "foo/__mocks__" (no ending slash) */
+              group: ["**/*.test.ts?(x)", "**/tests**", "**/__mocks__**"],
               message:
                 "Test-related exports like mocks should only be imported in test-related files. " +
                 "If this file is part of a test suite, please rename it to match the pattern *.test.*",
@@ -451,5 +457,5 @@ export default tsEslint.config(
       ],
     },
   }
-  ////////////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////
 );
