@@ -1,0 +1,14 @@
+{
+  "name": "tsconfig-paths-esm-loader",
+  "projectType": "library",
+  "sourceRoot": "tools/tsconfig-paths-esm-loader",
+  "tags": [],
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "options": {
+        "lintFilePatterns": ["tools/tsconfig-paths-esm-loader/**/*"]
+      }
+    }
+  }
+}
