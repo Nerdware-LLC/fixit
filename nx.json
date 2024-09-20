@@ -4,8 +4,6 @@
   "workspaceLayout": { "appsDir": "apps", "libsDir": "libs" },
 
   "plugins": [
-    "@nx/js",
-    "@nx/node",
     {
       "plugin": "@nx/eslint/plugin",
       "options": {
