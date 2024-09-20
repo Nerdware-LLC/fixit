@@ -75,11 +75,7 @@
     },
     "@nx/vite:test": {
       "cache": true,
-      "inputs": [
-        "default",
-        "^production",
-        "{workspaceRoot}/vitest.shared-configs.ts"
-      ],
+      "inputs": ["default", "^production"],
       "outputs": ["{projectRoot}/coverage"]
     },
     "build": {
