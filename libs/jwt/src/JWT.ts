@@ -1,11 +1,6 @@
-import {
-  sign as jwtSign,
-  verify as jwtVerify,
-  type JwtPayload,
-  type SignOptions,
-  type VerifyOptions,
-} from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 import { AuthError } from "@fixit/http-errors";
+import type { JwtPayload, SignOptions, VerifyOptions } from "jsonwebtoken";
 
 export type BaseJwtPayload = JwtPayload & {
   id?: string;
@@ -34,7 +29,7 @@ export class JWT {
     // If `subject` is not provided, try `payload.id`
     const subject = options?.subject ?? payload.id;
 
-    return jwtSign(payload, privateKey, {
+    return jwt.sign(payload, privateKey, {
       ...(subject && { subject }),
       ...options,
     });
@@ -65,7 +60,7 @@ export class JWT {
   ): Promise<Payload> => {
     // Get the raw decoded payload from the JWT
     let decodedPayload = await new Promise<Payload>((resolve, reject) => {
-      jwtVerify(token, privateKey, options, (err, decoded) => {
+      jwt.verify(token, privateKey, options, (err, decoded) => {
         if (err || !decoded) {
           const errName = err?.name ?? "default";
           const errMsg =
