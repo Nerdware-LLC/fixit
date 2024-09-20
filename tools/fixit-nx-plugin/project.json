@@ -1,6 +1,20 @@
 {
   "name": "fixit-nx-plugin",
   "projectType": "library",
+  "sourceRoot": "tools/fixit-nx-plugin",
   "tags": [],
-  "targets": {}
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "options": {
+        "lintFilePatterns": ["tools/fixit-nx-plugin/**/*"]
+      }
+    },
+    "typecheck": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "tools/fixit-nx-plugin"
+      }
+    }
+  }
 }
