@@ -17,7 +17,8 @@
         "testTargetName": "test",
         "previewTargetName": "vite-preview",
         "serveTargetName": "vite-serve",
-        "serveStaticTargetName": "vite-serve-static"
+        "serveStaticTargetName": "vite-serve-static",
+        "typecheckTargetName": "vite-typecheck"
       }
     }
   ],
