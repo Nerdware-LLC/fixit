@@ -1,6 +1,6 @@
 import { Model } from "@nerdware/ddb-single-table";
 import { isString } from "@nerdware/ts-type-safety-utils";
-import { isValidStripeID } from "@fixit/stripe-client/helpers.js";
+import { isValidStripeID } from "@fixit/stripe-client/helpers";
 import { INVOICE_ENUM_CONSTANTS } from "./enumConstants.js";
 import { invoiceModelHelpers, INVOICE_SK_PREFIX_STR } from "./helpers.js";
 import { userModelHelpers } from "../User/helpers.js";

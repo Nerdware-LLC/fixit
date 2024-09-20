@@ -3,6 +3,20 @@
   "private": true,
   "type": "module",
   "exports": {
-    "./*": "./src/*"
+    "./ddbTable": "./src/ddbTable.js",
+    "./tableKeysSchema": "./src/tableKeysSchema.js",
+    "./__mocks__": "./src/__mocks__/staticMockItems/index.js",
+    "./__mocks__/*": "./src/__mocks__/staticMockItems/*",
+    "./skTypeGuards": "./src/_common/skTypeGuards.js",
+    "./Contact": "./src/Contact/index.js",
+    "./Invoice": "./src/Invoice/index.js",
+    "./Location": "./src/Location/index.js",
+    "./PasswordResetToken": "./src/PasswordResetToken/index.js",
+    "./Profile": "./src/Profile/index.js",
+    "./User": "./src/User/index.js",
+    "./UserLogin": "./src/UserLogin/index.js",
+    "./UserStripeConnectAccount": "./src/UserStripeConnectAccount/index.js",
+    "./UserSubscription": "./src/UserSubscription/index.js",
+    "./WorkOrder": "./src/WorkOrder/index.js"
   }
 }

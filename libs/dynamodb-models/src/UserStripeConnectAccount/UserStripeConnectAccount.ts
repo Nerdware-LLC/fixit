@@ -1,4 +1,4 @@
-import { isValidStripeID } from "@fixit/stripe-client/helpers.js";
+import { isValidStripeID } from "@fixit/stripe-client/helpers";
 import { scaModelHelpers } from "./helpers.js";
 import { userModelHelpers } from "../User/helpers.js";
 import { COMMON_ATTRIBUTES } from "../_common/modelAttributes.js";

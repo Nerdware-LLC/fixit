@@ -1,7 +1,7 @@
 import { isValidEmail, isValidHandle, isValidName } from "@nerdware/ts-string-helpers";
 import { hasKey, isPlainObject } from "@nerdware/ts-type-safety-utils";
 import { Expo } from "expo-server-sdk";
-import { isValidStripeID } from "@fixit/stripe-client/helpers.js";
+import { isValidStripeID } from "@fixit/stripe-client/helpers";
 import { userModelHelpers } from "./helpers.js";
 import { isValidDisplayName, isValidProfilePhotoUrl } from "../Profile/helpers.js";
 import { COMMON_ATTRIBUTE_TYPES, COMMON_ATTRIBUTES } from "../_common/modelAttributes.js";

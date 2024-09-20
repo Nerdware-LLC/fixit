@@ -2,7 +2,7 @@ import { Model } from "@nerdware/ddb-single-table";
 import { hasKey } from "@nerdware/ts-type-safety-utils";
 import { pricesCache } from "@fixit/stripe-client/caches/pricesCache.js";
 import { productsCache } from "@fixit/stripe-client/caches/productsCache.js";
-import { isValidStripeID } from "@fixit/stripe-client/helpers.js";
+import { isValidStripeID } from "@fixit/stripe-client/helpers";
 import {
   SUBSCRIPTION_ENUMS,
   SUBSCRIPTION_PRICE_NAMES as PRICE_NAMES,
