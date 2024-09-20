@@ -26,9 +26,7 @@
   "namedInputs": {
     "sharedGlobals": [
       "{workspaceRoot}/package-lock.json",
-      {
-        "runtime": "node --version"
-      }
+      { "runtime": "node --version" }
     ],
     "default": ["{projectRoot}/**/*", "sharedGlobals"],
     "production": [
@@ -94,14 +92,8 @@
         "minify": true
       },
       "configurations": {
-        "staging": {
-          "declaration": true,
-          "sourcemap": true
-        },
-        "prod": {
-          "declaration": false,
-          "sourcemap": false
-        }
+        "staging": { "declaration": true, "sourcemap": true },
+        "prod": { "declaration": false, "sourcemap": false }
       },
       "defaultConfiguration": "prod"
     }
@@ -112,6 +104,7 @@
     "projectsRelationship": "independent",
     "releaseTagPattern": "{projectName}@{version}",
     "conventionalCommits": {
+      // prettier-ignore
       "types": {
         "feat": { "semverBump": "minor" },
         "fix": { "semverBump": "patch" },
