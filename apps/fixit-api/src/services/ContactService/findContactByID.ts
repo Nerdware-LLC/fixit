@@ -1,5 +1,5 @@
-import { Contact } from "@/models/Contact";
-import { UserInputError } from "@/utils/httpErrors.js";
+import { Contact } from "@fixit/dynamodb-models/Contact";
+import { UserInputError } from "@fixit/http-errors";
 
 /**
  * ### ContactService: findContactByID

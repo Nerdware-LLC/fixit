@@ -1,6 +1,6 @@
 import { ApiController } from "@/controllers/ApiController.js";
-import { AccountService } from "@/services/AccountService";
-import { AuthService } from "@/services/AuthService";
+import { AccountService } from "@/services/AccountService/index.js";
+import { AuthService } from "@/services/AuthService/index.js";
 
 /**
  * This controller returns a Stripe customer dashboard link for an authenticated user.

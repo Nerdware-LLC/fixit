@@ -1,7 +1,7 @@
 import { getTypeSafeError } from "@nerdware/ts-type-safety-utils";
-import { UserSubscription } from "@/models/UserSubscription";
-import { UserSubscriptionService } from "@/services/UserSubscriptionService";
-import { logger } from "@/utils/logger.js";
+import { UserSubscription } from "@fixit/dynamodb-models/UserSubscription";
+import { logger } from "@fixit/node-logger";
+import { UserSubscriptionService } from "@/services/UserSubscriptionService/index.js";
 import type Stripe from "stripe";
 
 /**

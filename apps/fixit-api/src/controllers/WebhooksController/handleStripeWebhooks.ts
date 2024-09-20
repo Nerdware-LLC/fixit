@@ -1,9 +1,9 @@
 import { getTypeSafeError, safeJsonStringify } from "@nerdware/ts-type-safety-utils";
 import express from "express";
-import { stripe } from "@/lib/stripe/stripeClient.js";
-import { ENV } from "@/server/env";
-import { logger } from "@/utils/logger.js";
-import { StripeWebhooksController } from "./StripeWebhooksController";
+import { logger } from "@fixit/node-logger";
+import { stripe } from "@fixit/stripe-client";
+import { ENV } from "@/server/env.js";
+import { StripeWebhooksController } from "./StripeWebhooksController/index.js";
 import type { RequestHandler } from "express";
 import type Stripe from "stripe";
 import type { GetDataObjectTypeForEvent } from "./types.js";
@@ -33,11 +33,11 @@ export const handleStripeWebhooks: [RequestHandler, RequestHandler<never, unknow
       event = stripe.webhooks.constructEvent(
         req.body,
         req.headers["stripe-signature"] as string | string[] | Buffer,
-        ENV.STRIPE.WEBHOOKS_SECRET
+        ENV.STRIPE_WEBHOOKS_SECRET
       ) as Stripe.DiscriminatedEvent;
     } catch (err: unknown) {
       const error = getTypeSafeError(err);
-      logger.stripe(error, "Webhook signature verification failed");
+      logger.error(error, "Webhook signature verification failed");
       res.status(400).send(`Webhook Error: ${error.message}`);
     }
 
@@ -53,7 +53,7 @@ export const handleStripeWebhooks: [RequestHandler, RequestHandler<never, unknow
     */
 
     // Log the webhook and its actionability
-    logger.webhook(
+    logger.debug(
       `Stripe webhook received: "${event.type}" ` +
         `(HANDLED: ${eventHandler !== undefined}, ACTIONABLE: ${!!eventHandler}) ` +
         `EVENT DATA: ${safeJsonStringify(event.data.object, null, 2)}`

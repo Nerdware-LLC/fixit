@@ -1,7 +1,7 @@
 import { ApiController } from "@/controllers/ApiController.js";
-import { returnUrlReqBodySchema } from "@/controllers/ConnectController/createAccountLink";
-import { AccountService } from "@/services/AccountService";
-import { AuthService } from "@/services/AuthService";
+import { returnUrlReqBodySchema } from "@/controllers/ConnectController/createAccountLink.js";
+import { AccountService } from "@/services/AccountService/index.js";
+import { AuthService } from "@/services/AuthService/index.js";
 
 /**
  * This controller returns a Stripe Customer Portal link, which allows the User to

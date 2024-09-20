@@ -8,15 +8,15 @@ import {
   isValidText,
 } from "@nerdware/ts-string-helpers";
 import { z as zod } from "zod";
+import { userModelHelpers } from "@fixit/dynamodb-models/User";
+import { WORK_ORDER_ENUM_CONSTANTS as WO_ENUMS } from "@fixit/dynamodb-models/WorkOrder";
 import {
   createChecklistItemZodSchema,
   updateChecklistItemZodSchema,
 } from "@/graphql/Checklist/helpers.js";
 import { locationInputZodSchema } from "@/graphql/Location/helpers.js";
-import { userModelHelpers } from "@/models/User/helpers.js";
-import { WORK_ORDER_ENUM_CONSTANTS as WO_ENUMS } from "@/models/WorkOrder/enumConstants.js";
-import type { CreateWorkOrderInput, UpdateWorkOrderInput } from "@/types/graphql.js";
 import type { ZodObjectWithShape } from "@/types/zod.js";
+import type { CreateWorkOrderInput, UpdateWorkOrderInput } from "@fixit/api-schemas/GraphQL/types";
 
 /**
  * Zod schema for {@link CreateWorkOrderInput} objects.

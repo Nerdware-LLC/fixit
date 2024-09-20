@@ -1,7 +1,7 @@
-import { User } from "@fixit/dynamodb-models/User/index.js";
+import { User } from "@fixit/dynamodb-models/User";
 import { WorkOrderPushNotification } from "@/events/pushNotifications/WorkOrderPushNotification.js";
 import { lambdaClient } from "@/lib/lambdaClient/lambdaClient.js";
-import type { WorkOrderItem } from "@fixit/dynamodb-models/WorkOrder/index.js";
+import type { WorkOrderItem } from "@fixit/dynamodb-models/WorkOrder";
 
 /**
  * Notify assignee of cancelled WorkOrder when `WorkOrderCancelled` event is emitted.

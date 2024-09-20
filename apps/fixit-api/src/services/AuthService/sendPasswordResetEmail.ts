@@ -1,8 +1,8 @@
-import { pinpointClient } from "@/lib/pinpointClient";
-import { PasswordResetToken } from "@/models/PasswordResetToken";
-import { User, type UserItem } from "@/models/User";
-import { ENV } from "@/server/env";
-import { AuthError } from "@/utils/httpErrors.js";
+import { PasswordResetToken } from "@fixit/dynamodb-models/PasswordResetToken";
+import { User, type UserItem } from "@fixit/dynamodb-models/User";
+import { AuthError } from "@fixit/http-errors";
+import { pinpointClient } from "@/lib/pinpointClient/index.js";
+import { ENV } from "@/server/env.js";
 
 /**
  * ### AuthService: sendPasswordResetEmail
@@ -34,7 +34,7 @@ export const sendPasswordResetEmail = async ({ email }: Pick<UserItem, "email">)
         EmailMessage: {
           Substitutions: {
             passwordResetHREF: [
-              `${ENV.WEB_CLIENT.URL}/reset-password?token=${passwordResetToken}`, // prettier-ignore
+              `${ENV.WEB_CLIENT_URL}/reset-password?token=${passwordResetToken}`, // prettier-ignore
             ],
           },
         },

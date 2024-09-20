@@ -7,12 +7,12 @@ import {
   type Template,
 } from "@aws-sdk/client-pinpoint";
 import { getErrorMessage } from "@nerdware/ts-type-safety-utils";
-import { ENV } from "@/server/env";
-import { logger } from "@/utils/logger.js";
+import { logger } from "@fixit/node-logger";
+import { ENV } from "@/server/env.js";
 import { fmtMessageAddresses, type PinpointMessageTo } from "./helpers.js";
 import type { OverrideProperties } from "type-fest";
 
-const _pinpointClient = new PinpointClient({ region: ENV.AWS.REGION });
+const _pinpointClient = new PinpointClient({ region: ENV.AWS_REGION });
 
 /**
  * App-specific Pinpoint templates.
@@ -96,9 +96,9 @@ export const pinpointClient = {
     return await _pinpointClient
       .send(
         new SendMessagesCommand({
-          ApplicationId: ENV.AWS.PINPOINT_PROJECT_ID,
+          ApplicationId: ENV.PINPOINT_PROJECT_ID,
           MessageRequest: {
-            ...(!!to && !!ChannelType && { Addresses: fmtMessageAddresses({ to, ChannelType }) }),
+            ...(to && ChannelType && { Addresses: fmtMessageAddresses({ to, ChannelType }) }),
             ...messageRequest,
           } as MessageRequest,
         })

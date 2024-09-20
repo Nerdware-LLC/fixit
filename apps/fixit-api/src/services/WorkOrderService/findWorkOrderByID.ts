@@ -1,5 +1,5 @@
-import { WorkOrder } from "@/models/WorkOrder";
-import { UserInputError } from "@/utils/httpErrors.js";
+import { WorkOrder } from "@fixit/dynamodb-models/WorkOrder";
+import { UserInputError } from "@fixit/http-errors";
 
 /**
  * ### WorkOrderService: findWorkOrderByID

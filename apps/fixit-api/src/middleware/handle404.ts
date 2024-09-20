@@ -1,5 +1,5 @@
-import { NotFoundError } from "@/utils/httpErrors.js";
-import { logger } from "@/utils/logger.js";
+import { NotFoundError } from "@fixit/http-errors";
+import { logger } from "@fixit/node-logger";
 import type { RequestHandler } from "express";
 
 /**

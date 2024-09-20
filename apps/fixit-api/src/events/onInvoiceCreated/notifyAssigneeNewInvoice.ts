@@ -1,7 +1,7 @@
-import { User } from "@fixit/dynamodb-models/User/index.js";
+import { User } from "@fixit/dynamodb-models/User";
 import { InvoicePushNotification } from "@/events/pushNotifications/InvoicePushNotification.js";
 import { lambdaClient } from "@/lib/lambdaClient/lambdaClient.js";
-import type { InvoiceItem } from "@fixit/dynamodb-models/Invoice/index.js";
+import type { InvoiceItem } from "@fixit/dynamodb-models/Invoice";
 
 /**
  * Notify assignee of new Invoice when `NewInvoice` event is emitted.

@@ -1,16 +1,16 @@
-import { eventEmitter } from "@/events/eventEmitter.js";
-import { usersCache } from "@/lib/cache/usersCache.js";
-import { stripe } from "@/lib/stripe/stripeClient.js";
-import { Profile, type CreateProfileParams } from "@/models/Profile";
-import { User, type UserItem, type UserCreateItemParams } from "@/models/User";
-import { UserLogin, type LoginParams } from "@/models/UserLogin";
+import { Profile, type CreateProfileParams } from "@fixit/dynamodb-models/Profile";
+import { User, type UserItem, type UserCreateItemParams } from "@fixit/dynamodb-models/User";
+import { UserLogin, type LoginParams } from "@fixit/dynamodb-models/UserLogin";
 import {
   UserStripeConnectAccount,
   type UserStripeConnectAccountItem,
-} from "@/models/UserStripeConnectAccount";
-import { UserSCAService } from "@/services/UserSCAService";
-import { UserInputError } from "@/utils/httpErrors.js";
-import { logger } from "@/utils/logger.js";
+} from "@fixit/dynamodb-models/UserStripeConnectAccount";
+import { UserInputError } from "@fixit/http-errors";
+import { logger } from "@fixit/node-logger";
+import { stripe } from "@fixit/stripe-client";
+import { eventEmitter } from "@/events/eventEmitter.js";
+import { usersCache } from "@/lib/cache/usersCache.js";
+import { UserSCAService } from "@/services/UserSCAService/index.js";
 import type { UndefinedOnPartialDeep } from "type-fest";
 
 export type RegisterNewUserParams = UndefinedOnPartialDeep<
@@ -53,7 +53,7 @@ export const registerNewUser = async ({
   const { id: stripeCustomerID } = await stripe.customers.create({
     email,
     ...(phone && { phone }),
-    ...(!!newUserProfile.displayName && { name: newUserProfile.displayName }),
+    ...(newUserProfile.displayName && { name: newUserProfile.displayName }),
   });
 
   // Vars to hold the db items created in the try block:

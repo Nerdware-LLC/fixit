@@ -1,6 +1,9 @@
 import { getTypeSafeError } from "@nerdware/ts-type-safety-utils";
-import { UserStripeConnectAccount, SCA_SK_PREFIX_STR } from "@/models/UserStripeConnectAccount";
-import { logger } from "@/utils/logger.js";
+import {
+  UserStripeConnectAccount,
+  SCA_SK_PREFIX_STR,
+} from "@fixit/dynamodb-models/UserStripeConnectAccount";
+import { logger } from "@fixit/node-logger";
 import type Stripe from "stripe";
 
 /**

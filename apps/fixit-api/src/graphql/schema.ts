@@ -1,6 +1,6 @@
 import { makeExecutableSchema } from "@graphql-tools/schema";
+import { typeDefs } from "@fixit/api-schemas/GraphQL/typeDefs";
 import { resolvers } from "./resolvers.js";
-import { typeDefs } from "./typeDefs.js";
 
 /**
  * Fixit API GraphQL Schema

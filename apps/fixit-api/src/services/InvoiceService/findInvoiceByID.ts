@@ -1,5 +1,5 @@
-import { Invoice } from "@/models/Invoice";
-import { UserInputError } from "@/utils/httpErrors.js";
+import { Invoice } from "@fixit/dynamodb-models/Invoice";
+import { UserInputError } from "@fixit/http-errors";
 
 /**
  * ### InvoiceService: findInvoiceByID

@@ -1,4 +1,4 @@
-import { Cache } from "@/lib/cache/Cache.js";
+import { Cache } from "@fixit/node-cache";
 import type { UsersCacheObject } from "@/lib/cache/usersCache.js";
 
 /**

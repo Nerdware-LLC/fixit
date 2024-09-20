@@ -1,8 +1,8 @@
 import { sanitizeAlphabetic, isValidAlphabetic } from "@nerdware/ts-string-helpers";
 import { z as zod } from "zod";
 import { ApiController } from "@/controllers/ApiController.js";
-import { AuthService } from "@/services/AuthService";
-import { CheckoutService } from "@/services/CheckoutService";
+import { AuthService } from "@/services/AuthService/index.js";
+import { CheckoutService } from "@/services/CheckoutService/index.js";
 
 /**
  * This controller returns a Stripe Customer Portal link, which allows the User to

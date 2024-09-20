@@ -1,7 +1,7 @@
-import { MOCK_USERS, MOCK_USER_SCAs } from "@/tests/staticMockItems";
+import { MOCK_USERS, MOCK_USER_SCAs } from "@fixit/dynamodb-models/__mocks__";
 import { verifyUserIsAuthorizedToAccessPaidContent } from "./verifyUserIsAuthorizedToAccessPaidContent.js";
-import type { UserSubscription } from "@/types/graphql.js";
-import type { AuthTokenPayload } from "@/types/open-api.js";
+import type { UserSubscription } from "@fixit/api-schemas/GraphQL/types";
+import type { AuthTokenPayload } from "@fixit/api-schemas/OpenAPI/types";
 
 describe("verifyUserIsAuthorizedToAccessPaidContent()", () => {
   const YEAR_2000 = new Date(2000, 0);

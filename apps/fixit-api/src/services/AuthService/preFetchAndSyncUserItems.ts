@@ -1,10 +1,10 @@
-import { User, type UserItem } from "@/models/User";
-import { UserSCAService } from "@/services/UserSCAService";
-import { UserService } from "@/services/UserService";
-import { UserSubscriptionService } from "@/services/UserSubscriptionService";
-import type { UserStripeConnectAccountItem } from "@/models/UserStripeConnectAccount";
-import type { UserSubscriptionItem } from "@/models/UserSubscription";
-import type { PreFetchedUserItems } from "@/types/open-api.js";
+import { User, type UserItem } from "@fixit/dynamodb-models/User";
+import { UserSCAService } from "@/services/UserSCAService/index.js";
+import { UserService } from "@/services/UserService/index.js";
+import { UserSubscriptionService } from "@/services/UserSubscriptionService/index.js";
+import type { PreFetchedUserItems } from "@fixit/api-schemas/OpenAPI/types";
+import type { UserStripeConnectAccountItem } from "@fixit/dynamodb-models/UserStripeConnectAccount";
+import type { UserSubscriptionItem } from "@fixit/dynamodb-models/UserSubscription";
 
 /**
  * ### AuthService: preFetchAndSyncUserItems

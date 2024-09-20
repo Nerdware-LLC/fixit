@@ -1,4 +1,7 @@
-import { UserSubscription, type UserSubscriptionItem } from "@/models/UserSubscription";
+import {
+  UserSubscription,
+  type UserSubscriptionItem,
+} from "@fixit/dynamodb-models/UserSubscription";
 
 /**
  * Although unlikely, it is possible for users to have multiple subs.

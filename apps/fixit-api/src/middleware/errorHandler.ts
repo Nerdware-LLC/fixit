@@ -1,8 +1,8 @@
 import { getTypeSafeError } from "@nerdware/ts-type-safety-utils";
-import { ENV } from "@/server/env";
-import { logger } from "@/utils/logger.js";
-import type { CombineUnionOfObjects } from "@/types/helpers.js";
-import type { HttpError } from "@/utils/httpErrors.js";
+import { logger } from "@fixit/node-logger";
+import { ENV } from "@/server/env.js";
+import type { BaseHttpError as HttpError } from "@fixit/http-errors";
+import type { CombineUnionOfObjects } from "@fixit/ts-generic-util-types/CombineUnionOfObjects.js";
 import type { ErrorRequestHandler } from "express";
 
 const DEFAULT_ERROR_MESSAGE = "An unexpected problem occurred";

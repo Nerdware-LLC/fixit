@@ -1,12 +1,7 @@
 import { isString, isPlainObject } from "@nerdware/ts-type-safety-utils";
 import request from "supertest";
-import { httpServer, type HttpServerWithCustomStart } from "@/httpServer.js";
-import { usersCache } from "@/lib/cache/usersCache.js";
-import { stripe } from "@/lib/stripe/stripeClient.js";
-import { User, userModelHelpers } from "@/models/User";
-import { ddbTable } from "@/models/ddbTable.js";
-import { AuthService } from "@/services/AuthService";
-import { AuthToken } from "@/services/AuthService/AuthToken.js";
+import { passwordHasher } from "@fixit/auth/passwordHasher.js";
+import { User, userModelHelpers } from "@fixit/dynamodb-models/User";
 import {
   MOCK_USERS,
   MOCK_CONTACTS,
@@ -20,9 +15,16 @@ import {
   UNALIASED_MOCK_WORK_ORDERS,
   UNALIASED_MOCK_INVOICES,
   MOCK_USER_SCAs,
-} from "@/tests/staticMockItems";
-import { JWT } from "@/utils/jwt.js";
-import { passwordHasher } from "@/utils/passwordHasher.js";
+} from "@fixit/dynamodb-models/__mocks__";
+import { ddbTable } from "@fixit/dynamodb-models/ddbTable";
+import { JWT } from "@fixit/jwt";
+import { stripe } from "@fixit/stripe-client";
+import { mockStripeSubscription, mockStripeApiLastResponse } from "@fixit/stripe-client/__mocks__";
+import { httpServer, type HttpServerWithCustomStart } from "@/httpServer.js";
+import { usersCache } from "@/lib/cache/usersCache.js";
+import { ENV } from "@/server/env.js";
+import { AuthToken } from "@/services/AuthService/AuthToken.js";
+import { AuthService } from "@/services/AuthService/index.js";
 
 vi.mock("@/apolloServer.js");
 

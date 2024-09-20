@@ -1,5 +1,8 @@
-import { stripe } from "@/lib/stripe/stripeClient.js";
-import { UserSubscription, type UserSubscriptionItem } from "@/models/UserSubscription";
+import {
+  UserSubscription,
+  type UserSubscriptionItem,
+} from "@fixit/dynamodb-models/UserSubscription";
+import { stripe } from "@fixit/stripe-client";
 import { normalizeStripeFields } from "./normalizeStripeFields.js";
 
 /**

@@ -1,8 +1,8 @@
-import { stripe } from "@/lib/stripe/stripeClient.js";
 import {
   UserStripeConnectAccount,
   type UserStripeConnectAccountItem,
-} from "@/models/UserStripeConnectAccount";
+} from "@fixit/dynamodb-models/UserStripeConnectAccount";
+import { stripe } from "@fixit/stripe-client";
 
 /**
  * Fetches up-to-date Stripe Connect Account data from Stripe and updates the DB if necessary.

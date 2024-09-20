@@ -1,11 +1,11 @@
 import cors, { type CorsOptions } from "cors";
-import { ENV } from "@/server/env";
+import { ENV } from "@/server/env.js";
 
 const corsOptions: CorsOptions = {
   credentials: true,
 
   origin: [
-    ENV.WEB_CLIENT.URL,
+    ENV.WEB_CLIENT_URL,
     "https://studio.apollographql.com", // Apollo Studio origin for introspection
   ],
 

@@ -1,9 +1,9 @@
-import { stripe } from "@/lib/stripe/stripeClient.js";
 import {
   UserStripeConnectAccount,
   type UserStripeConnectAccountCreateItemParams as UserSCACreateItemParams,
-} from "@/models/UserStripeConnectAccount";
-import type { UserItem } from "@/models/User";
+} from "@fixit/dynamodb-models/UserStripeConnectAccount";
+import { stripe } from "@fixit/stripe-client";
+import type { UserItem } from "@fixit/dynamodb-models/User";
 import type { Simplify } from "type-fest";
 
 /**

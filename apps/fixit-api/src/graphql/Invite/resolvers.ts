@@ -1,8 +1,8 @@
 import { sanitizeEmail, isValidPhone, isValidEmail } from "@nerdware/ts-string-helpers";
-import { MutationResponse } from "@/graphql/_responses";
-import { pinpointClient } from "@/lib/pinpointClient";
-import { UserInputError } from "@/utils/httpErrors.js";
-import type { Resolvers } from "@/types/graphql.js";
+import { MutationResponse } from "@fixit/apollo-graphql/responses";
+import { UserInputError } from "@fixit/http-errors";
+import { pinpointClient } from "@/lib/pinpointClient/index.js";
+import type { Resolvers } from "@fixit/api-schemas/GraphQL/types";
 
 export const resolvers: Resolvers = {
   Mutation: {
@@ -16,7 +16,7 @@ export const resolvers: Resolvers = {
       } = user;
 
       const inviteSenderDisplayName =
-        givenName && familyName ? `${givenName} ${familyName}` : givenName ?? displayName;
+        givenName && familyName ? `${givenName} ${familyName}` : (givenName ?? displayName);
 
       // SEE IF THE ARG IS A PHONE NUMBER OR EMAIL ADDRESS
       if (isValidPhone(phoneOrEmail)) {

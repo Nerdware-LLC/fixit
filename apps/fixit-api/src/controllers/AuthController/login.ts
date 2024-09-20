@@ -9,7 +9,7 @@ import {
 import { hasKey } from "@nerdware/ts-type-safety-utils";
 import { z as zod } from "zod";
 import { ApiController } from "@/controllers/ApiController.js";
-import { AuthService } from "@/services/AuthService";
+import { AuthService } from "@/services/AuthService/index.js";
 import type { ParsedGoogleOAuth2IDTokenFields } from "@/services/AuthService/GoogleOAuth2IDToken.js";
 
 /**

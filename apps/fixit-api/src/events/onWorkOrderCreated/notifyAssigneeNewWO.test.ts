@@ -1,8 +1,8 @@
-import { User, type UserItem } from "@fixit/dynamodb-models/User/index.js";
+import { User, type UserItem } from "@fixit/dynamodb-models/User";
 import { WorkOrderPushNotification } from "@/events/pushNotifications/index.js";
 import { lambdaClient } from "@/lib/lambdaClient/index.js";
 import { notifyAssigneeNewWO } from "./notifyAssigneeNewWO.js";
-import type { WorkOrderItem } from "@fixit/dynamodb-models/WorkOrder/index.js";
+import type { WorkOrderItem } from "@fixit/dynamodb-models/WorkOrder";
 
 describe("notifyAssigneeNewWO", () => {
   test("sends a push notification to the assignee when the assignee has an expoPushToken", async () => {

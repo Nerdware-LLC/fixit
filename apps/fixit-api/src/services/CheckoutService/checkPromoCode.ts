@@ -1,5 +1,5 @@
-import { promoCodesCache } from "@/lib/cache/promoCodesCache.js";
-import type { PromoCodeInfo } from "@/types/open-api.js";
+import { promoCodesCache } from "@fixit/stripe-client/caches/promoCodesCache.js";
+import type { PromoCodeInfo } from "@fixit/api-schemas/OpenAPI/types";
 
 /**
  * This checks the provided `promoCode`s validity and discount percentage (if valid/applicable).
@@ -14,6 +14,6 @@ export const checkPromoCode = ({
   return {
     value: promoCodeValueToCheck,
     isValidPromoCode: !!maybeDiscountPercentage,
-    ...(!!maybeDiscountPercentage && { discountPercentage: maybeDiscountPercentage }),
+    ...(maybeDiscountPercentage && { discountPercentage: maybeDiscountPercentage }),
   };
 };

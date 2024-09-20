@@ -1,18 +1,21 @@
 import { safeJsonStringify } from "@nerdware/ts-type-safety-utils";
+import { Contact, type ContactItem } from "@fixit/dynamodb-models/Contact";
+import { Invoice, type InvoiceItem } from "@fixit/dynamodb-models/Invoice";
+import { USER_SK_PREFIX_STR } from "@fixit/dynamodb-models/User";
+import { UserStripeConnectAccount as UserSCA } from "@fixit/dynamodb-models/UserStripeConnectAccount";
+import {
+  UserSubscription,
+  type UserSubscriptionItem,
+} from "@fixit/dynamodb-models/UserSubscription";
+import { WorkOrder, type WorkOrderItem } from "@fixit/dynamodb-models/WorkOrder";
+import { ddbTable } from "@fixit/dynamodb-models/ddbTable";
+import { skTypeGuards } from "@fixit/dynamodb-models/skTypeGuards";
+import { AuthError, InternalServerError } from "@fixit/http-errors";
+import { logger } from "@fixit/node-logger";
 import { usersCache } from "@/lib/cache/usersCache.js";
-import { Contact, type ContactItem } from "@/models/Contact";
-import { Invoice, type InvoiceItem } from "@/models/Invoice";
-import { USER_SK_PREFIX_STR } from "@/models/User";
-import { UserStripeConnectAccount as UserSCA } from "@/models/UserStripeConnectAccount";
-import { UserSubscription, type UserSubscriptionItem } from "@/models/UserSubscription";
-import { WorkOrder, type WorkOrderItem } from "@/models/WorkOrder";
-import { skTypeGuards } from "@/models/_common/skTypeGuards.js";
-import { ddbTable } from "@/models/ddbTable.js";
-import { AuthError, InternalServerError } from "@/utils/httpErrors.js";
-import { logger } from "@/utils/logger.js";
-import type { UserItem } from "@/models/User";
-import type { UserStripeConnectAccountItem } from "@/models/UserStripeConnectAccount";
-import type { PreFetchedUserItems } from "@/types/open-api.js";
+import type { PreFetchedUserItems } from "@fixit/api-schemas/OpenAPI/types";
+import type { UserItem } from "@fixit/dynamodb-models/User";
+import type { UserStripeConnectAccountItem } from "@fixit/dynamodb-models/UserStripeConnectAccount";
 
 /**
  * ### UserService: queryUserItems

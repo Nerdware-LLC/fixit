@@ -8,15 +8,15 @@ import {
   logReqReceived,
   handle404,
   errorHandler,
-} from "@/middleware";
+} from "@/middleware/index.js";
 import {
   adminRouter,
   authRouter,
   connectRouter,
   subscriptionsRouter,
   webhooksRouter,
-} from "@/routes";
-import { ENV } from "@/server/env";
+} from "@/routes/index.js";
+import { ENV } from "@/server/env.js";
 
 /**
  * The express app for API REST requests as well as the GraphQL entry point.

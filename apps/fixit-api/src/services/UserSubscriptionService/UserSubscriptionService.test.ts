@@ -1,5 +1,7 @@
-import { subModelHelpers } from "@/models/UserSubscription/helpers.js";
-import { MOCK_USERS, MOCK_USER_SUBS } from "@/tests/staticMockItems";
+import { subModelHelpers } from "@fixit/dynamodb-models/UserSubscription";
+import { MOCK_USERS, MOCK_USER_SUBS } from "@fixit/dynamodb-models/__mocks__";
+import { stripe } from "@fixit/stripe-client";
+import { mockStripeSubscription } from "@fixit/stripe-client/__mocks__/mockStripeSubscription.js";
 import { UserSubscriptionService } from "./index.js";
 
 describe("UserSubscriptionService", () => {
@@ -18,6 +20,12 @@ describe("UserSubscriptionService", () => {
               ? MOCK_USERS.USER_B
               : MOCK_USERS.USER_C;
 
+        // Stub stripe.subscriptions.create response in UserSubscriptionService.createSubscription
+        vi.spyOn(stripe.subscriptions, "create").mockResolvedValueOnce({
+          ...mockStripeSubscription,
+          id: mockSub.id,
+        } as any);
+
         // Act on the createSubscription method:
         const { userSubscription, stripeSubscriptionObject } =
           await UserSubscriptionService.createSubscription({
@@ -29,7 +37,7 @@ describe("UserSubscriptionService", () => {
         // Assert the results
         expect(userSubscription).toStrictEqual({
           ...mockSub,
-          sk: expect.toSatisfyFn((value: string) => subModelHelpers.sk.isValid(value)),
+          sk: expect.toSatisfyFn((value) => subModelHelpers.sk.isValid(value)),
           createdAt: expect.any(Date),
           updatedAt: expect.any(Date),
         });

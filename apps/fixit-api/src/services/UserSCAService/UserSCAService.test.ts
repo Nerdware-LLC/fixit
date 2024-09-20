@@ -1,7 +1,7 @@
-import { isValidStripeID } from "@/lib/stripe/helpers.js";
-import { userModelHelpers } from "@/models/User/helpers.js";
-import { scaModelHelpers } from "@/models/UserStripeConnectAccount/helpers.js";
-import { MOCK_USER_SCAs, MOCK_USERS } from "@/tests/staticMockItems";
+import { userModelHelpers } from "@fixit/dynamodb-models/User";
+import { scaModelHelpers } from "@fixit/dynamodb-models/UserStripeConnectAccount";
+import { MOCK_USER_SCAs, MOCK_USERS } from "@fixit/dynamodb-models/__mocks__";
+import { isValidStripeID } from "@fixit/stripe-client/helpers";
 import { UserSCAService } from "./index.js";
 
 describe("UserSCAService", () => {

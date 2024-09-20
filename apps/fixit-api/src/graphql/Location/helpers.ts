@@ -1,8 +1,8 @@
 import { sanitizeName, isValidName } from "@nerdware/ts-string-helpers";
 import { z as zod } from "zod";
-import { sanitizeStreetAddress, isValidStreetAddress } from "@/models/Location/helpers.js";
-import type { CreateLocationInput } from "@/types/graphql.js";
+import { sanitizeStreetAddress, isValidStreetAddress } from "@fixit/dynamodb-models/Location";
 import type { ZodObjectWithShape } from "@/types/zod.js";
+import type { CreateLocationInput } from "@fixit/api-schemas/GraphQL/types";
 
 /**
  * Zod schema for {@link CreateLocationInput} objects.

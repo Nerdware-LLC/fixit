@@ -1,8 +1,8 @@
-import { USER_ID_PREFIX_STR } from "@/models/User/helpers.js";
-import { ddbTable } from "@/models/ddbTable.js";
-import { Cache } from "./Cache.js";
-import type { UnaliasedUserItem } from "@/models/User";
-import type { User, Contact } from "@/types/graphql.js";
+import { USER_ID_PREFIX_STR } from "@fixit/dynamodb-models/User";
+import { ddbTable } from "@fixit/dynamodb-models/ddbTable";
+import { Cache } from "@fixit/node-cache";
+import type { User, Contact } from "@fixit/api-schemas/GraphQL/types";
+import type { UnaliasedUserItem } from "@fixit/dynamodb-models/User";
 import type { Simplify } from "type-fest";
 
 export type UsersCacheObject = Simplify<Pick<User, keyof Contact>>;

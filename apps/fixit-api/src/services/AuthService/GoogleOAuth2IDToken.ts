@@ -9,9 +9,9 @@ import {
   isValidName,
 } from "@nerdware/ts-string-helpers";
 import { getTypeSafeError } from "@nerdware/ts-type-safety-utils";
-import { googleOAuth2Client } from "@/lib/googleOAuth2Client";
-import { AuthError } from "@/utils/httpErrors.js";
-import type { UserItem } from "@/models/User";
+import { AuthError } from "@fixit/http-errors";
+import { googleOAuth2Client } from "@/lib/googleOAuth2Client/index.js";
+import type { UserItem } from "@fixit/dynamodb-models/User";
 import type { TokenPayload as GoogleOAuth2IDTokenPayload } from "google-auth-library";
 import type { Simplify } from "type-fest";
 

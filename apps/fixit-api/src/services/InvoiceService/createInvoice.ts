@@ -1,6 +1,6 @@
+import { Invoice } from "@fixit/dynamodb-models/Invoice";
 import { eventEmitter } from "@/events/eventEmitter.js";
-import { Invoice } from "@/models/Invoice";
-import type { InvoiceInput } from "@/types/graphql.js";
+import type { InvoiceInput } from "@fixit/api-schemas/GraphQL/types";
 
 /**
  * ### InvoiceService - createInvoice
@@ -11,7 +11,7 @@ export const createInvoice = async (invInput: { createdByUserID: string } & Invo
     assignedToUserID: invInput.assignedTo,
     amount: invInput.amount,
     status: "OPEN",
-    ...(!!invInput.workOrderID && {
+    ...(invInput.workOrderID && {
       workOrderID: invInput.workOrderID,
     }),
   });

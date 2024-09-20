@@ -1,5 +1,5 @@
 import express from "express";
-import { ConnectController } from "@/controllers/ConnectController";
+import { ConnectController } from "@/controllers/ConnectController/index.js";
 
 export const connectRouter = express.Router();
 

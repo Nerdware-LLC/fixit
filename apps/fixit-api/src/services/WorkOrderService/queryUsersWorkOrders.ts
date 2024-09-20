@@ -1,5 +1,5 @@
-import { WorkOrder } from "@/models/WorkOrder";
-import type { AuthTokenPayload } from "@/types/open-api.js";
+import { WorkOrder } from "@fixit/dynamodb-models/WorkOrder";
+import type { AuthTokenPayload } from "@fixit/api-schemas/OpenAPI/types";
 
 /**
  * ### WorkOrderService: queryUsersWorkOrders

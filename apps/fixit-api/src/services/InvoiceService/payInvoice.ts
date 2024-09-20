@@ -1,9 +1,9 @@
+import { Invoice } from "@fixit/dynamodb-models/Invoice";
+import { UserInputError, ForbiddenError } from "@fixit/http-errors";
+import { stripe } from "@fixit/stripe-client";
 import { eventEmitter } from "@/events/eventEmitter.js";
-import { stripe } from "@/lib/stripe/stripeClient.js";
-import { Invoice } from "@/models/Invoice";
-import { AuthService } from "@/services/AuthService";
-import { UserInputError, ForbiddenError } from "@/utils/httpErrors.js";
-import type { AuthTokenPayload } from "@/types/open-api.js";
+import { AuthService } from "@/services/AuthService/index.js";
+import type { AuthTokenPayload } from "@fixit/api-schemas/OpenAPI/types";
 
 /**
  * ### InvoiceService - payInvoice

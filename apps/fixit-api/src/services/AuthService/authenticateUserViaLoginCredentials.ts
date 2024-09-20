@@ -1,7 +1,7 @@
-import { User, type UserItem } from "@/models/User";
-import { AuthError, InternalServerError } from "@/utils/httpErrors.js";
-import { passwordHasher } from "@/utils/passwordHasher.js";
-import type { LoginParams } from "@/models/UserLogin";
+import { passwordHasher } from "@fixit/auth/passwordHasher.js";
+import { User, type UserItem } from "@fixit/dynamodb-models/User";
+import { AuthError, InternalServerError } from "@fixit/http-errors";
+import type { LoginParams } from "@fixit/dynamodb-models/UserLogin";
 
 /**
  * ### AuthService: authenticateUserViaLoginCredentials

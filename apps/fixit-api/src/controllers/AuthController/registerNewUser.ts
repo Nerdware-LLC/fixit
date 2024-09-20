@@ -7,8 +7,8 @@ import {
 import { hasKey } from "@nerdware/ts-type-safety-utils";
 import { z as zod } from "zod";
 import { ApiController } from "@/controllers/ApiController.js";
-import { AuthService } from "@/services/AuthService";
-import { UserService } from "@/services/UserService";
+import { AuthService } from "@/services/AuthService/index.js";
+import { UserService } from "@/services/UserService/index.js";
 import { loginReqBodyZodSchema } from "./login.js";
 import type { ParsedGoogleOAuth2IDTokenFields } from "@/services/AuthService/GoogleOAuth2IDToken.js";
 

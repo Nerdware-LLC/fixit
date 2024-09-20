@@ -1,5 +1,5 @@
-import { stripe } from "@/lib/stripe/stripeClient.js";
-import type { AuthTokenPayload } from "@/types/open-api.js";
+import { stripe } from "@fixit/stripe-client";
+import type { AuthTokenPayload } from "@fixit/api-schemas/OpenAPI/types";
 
 /**
  * ### AccountService: createCustomerBillingPortalLink

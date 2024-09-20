@@ -18,8 +18,8 @@ export const logReqReceived: RequestHandler<
 > = (req, res, next) => {
   if (req.originalUrl === "/api") {
     // Only log GQL /api requests if req.body.operationName exists
-    if (isString(req.body?.operationName))
-      logger.gql(getReqLogMsg(req, `OPERATION ${req.body.operationName}`));
+    const { operationName } = req.body ?? {};
+    if (isString(operationName)) logger.server(getReqLogMsg(req, `OPERATION ${operationName}`));
   } else if (req.originalUrl !== "/api/admin/healthcheck") {
     logger.server(getReqLogMsg(req, `PATH ${req.originalUrl}`));
   }

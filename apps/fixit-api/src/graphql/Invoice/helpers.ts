@@ -1,9 +1,9 @@
 import { isString } from "@nerdware/ts-type-safety-utils";
 import { z as zod } from "zod";
-import { userModelHelpers } from "@/models/User/helpers.js";
-import { workOrderModelHelpers as woModelHelpers } from "@/models/WorkOrder/helpers.js";
-import type { InvoiceInput } from "@/types/graphql.js";
+import { userModelHelpers } from "@fixit/dynamodb-models/User";
+import { workOrderModelHelpers as woModelHelpers } from "@fixit/dynamodb-models/WorkOrder";
 import type { ZodObjectWithShape } from "@/types/zod.js";
+import type { InvoiceInput } from "@fixit/api-schemas/GraphQL/types";
 import type { UndefinedOnPartialDeep } from "type-fest";
 
 /**

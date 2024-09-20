@@ -1,5 +1,5 @@
 import { pinpointClient } from "@/lib/pinpointClient/index.js";
-import type { UserItem } from "@fixit/dynamodb-models/User/index.js";
+import type { UserItem } from "@fixit/dynamodb-models/User";
 
 /**
  * Send welcome email to new User when `NewUser` event is emitted.

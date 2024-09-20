@@ -1,5 +1,5 @@
 import { PushNotification, type PushNotificationRecipient } from "./PushNotification.js";
-import type { WorkOrderItem } from "@fixit/dynamodb-models/WorkOrder/index.js";
+import type { WorkOrderItem } from "@fixit/dynamodb-models/WorkOrder";
 
 /**
  * This class represents a push notification for a WorkOrder event.

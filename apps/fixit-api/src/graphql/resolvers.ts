@@ -8,7 +8,7 @@ import * as userSubscription from "./UserSubscription/resolvers.js";
 import * as workOrder from "./WorkOrder/resolvers.js";
 import * as dateTimeCustomScalar from "./_scalars/DateTime/resolvers.js";
 import * as emailCustomScalar from "./_scalars/Email/resolvers.js";
-import type { Resolvers } from "@/types/graphql.js";
+import type { Resolvers } from "@fixit/api-schemas/GraphQL/types";
 
 /**
  * Fixit API — GraphQL Schema Resolvers

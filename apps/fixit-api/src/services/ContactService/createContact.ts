@@ -1,7 +1,7 @@
-import { Contact, type ContactItem } from "@/models/Contact";
-import { User } from "@/models/User";
-import { UserInputError } from "@/utils/httpErrors.js";
-import type { Contact as GqlContactObject } from "@/types/graphql.js";
+import { Contact, type ContactItem } from "@fixit/dynamodb-models/Contact";
+import { User } from "@fixit/dynamodb-models/User";
+import { UserInputError } from "@fixit/http-errors";
+import type { Contact as GqlContactObject } from "@fixit/api-schemas/GraphQL/types";
 
 /**
  * ### ContactService: createContact

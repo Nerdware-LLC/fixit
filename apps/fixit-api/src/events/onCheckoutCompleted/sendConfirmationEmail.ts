@@ -1,5 +1,5 @@
 import { isString } from "@nerdware/ts-type-safety-utils";
-import { SUBSCRIPTION_PRODUCT_NAMES } from "@fixit/dynamodb-models/UserSubscription/enumConstants.js";
+import { SUBSCRIPTION_PRODUCT_NAMES } from "@fixit/dynamodb-models/UserSubscription";
 import { intToCurrencyStr, capitalize } from "@fixit/string-formatters";
 import { pinpointClient } from "@/lib/pinpointClient/index.js";
 import type { SubscriptionPriceName } from "@fixit/api-schemas/GraphQL/types";

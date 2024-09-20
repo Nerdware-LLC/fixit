@@ -1,8 +1,8 @@
 import { sanitizeURL, isValidURL } from "@nerdware/ts-string-helpers";
 import { z as zod } from "zod";
 import { ApiController } from "@/controllers/ApiController.js";
-import { AccountService } from "@/services/AccountService";
-import { AuthService } from "@/services/AuthService";
+import { AccountService } from "@/services/AccountService/index.js";
+import { AuthService } from "@/services/AuthService/index.js";
 
 /**
  * This schema defines a `req.body` object with a required `returnURL` string property.

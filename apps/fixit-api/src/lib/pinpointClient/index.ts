@@ -1,2 +1,2 @@
 export * from "./pinpointClient.js";
-export * from "./helpers";
+export * from "./helpers.js";

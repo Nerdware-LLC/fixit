@@ -1,8 +1,8 @@
 import { hasKey } from "@nerdware/ts-type-safety-utils";
 import dayjs from "dayjs";
-import { PaymentRequiredError } from "@/utils/httpErrors.js";
-import type { SubscriptionStatus } from "@/types/graphql.js";
-import type { AuthTokenPayload } from "@/types/open-api.js";
+import { PaymentRequiredError } from "@fixit/http-errors";
+import type { SubscriptionStatus } from "@fixit/api-schemas/GraphQL/types";
+import type { AuthTokenPayload } from "@fixit/api-schemas/OpenAPI/types";
 
 /**
  * ### AuthService: Verify User Is Authorized To Access Paid Content
@@ -31,7 +31,7 @@ export const verifyUserIsAuthorizedToAccessPaidContent = ({
   ) {
     throw new Error(
       !!status && hasKey(SUB_STATUS_AUTH_METADATA, status)
-        ? SUB_STATUS_AUTH_METADATA[status].reason ?? "Invalid subscription."
+        ? (SUB_STATUS_AUTH_METADATA[status].reason ?? "Invalid subscription.")
         : "Invalid subscription."
     );
   }

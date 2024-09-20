@@ -1,12 +1,12 @@
 import { sanitizeAlphabetic } from "@nerdware/ts-string-helpers";
 import { z as zod } from "zod";
+import { SUBSCRIPTION_ENUMS } from "@fixit/dynamodb-models/UserSubscription";
+import { pricesCache } from "@fixit/stripe-client/caches/pricesCache.js";
+import { promoCodesCache } from "@fixit/stripe-client/caches/promoCodesCache.js";
+import { isValidStripeID, sanitizeStripeID } from "@fixit/stripe-client/helpers";
 import { ApiController } from "@/controllers/ApiController.js";
-import { pricesCache } from "@/lib/cache/pricesCache.js";
-import { promoCodesCache } from "@/lib/cache/promoCodesCache.js";
-import { isValidStripeID, sanitizeStripeID } from "@/lib/stripe/helpers.js";
-import { SUBSCRIPTION_ENUMS } from "@/models/UserSubscription/enumConstants.js";
-import { AuthService } from "@/services/AuthService";
-import { CheckoutService } from "@/services/CheckoutService";
+import { AuthService } from "@/services/AuthService/index.js";
+import { CheckoutService } from "@/services/CheckoutService/index.js";
 
 /**
  * This controller returns

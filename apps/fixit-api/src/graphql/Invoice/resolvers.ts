@@ -1,11 +1,11 @@
-import { DeleteMutationResponse } from "@/graphql/_responses/index.js";
-import { invoiceModelHelpers } from "@/models/Invoice/helpers.js";
-import { User } from "@/models/User";
-import { WorkOrder } from "@/models/WorkOrder";
-import { InvoiceService } from "@/services/InvoiceService";
-import { UserInputError } from "@/utils/httpErrors.js";
+import { DeleteMutationResponse } from "@fixit/apollo-graphql/responses";
+import { invoiceModelHelpers } from "@fixit/dynamodb-models/Invoice";
+import { User } from "@fixit/dynamodb-models/User";
+import { WorkOrder } from "@fixit/dynamodb-models/WorkOrder";
+import { UserInputError } from "@fixit/http-errors";
+import { InvoiceService } from "@/services/InvoiceService/index.js";
 import { createInvoiceZodSchema } from "./helpers.js";
-import type { Resolvers } from "@/types/graphql.js";
+import type { Resolvers } from "@fixit/api-schemas/GraphQL/types";
 
 export const resolvers: Resolvers = {
   Query: {

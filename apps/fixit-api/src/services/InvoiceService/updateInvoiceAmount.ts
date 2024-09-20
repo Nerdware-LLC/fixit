@@ -1,9 +1,9 @@
+import { Invoice } from "@fixit/dynamodb-models/Invoice";
+import { UserInputError } from "@fixit/http-errors";
 import { eventEmitter } from "@/events/eventEmitter.js";
-import { Invoice } from "@/models/Invoice";
-import { AuthService } from "@/services/AuthService";
-import { UserInputError } from "@/utils/httpErrors.js";
-import type { MutationUpdateInvoiceAmountArgs } from "@/types/graphql.js";
-import type { AuthTokenPayload } from "@/types/open-api.js";
+import { AuthService } from "@/services/AuthService/index.js";
+import type { MutationUpdateInvoiceAmountArgs } from "@fixit/api-schemas/GraphQL/types";
+import type { AuthTokenPayload } from "@fixit/api-schemas/OpenAPI/types";
 
 /**
  * ### InvoiceService - updateInvoiceAmount

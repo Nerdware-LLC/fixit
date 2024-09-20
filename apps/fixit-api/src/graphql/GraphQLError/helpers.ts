@@ -1,12 +1,12 @@
 import { unwrapResolverError } from "@apollo/server/errors";
-import { HTTP_ERROR_CONFIGS, type HttpError } from "@/utils/httpErrors.js";
-import { logger } from "@/utils/logger.js";
-import type { ApolloServerContext } from "@/apolloServer.js";
-import type {
-  GraphQLFormattedErrorWithExtensions,
-  GraphQLErrorCustomExtensions as GqlErrorExtensions,
-} from "@/types/graphql.js";
+import { HTTP_ERROR_METADATA, type BaseHttpError } from "@fixit/http-errors";
+import { logger } from "@fixit/node-logger";
 import type { ApolloServerOptions } from "@apollo/server";
+import type {
+  ApolloServerContext,
+  GraphQLErrorExtensions,
+  GraphQLFormattedErrorWithExtensions,
+} from "@fixit/apollo-graphql/types";
 
 /**
  * ### ApolloServer `formatError` function
@@ -44,8 +44,9 @@ export const formatApolloError: NonNullable<
   const originalError = unwrapResolverError(originalErrorOrWrappedError) ?? {};
 
   // See if the originalError has an HttpError `statusCode`, default to 500
-  const { statusCode: httpErrorStatusCode = 500 } =
-    originalError as { statusCode?: HttpError["statusCode"] }; // prettier-ignore
+  const { statusCode: httpErrorStatusCode = 500 } = originalError as {
+    statusCode?: BaseHttpError["statusCode"];
+  };
 
   // If the statusCode >= 500, log the error
   if (httpErrorStatusCode >= 500) {
@@ -56,7 +57,7 @@ export const formatApolloError: NonNullable<
   }
 
   // Look up the error config for the statusCode
-  const httpErrorGqlExtensions = HTTP_ERROR_CONFIGS[httpErrorStatusCode]?.gqlErrorExtensions;
+  const httpErrorGqlExtensions = HTTP_ERROR_METADATA[httpErrorStatusCode]?.gqlErrorExtensions;
 
   // Check for unhandled statusCodes (should never happen, but just in case)
   if (!httpErrorGqlExtensions) {
@@ -66,7 +67,7 @@ export const formatApolloError: NonNullable<
     );
   }
 
-  const gqlFormattedErrorExts: Partial<GqlErrorExtensions> = gqlFormattedError.extensions ?? {};
+  const gqlFormattedErrorExts: Partial<GraphQLErrorExtensions> = gqlFormattedError.extensions ?? {};
 
   // Must return a GraphQLFormattedError object
   return {
@@ -77,7 +78,7 @@ export const formatApolloError: NonNullable<
       code:
         gqlFormattedErrorExts.code ??
         httpErrorGqlExtensions?.code ??
-        HTTP_ERROR_CONFIGS[500].gqlErrorExtensions.code,
+        HTTP_ERROR_METADATA[500].gqlErrorExtensions.code,
       http: {
         status: gqlFormattedErrorExts.http?.status ?? httpErrorStatusCode,
       },

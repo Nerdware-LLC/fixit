@@ -1,12 +1,15 @@
-import { promoCodesCache } from "@/lib/cache/promoCodesCache.js";
-import { stripe } from "@/lib/stripe/stripeClient.js";
-import { UserSubscription, type UserSubscriptionItem } from "@/models/UserSubscription";
-import { SUBSCRIPTION_PRICE_NAMES as SUB_PRICE_NAMES } from "@/models/UserSubscription/enumConstants.js";
-import { UserInputError } from "@/utils/httpErrors.js";
+import {
+  SUBSCRIPTION_PRICE_NAMES as SUB_PRICE_NAMES,
+  UserSubscription,
+  type UserSubscriptionItem,
+} from "@fixit/dynamodb-models/UserSubscription";
+import { UserInputError } from "@fixit/http-errors";
+import { stripe } from "@fixit/stripe-client";
+import { promoCodesCache } from "@fixit/stripe-client/caches/promoCodesCache.js";
 import { normalizeStripeFields } from "./normalizeStripeFields.js";
-import type { StripeSubscriptionWithClientSecret } from "@/lib/stripe/types.js";
-import type { UserItem } from "@/models/User";
-import type { SubscriptionPriceName } from "@/types/graphql.js";
+import type { SubscriptionPriceName } from "@fixit/api-schemas/GraphQL/types";
+import type { UserItem } from "@fixit/dynamodb-models/User";
+import type { StripeSubscriptionWithClientSecret } from "@fixit/stripe-client/types";
 import type Stripe from "stripe";
 
 /**

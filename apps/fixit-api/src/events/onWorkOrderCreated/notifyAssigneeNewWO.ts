@@ -1,7 +1,7 @@
-import { User } from "@fixit/dynamodb-models/User/index.js";
+import { User } from "@fixit/dynamodb-models/User";
 import { WorkOrderPushNotification } from "@/events/pushNotifications/index.js";
 import { lambdaClient } from "@/lib/lambdaClient/index.js";
-import type { WorkOrderItem } from "@fixit/dynamodb-models/WorkOrder/index.js";
+import type { WorkOrderItem } from "@fixit/dynamodb-models/WorkOrder";
 
 /**
  * Notify assignee of new WorkOrder when `WorkOrderAssigned` event is emitted.

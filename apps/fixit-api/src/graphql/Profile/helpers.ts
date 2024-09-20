@@ -1,8 +1,8 @@
 import { sanitizeName, isValidName } from "@nerdware/ts-string-helpers";
 import { z as zod } from "zod";
-import { sanitizeDisplayName, isValidDisplayName } from "@/models/Profile/helpers.js";
-import type { ProfileInput } from "@/types/graphql.js";
+import { sanitizeDisplayName, isValidDisplayName } from "@fixit/dynamodb-models/Profile";
 import type { ZodObjectWithShape } from "@/types/zod.js";
+import type { ProfileInput } from "@fixit/api-schemas/GraphQL/types";
 
 /**
  * Zod schema for {@link ProfileInput} objects.

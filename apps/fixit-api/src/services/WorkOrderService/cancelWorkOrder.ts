@@ -1,7 +1,7 @@
+import { WorkOrder, type WorkOrderItem } from "@fixit/dynamodb-models/WorkOrder";
+import { UserInputError } from "@fixit/http-errors";
 import { eventEmitter } from "@/events/eventEmitter.js";
-import { WorkOrder, type WorkOrderItem } from "@/models/WorkOrder";
-import { AuthService } from "@/services/AuthService";
-import { UserInputError } from "@/utils/httpErrors.js";
+import { AuthService } from "@/services/AuthService/index.js";
 
 export const cancelWorkOrder = async ({
   workOrderID,
@@ -31,7 +31,7 @@ export const cancelWorkOrder = async ({
   let workOrder = existingWO;
 
   /* If status is UNASSIGNED, delete it and return a DeleteMutationResponse.
-  Otherwise, update WO status to CANCELLED and return the updated WorkOrder.*/
+  Otherwise, update WO status to CANCELLED and return the updated WorkOrder. */
 
   if (existingWO.status === "UNASSIGNED") {
     await WorkOrder.deleteItem({ createdByUserID: authenticatedUserID, id: workOrderID });

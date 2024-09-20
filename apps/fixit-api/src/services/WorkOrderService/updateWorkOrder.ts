@@ -1,10 +1,10 @@
+import { Location } from "@fixit/dynamodb-models/Location";
+import { userModelHelpers } from "@fixit/dynamodb-models/User";
+import { WorkOrder } from "@fixit/dynamodb-models/WorkOrder";
+import { UserInputError } from "@fixit/http-errors";
 import { eventEmitter } from "@/events/eventEmitter.js";
-import { Location } from "@/models/Location";
-import { userModelHelpers } from "@/models/User/helpers.js";
-import { WorkOrder } from "@/models/WorkOrder";
-import { AuthService } from "@/services/AuthService";
-import { UserInputError } from "@/utils/httpErrors.js";
-import type { UpdateWorkOrderInput } from "@/types/graphql.js";
+import { AuthService } from "@/services/AuthService/index.js";
+import type { UpdateWorkOrderInput } from "@fixit/api-schemas/GraphQL/types";
 
 export const updateWorkOrder = async ({
   workOrderID,
@@ -57,7 +57,7 @@ export const updateWorkOrder = async ({
     {
       update: {
         ...woFieldsToUpdate,
-        ...(!!location && { location: Location.fromParams(location) }),
+        ...(location && { location: Location.fromParams(location) }),
         status: upToDateStatus,
       },
     }

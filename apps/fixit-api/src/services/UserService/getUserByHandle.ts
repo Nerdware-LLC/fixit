@@ -1,6 +1,6 @@
+import { User, userModelHelpers } from "@fixit/dynamodb-models/User";
 import { usersCache } from "@/lib/cache/usersCache.js";
-import { User, userModelHelpers } from "@/models/User";
-import type { User as GqlUser } from "@/types/graphql.js";
+import type { User as GqlUser } from "@fixit/api-schemas/GraphQL/types";
 
 /**
  * ### UserService: getUserByHandle

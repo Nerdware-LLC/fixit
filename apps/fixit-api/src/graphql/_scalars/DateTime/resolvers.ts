@@ -1,8 +1,7 @@
 import { GraphQLScalarType, Kind } from "graphql";
-import { logger } from "@/utils/logger.js";
-import { isValidTimestamp } from "@/utils/timestamps.js";
+import { isValidTimestamp } from "@fixit/timestamp-utils";
 import { getScalarErrMsg } from "../helpers.js";
-import type { Resolvers } from "@/types/graphql.js";
+import type { Resolvers } from "@fixit/api-schemas/GraphQL/types";
 
 export const resolvers: Resolvers = {
   DateTime: new GraphQLScalarType({
@@ -13,7 +12,6 @@ export const resolvers: Resolvers = {
     parseValue(value: unknown) {
       if (!isValidTimestamp(value)) {
         const errMsg = getScalarErrMsg("DateTime", value);
-        logger.gql(errMsg);
         throw new TypeError(errMsg);
       }
       return value;
@@ -23,7 +21,6 @@ export const resolvers: Resolvers = {
     serialize(value: unknown) {
       if (!isValidTimestamp(value)) {
         const errMsg = getScalarErrMsg("DateTime", value);
-        logger.gql(errMsg);
         throw new TypeError(errMsg);
       }
       return value;

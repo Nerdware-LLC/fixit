@@ -1,8 +1,8 @@
-import { User, type UserItem } from "@fixit/dynamodb-models/User/index.js";
+import { User, type UserItem } from "@fixit/dynamodb-models/User";
 import { WorkOrderPushNotification } from "@/events/pushNotifications/WorkOrderPushNotification.js";
 import { lambdaClient } from "@/lib/lambdaClient/index.js";
 import { notifyAssigneeUpdatedWO } from "./notifyAssigneeUpdatedWO.js";
-import type { WorkOrderItem } from "@fixit/dynamodb-models/WorkOrder/index.js";
+import type { WorkOrderItem } from "@fixit/dynamodb-models/WorkOrder";
 
 describe("notifyAssigneeUpdatedWO", () => {
   test("does not create/send any PushNotifications when there are no assignees", async () => {

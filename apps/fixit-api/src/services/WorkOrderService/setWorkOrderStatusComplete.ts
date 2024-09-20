@@ -1,7 +1,7 @@
+import { WorkOrder } from "@fixit/dynamodb-models/WorkOrder";
+import { UserInputError } from "@fixit/http-errors";
 import { eventEmitter } from "@/events/eventEmitter.js";
-import { WorkOrder } from "@/models/WorkOrder";
-import { AuthService } from "@/services/AuthService";
-import { UserInputError } from "@/utils/httpErrors.js";
+import { AuthService } from "@/services/AuthService/index.js";
 
 export const setWorkOrderStatusComplete = async ({
   workOrderID,

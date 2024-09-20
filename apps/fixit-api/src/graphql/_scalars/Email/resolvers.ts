@@ -1,8 +1,7 @@
 import { isValidEmail } from "@nerdware/ts-string-helpers";
 import { GraphQLScalarType, Kind } from "graphql";
-import { logger } from "@/utils/logger.js";
 import { getScalarErrMsg } from "../helpers.js";
-import type { Resolvers } from "@/types/graphql.js";
+import type { Resolvers } from "@fixit/api-schemas/GraphQL/types";
 
 export const resolvers: Resolvers = {
   Email: new GraphQLScalarType({
@@ -13,7 +12,6 @@ export const resolvers: Resolvers = {
     parseValue(value: unknown) {
       if (!isValidEmail(value)) {
         const errMsg = getScalarErrMsg("Email", value);
-        logger.gql(errMsg);
         throw new TypeError(errMsg);
       }
       return value;
@@ -23,7 +21,6 @@ export const resolvers: Resolvers = {
     serialize(value: unknown) {
       if (!isValidEmail(value)) {
         const errMsg = getScalarErrMsg("Email", value);
-        logger.gql(errMsg);
         throw new TypeError(errMsg);
       }
       return value;

@@ -1,5 +1,5 @@
 import helmet from "helmet";
-import { ENV } from "@/server/env";
+import { ENV } from "@/server/env.js";
 import type { RequestHandler } from "express";
 
 /**
@@ -12,8 +12,8 @@ import type { RequestHandler } from "express";
 
 // CSP DIRECTIVE SOURCES
 const SELF = "'self'";
-const API_CSP_SOURCE = `${ENV.CONFIG.API_BASE_URL}/`;
-const API_CSP_REPORT_URI = `${ENV.CONFIG.API_BASE_URL}/admin/csp-violation`;
+const API_CSP_SOURCE = `${ENV.API_BASE_URL}/`;
+const API_CSP_REPORT_URI = `${ENV.API_BASE_URL}/admin/csp-violation`;
 const GOOGLE_GSI = "https://accounts.google.com/gsi/";
 const GOOGLE_GSI_CLIENT = "https://accounts.google.com/gsi/client";
 const GOOGLE_GSI_STYLE = "https://accounts.google.com/gsi/style";
@@ -38,20 +38,20 @@ const helmetMW = helmet({
   contentSecurityPolicy: {
     useDefaults: true,
     directives: {
-      "default-src": [SELF, ENV.WEB_CLIENT.URL, GOOGLE_GSI],
+      "default-src": [SELF, ENV.WEB_CLIENT_URL, GOOGLE_GSI],
       "base-uri": SELF,
       "connect-src": [SELF, API_CSP_SOURCE, SENTRY_INGEST, GOOGLE_GSI, STRIPE_API],
       "font-src": [SELF, "https:", "data:"],
       "form-action": [SELF, API_CSP_SOURCE],
-      "frame-ancestors": [SELF, ENV.WEB_CLIENT.URL],
+      "frame-ancestors": [SELF, ENV.WEB_CLIENT_URL],
       "frame-src": [GOOGLE_GSI, STRIPE_JS, STRIPE_HOOKS],
-      "img-src": [ENV.WEB_CLIENT.URL, "data:", "blob:"],
+      "img-src": [ENV.WEB_CLIENT_URL, "data:", "blob:"],
       "object-src": "'none'",
       "report-to": "fixit-security",
       "report-uri": API_CSP_REPORT_URI,
-      "script-src": [SELF, ENV.WEB_CLIENT.URL, GOOGLE_GSI_CLIENT, STRIPE_JS],
+      "script-src": [SELF, ENV.WEB_CLIENT_URL, GOOGLE_GSI_CLIENT, STRIPE_JS],
       "script-src-attr": "'none'",
-      "style-src": [SELF, ENV.WEB_CLIENT.URL, GOOGLE_GSI_STYLE, "https:", "'unsafe-inline'"],
+      "style-src": [SELF, ENV.WEB_CLIENT_URL, GOOGLE_GSI_STYLE, "https:", "'unsafe-inline'"],
       "upgrade-insecure-requests": [],
     },
   },

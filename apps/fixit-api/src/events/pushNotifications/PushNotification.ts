@@ -1,5 +1,5 @@
 import { ENV } from "@/server/env.js";
-import type { UserItem } from "@fixit/dynamodb-models/User/index.js";
+import type { UserItem } from "@fixit/dynamodb-models/User";
 import type { Primitive } from "type-fest";
 
 /**

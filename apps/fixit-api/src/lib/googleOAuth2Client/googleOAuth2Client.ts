@@ -1,5 +1,5 @@
 import { OAuth2Client } from "google-auth-library";
-import { ENV } from "@/server/env";
+import { ENV } from "@/server/env.js";
 
 /**
  * Google OAuth2 Client
@@ -7,6 +7,6 @@ import { ENV } from "@/server/env";
  * @see https://developers.google.com/identity/gsi/web/guides/verify-google-id-token
  */
 export const googleOAuth2Client = new OAuth2Client({
-  clientId: ENV.GOOGLE_OAUTH.CLIENT_ID,
-  clientSecret: ENV.GOOGLE_OAUTH.CLIENT_SECRET,
+  clientId: ENV.GOOGLE_OAUTH_CLIENT_ID,
+  clientSecret: ENV.GOOGLE_OAUTH_CLIENT_SECRET,
 });

@@ -1,5 +1,5 @@
-import { UserSubscriptionService } from "@/services/UserSubscriptionService";
-import type { Resolvers } from "@/types/graphql.js";
+import { UserSubscriptionService } from "@/services/UserSubscriptionService/index.js";
+import type { Resolvers } from "@fixit/api-schemas/GraphQL/types";
 
 export const resolvers: Resolvers = {
   Query: {

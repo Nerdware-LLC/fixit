@@ -1,8 +1,8 @@
 import request from "supertest";
+import { MOCK_USERS, MOCK_USER_SUBS, MOCK_USER_SCAs } from "@fixit/dynamodb-models/__mocks__";
+import { stripe } from "@fixit/stripe-client";
 import { httpServer, type HttpServerWithCustomStart } from "@/httpServer.js";
-import { stripe } from "@/lib/stripe/stripeClient.js";
 import { AuthToken } from "@/services/AuthService/AuthToken.js";
-import { MOCK_USERS, MOCK_USER_SUBS, MOCK_USER_SCAs } from "@/tests/staticMockItems";
 
 vi.mock("@/apolloServer.js");
 

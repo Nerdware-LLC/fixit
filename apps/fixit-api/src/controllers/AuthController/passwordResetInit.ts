@@ -1,7 +1,7 @@
 import { sanitizeEmail, isValidEmail } from "@nerdware/ts-string-helpers";
 import { z as zod } from "zod";
 import { ApiController } from "@/controllers/ApiController.js";
-import { AuthService } from "@/services/AuthService";
+import { AuthService } from "@/services/AuthService/index.js";
 
 /**
  * This controller method begins the password reset process for a user.

@@ -1,7 +1,9 @@
-import { isValidStripeID } from "@/lib/stripe/helpers.js";
-import { userModelHelpers } from "@/models/User/helpers.js";
-import { scaModelHelpers } from "@/models/UserStripeConnectAccount/helpers.js";
-import { MOCK_USERS } from "@/tests/staticMockItems/users.js";
+import { userModelHelpers } from "@fixit/dynamodb-models/User";
+import { scaModelHelpers } from "@fixit/dynamodb-models/UserStripeConnectAccount";
+import { MOCK_USERS } from "@fixit/dynamodb-models/__mocks__";
+import { stripe } from "@fixit/stripe-client";
+import { mockStripeCustomer, mockStripeApiLastResponse } from "@fixit/stripe-client/__mocks__";
+import { isValidStripeID } from "@fixit/stripe-client/helpers";
 import { UserService } from "./index.js";
 
 describe("UserService", () => {
@@ -17,6 +19,13 @@ describe("UserService", () => {
             ? { password: "MockPassword@123" }
             : { googleID: mockUser.login.googleID }),
         };
+
+        // Stub stripe.customers.create response in UserService.registerNewUser
+        vi.spyOn(stripe.customers, "create").mockResolvedValueOnce({
+          ...mockStripeApiLastResponse,
+          ...mockStripeCustomer,
+          id: mockUser.stripeCustomerID,
+        });
 
         // Act on the UserService.registerNewUser() method
         const result = await UserService.registerNewUser(input);

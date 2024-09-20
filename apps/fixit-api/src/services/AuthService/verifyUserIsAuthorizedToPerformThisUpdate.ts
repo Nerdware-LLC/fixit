@@ -1,5 +1,5 @@
 import { hasKey } from "@nerdware/ts-type-safety-utils";
-import { ForbiddenError } from "@/utils/httpErrors.js";
+import { ForbiddenError } from "@fixit/http-errors";
 
 /**
  * This function performs the following common authorization validation checks for

@@ -1,7 +1,10 @@
 import { sanitizeText, isValidText } from "@nerdware/ts-string-helpers";
 import { z as zod } from "zod";
-import type { CreateChecklistItemInput, UpdateChecklistItemInput } from "@/types/graphql.js";
 import type { ZodObjectWithShape } from "@/types/zod.js";
+import type {
+  CreateChecklistItemInput,
+  UpdateChecklistItemInput,
+} from "@fixit/api-schemas/GraphQL/types";
 
 /**
  * Zod schema for {@link CreateChecklistItemInput} objects.

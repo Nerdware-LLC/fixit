@@ -1,10 +1,10 @@
 import { sanitizeHandle, isValidHandle } from "@nerdware/ts-string-helpers";
 import { isSafeInteger } from "@nerdware/ts-type-safety-utils";
+import { UserInputError } from "@fixit/http-errors";
 import { usersCache, type UsersCacheEntry } from "@/lib/cache/usersCache.js";
-import { UserService } from "@/services/UserService";
-import { UserInputError } from "@/utils/httpErrors.js";
-import type { ContactItem } from "@/models/Contact";
-import type { Resolvers } from "@/types/graphql.js";
+import { UserService } from "@/services/UserService/index.js";
+import type { Resolvers } from "@fixit/api-schemas/GraphQL/types";
+import type { ContactItem } from "@fixit/dynamodb-models/Contact";
 
 export const resolvers: Resolvers = {
   Query: {

@@ -1,5 +1,12 @@
-import { SUBSCRIPTION_ENUMS as SUB_ENUMS } from "@/models/UserSubscription/enumConstants.js";
-import { WORK_ORDER_ENUM_CONSTANTS as WO_ENUMS } from "@/models/WorkOrder/enumConstants.js";
+import { SUBSCRIPTION_ENUMS as SUB_ENUMS } from "@fixit/dynamodb-models/UserSubscription";
+import { WORK_ORDER_ENUM_CONSTANTS as WO_ENUMS } from "@fixit/dynamodb-models/WorkOrder";
+import type {
+  SubscriptionPriceName,
+  SubscriptionStatus,
+  WorkOrderCategory,
+  WorkOrderPriority,
+  WorkOrderStatus,
+} from "@fixit/api-schemas/GraphQL/types";
 import type { UndefinedOnPartialDeep, Writable } from "type-fest";
 import type {
   ZodType,
@@ -15,13 +22,6 @@ import type {
   ZodDefault,
   ZodEffects,
 } from "zod";
-import type {
-  SubscriptionPriceName,
-  SubscriptionStatus,
-  WorkOrderCategory,
-  WorkOrderPriority,
-  WorkOrderStatus,
-} from "./graphql.js";
 
 // This file contains Zod util types
 

@@ -1,5 +1,8 @@
 import { isString } from "@nerdware/ts-type-safety-utils";
+import { AuthError, InternalServerError } from "@fixit/http-errors";
 import { JWT } from "@fixit/jwt";
+import { ENV } from "@/server/env.js";
+import type { AuthTokenPayload } from "@fixit/api-schemas/OpenAPI/types";
 import type { Request } from "express";
 import type { SetOptional } from "type-fest";
 
@@ -35,7 +38,7 @@ export class AuthToken {
   /**
    * Extracts a raw auth token string from the "Authorization" header of an incoming request.
    */
-  static readonly getAuthHeaderToken = <R extends Request>(req: R) => {
+  static readonly getAuthHeaderToken = (req: Request) => {
     // Get token from "Authorization" header
     let token = req.get("Authorization");
     // Ensure token exists and is a string
@@ -71,9 +74,11 @@ export class AuthToken {
   [Symbol.toPrimitive]() {
     return this.encodedTokenValue;
   }
+
   valueOf() {
     return this.encodedTokenValue;
   }
+
   toString() {
     return this.encodedTokenValue;
   }

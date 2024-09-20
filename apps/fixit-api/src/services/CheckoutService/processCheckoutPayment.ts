@@ -1,17 +1,16 @@
-import { isString, getTypeSafeError } from "@nerdware/ts-type-safety-utils";
+import { isString, getErrorMessage } from "@nerdware/ts-type-safety-utils";
+import { SUBSCRIPTION_PRICE_NAMES as SUB_PRICE_NAMES } from "@fixit/dynamodb-models/UserSubscription";
+import { PaymentRequiredError } from "@fixit/http-errors";
+import { stripe } from "@fixit/stripe-client";
 import { eventEmitter } from "@/events/eventEmitter.js";
-import { stripe } from "@/lib/stripe/stripeClient.js";
-import { SUBSCRIPTION_PRICE_NAMES as SUB_PRICE_NAMES } from "@/models/UserSubscription/enumConstants.js";
-import { UserSubscriptionService } from "@/services/UserSubscriptionService";
-import { PaymentRequiredError } from "@/utils/httpErrors.js";
-import { logger } from "@/utils/logger.js";
+import { UserSubscriptionService } from "@/services/UserSubscriptionService/index.js";
+import type { CreateSubscriptionParams } from "@/services/UserSubscriptionService/createSubscription.js";
+import type { CheckoutCompletionInfo, AuthTokenPayload } from "@fixit/api-schemas/OpenAPI/types";
+import type { UserSubscriptionItem } from "@fixit/dynamodb-models/UserSubscription";
 import type {
   StripeSubscriptionWithClientSecret,
   StripeCustomerWithClientSecret,
-} from "@/lib/stripe/types.js";
-import type { UserSubscriptionItem } from "@/models/UserSubscription";
-import type { CreateSubscriptionParams } from "@/services/UserSubscriptionService/createSubscription.js";
-import type { CheckoutCompletionInfo, AuthTokenPayload } from "@/types/open-api.js";
+} from "@fixit/stripe-client/types";
 import type Stripe from "stripe";
 import type { Simplify, OverrideProperties, SetOptional } from "type-fest";
 
@@ -186,9 +185,7 @@ export const processCheckoutPayment = async (
 
     // If an error occurs, ensure the 402 status code is provided.
   } catch (err: unknown) {
-    const error = getTypeSafeError(err);
-    logger.stripe(error, "processCheckoutPayment");
-    throw new PaymentRequiredError(error.message);
+    throw new PaymentRequiredError(getErrorMessage(err));
   }
 
   // Emit the CheckoutCompleted event with payment details:

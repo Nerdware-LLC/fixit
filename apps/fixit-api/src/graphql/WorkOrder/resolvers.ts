@@ -1,11 +1,13 @@
 import { hasKey } from "@nerdware/ts-type-safety-utils";
-import { DeleteMutationResponse } from "@/graphql/_responses/index.js";
-import { User } from "@/models/User";
-import { WORK_ORDER_STATUSES as WO_STATUSES } from "@/models/WorkOrder/enumConstants.js";
-import { workOrderModelHelpers } from "@/models/WorkOrder/helpers.js";
-import { WorkOrderService } from "@/services/WorkOrderService";
+import { DeleteMutationResponse } from "@fixit/apollo-graphql/responses";
+import { User } from "@fixit/dynamodb-models/User";
+import {
+  workOrderModelHelpers,
+  WORK_ORDER_STATUSES as WO_STATUSES,
+} from "@fixit/dynamodb-models/WorkOrder";
+import { WorkOrderService } from "@/services/WorkOrderService/index.js";
 import { createWorkOrderZodSchema, updateWorkOrderZodSchema } from "./helpers.js";
-import type { Resolvers } from "@/types/graphql.js";
+import type { Resolvers } from "@fixit/api-schemas/GraphQL/types";
 
 export const resolvers: Resolvers = {
   Query: {

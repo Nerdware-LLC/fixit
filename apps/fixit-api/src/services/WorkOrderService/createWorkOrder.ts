@@ -1,7 +1,7 @@
+import { Location } from "@fixit/dynamodb-models/Location";
+import { WorkOrder } from "@fixit/dynamodb-models/WorkOrder";
 import { eventEmitter } from "@/events/eventEmitter.js";
-import { Location } from "@/models/Location";
-import { WorkOrder } from "@/models/WorkOrder";
-import type { CreateWorkOrderInput } from "@/types/graphql.js";
+import type { CreateWorkOrderInput } from "@fixit/api-schemas/GraphQL/types";
 
 /**
  * ### WorkOrderService: createWorkOrder

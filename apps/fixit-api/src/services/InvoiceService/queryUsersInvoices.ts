@@ -1,5 +1,5 @@
-import { Invoice } from "@/models/Invoice";
-import type { AuthTokenPayload } from "@/types/open-api.js";
+import { Invoice } from "@fixit/dynamodb-models/Invoice";
+import type { AuthTokenPayload } from "@fixit/api-schemas/OpenAPI/types";
 
 /**
  * ### InvoiceService: queryUsersInvoices

@@ -1,5 +1,6 @@
 import { getTypeSafeError } from "@nerdware/ts-type-safety-utils";
-import { UserInputError } from "@/utils/httpErrors.js";
+import { UserInputError } from "@fixit/http-errors";
+import type { ZodObjectWithShape } from "@/types/zod.js";
 import type {
   Paths,
   RestApiEndpoint,
@@ -7,8 +8,7 @@ import type {
   RestApiPOSTendpoint,
   RestApiRequestBodyByPath,
   RestApiResponseByPath,
-} from "@/types/open-api.js";
-import type { ZodObjectWithShape } from "@/types/zod.js";
+} from "@fixit/api-schemas/OpenAPI/types";
 import type { RequestHandler } from "express";
 import type { SetReturnType } from "type-fest";
 import type { ZodEffects, ZodRecord, ZodOptional } from "zod";

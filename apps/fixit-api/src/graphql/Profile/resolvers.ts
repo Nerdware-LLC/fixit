@@ -1,7 +1,7 @@
-import { Profile } from "@/models/Profile";
-import { User } from "@/models/User";
+import { Profile } from "@fixit/dynamodb-models/Profile";
+import { User } from "@fixit/dynamodb-models/User";
 import { createProfileZodSchema } from "./helpers.js";
-import type { Resolvers } from "@/types/graphql.js";
+import type { Resolvers } from "@fixit/api-schemas/GraphQL/types";
 
 export const resolvers: Resolvers = {
   Query: {

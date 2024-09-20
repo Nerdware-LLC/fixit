@@ -1,8 +1,8 @@
-import { PasswordResetToken } from "@/models/PasswordResetToken";
-import { User } from "@/models/User";
-import { UserLogin } from "@/models/UserLogin";
-import { UserInputError, InternalServerError } from "@/utils/httpErrors.js";
-import type { RestApiRequestBodyByPath } from "@/types/open-api.js";
+import { PasswordResetToken } from "@fixit/dynamodb-models/PasswordResetToken";
+import { User } from "@fixit/dynamodb-models/User";
+import { UserLogin } from "@fixit/dynamodb-models/UserLogin";
+import { UserInputError, InternalServerError } from "@fixit/http-errors";
+import type { RestApiRequestBodyByPath } from "@fixit/api-schemas/OpenAPI/types";
 
 /**
  * Validates a password-reset token and - if valid - updates the user's password.

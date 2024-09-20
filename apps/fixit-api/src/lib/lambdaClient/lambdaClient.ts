@@ -1,9 +1,9 @@
 import { LambdaClient, InvokeCommand, type InvokeCommandInput } from "@aws-sdk/client-lambda";
 import { safeJsonStringify } from "@nerdware/ts-type-safety-utils";
-import { ENV } from "@/server/env";
+import { ENV } from "@/server/env.js";
 import type { OverrideProperties, Except } from "type-fest";
 
-const _lambdaClient = new LambdaClient({ region: ENV.AWS.REGION });
+const _lambdaClient = new LambdaClient({ region: ENV.AWS_REGION });
 
 const _invoke = async ({
   InvocationType,
@@ -28,13 +28,17 @@ const _invoke = async ({
 
 /**
  * Simple interface for invoking Lambda functions.
- * @method `invokeEvent` Invoke Lambda fn using asynchronous "Event" invocation.
- * @method `invokeRequestResponse` Invoke Lambda fn using synchronous "RequestResponse" invocation.
  */
 export const lambdaClient = {
+  /**
+   * Invoke Lambda fn using asynchronous "Event" invocation.
+   */
   invokeEvent: async (FunctionName, Payload, invokeOpts = {}) => {
     return _invoke({ InvocationType: "Event", FunctionName, Payload, ...invokeOpts });
   },
+  /**
+   * Invoke Lambda fn using synchronous "RequestResponse" invocation.
+   */
   invokeRequestResponse: async (FunctionName, Payload, invokeOpts = {}) => {
     return _invoke({ InvocationType: "RequestResponse", FunctionName, Payload, ...invokeOpts });
   },

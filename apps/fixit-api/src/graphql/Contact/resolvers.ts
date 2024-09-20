@@ -1,9 +1,9 @@
-import { DeleteMutationResponse } from "@/graphql/_responses";
-import { Contact, contactModelHelpers } from "@/models/Contact";
-import { userModelHelpers } from "@/models/User";
-import { ContactService } from "@/services/ContactService";
-import { UserService } from "@/services/UserService";
-import type { Resolvers } from "@/types/graphql.js";
+import { DeleteMutationResponse } from "@fixit/apollo-graphql/responses";
+import { Contact, contactModelHelpers } from "@fixit/dynamodb-models/Contact";
+import { userModelHelpers } from "@fixit/dynamodb-models/User";
+import { ContactService } from "@/services/ContactService/index.js";
+import { UserService } from "@/services/UserService/index.js";
+import type { Resolvers } from "@fixit/api-schemas/GraphQL/types";
 
 export const resolvers: Resolvers = {
   Query: {
