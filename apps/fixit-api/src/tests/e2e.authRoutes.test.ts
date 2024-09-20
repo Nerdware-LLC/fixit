@@ -130,6 +130,12 @@ describe("[e2e] Server Requests /api/auth/*", () => {
       vi.spyOn(usersCache, "get").mockReturnValueOnce(MOCK_USERS.USER_B);
       // Stub User.updateItem into a no-op in update-ExpoPushToken logic
       vi.spyOn(User, "updateItem").mockResolvedValueOnce({} as any);
+      // Stub stripe.subscriptions.retrieve response in UserSubscriptionService.refreshDataFromStripe
+      vi.spyOn(stripe.subscriptions, "retrieve").mockResolvedValueOnce({
+        ...mockStripeApiLastResponse,
+        ...mockStripeSubscription,
+        id: MOCK_USER_SUBS.SUB_A.id,
+      });
 
       // Send the request
       const { status, body: responseBody } = await request(httpServer)
@@ -262,11 +268,14 @@ describe("[e2e] Server Requests /api/auth/*", () => {
     test("returns a valid Fixit AuthToken and pre-fetched user-items in response body", async () => {
       // Arrange mock client request args to provide in req.body:
       const MOCK_GOOGLE_TOKEN_REQUEST_ARGS = {
-        googleIDToken: JWT.signAndEncode({
-          email: MOCK_USERS.USER_B.email,
-          googleID: MOCK_USERS.USER_B.login.googleID,
-          id: MOCK_USERS.USER_B.login.googleID, // for jwt `subject` field
-        }),
+        googleIDToken: JWT.signAndEncode(
+          {
+            email: MOCK_USERS.USER_B.email,
+            googleID: MOCK_USERS.USER_B.login.googleID,
+            id: MOCK_USERS.USER_B.login.googleID, // for jwt `subject` field
+          },
+          ENV.JWT_PRIVATE_KEY
+        ),
       };
 
       // Stub AuthService.parseGoogleOAuth2IDToken
