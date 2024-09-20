@@ -3,9 +3,9 @@ import {
   addProjectConfiguration,
   formatFiles,
   generateFiles,
-  Tree,
   readJson,
   writeJson,
+  type Tree,
   type ProjectConfiguration,
 } from "@nx/devkit";
 
