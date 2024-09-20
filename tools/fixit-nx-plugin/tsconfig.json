@@ -1,5 +1,7 @@
 {
   "extends": "../../tsconfig.base.json",
-  "include": ["./*", "src", "generators"],
+
+  "include": ["./*", "generators"],
+
   "exclude": ["generators/*/files/**/*"]
 }
