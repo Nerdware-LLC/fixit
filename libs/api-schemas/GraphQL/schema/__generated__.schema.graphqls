@@ -1,0 +1,673 @@
+"""
+Directive to specify validation constraints on client-provided arguments and input-field values.
+
+This directive is based on <https://github.com/confuser/graphql-constraint-directive>.
+"""
+directive @constraint(
+  contains: String
+  endsWith: String
+
+  """A format used to validate the field."""
+  format: SupportedConstraintFormat
+  max: Int
+  maxLength: Int
+  min: Int
+  minLength: Int
+  notContains: String
+
+  """A regex-pattern string used to validate the field."""
+  pattern: String
+  startsWith: String
+) on ARGUMENT_DEFINITION | INPUT_FIELD_DEFINITION
+
+"""An interface for mutation-response types."""
+interface BaseMutationResponse {
+  """
+  A code for the mutation response. This may be an HTTP status code, like '200',
+  or a GraphQLError code, like 'BAD_USER_INPUT', depending on what makes sense
+  for the implementing type.
+  """
+  code: String
+
+  """
+  An optional message to provide additional info about the mutation response.
+  """
+  message: String
+
+  """Whether the mutation was successful."""
+  success: Boolean!
+}
+
+"""Mutation response for setting a WorkOrder's status to CANCELLED"""
+union CancelWorkOrderResponse = DeleteMutationResponse | WorkOrder
+
+"""A checklist item."""
+type ChecklistItem {
+  description: String!
+  id: ID!
+  isCompleted: Boolean!
+}
+
+"""
+Contact is a type which is simply a concrete implementation of the publicly
+accessible user fields defined in the PublicUserFields interface. The Contact
+type represents a user's contact, and is used to manage a user's contacts.
+"""
+type Contact implements PublicUserFields {
+  """(Immutable) Contact creation timestamp"""
+  createdAt: DateTime!
+
+  """Contact email address"""
+  email: String!
+
+  """Public-facing handle identifies users to other users (e.g., '@joe')"""
+  handle: String!
+
+  """Contact ID internally identifies a user's contact"""
+  id: ID!
+
+  """Contact phone number"""
+  phone: String
+
+  """Contact Profile object"""
+  profile: Profile!
+
+  """Timestamp of the most recent Contact object update"""
+  updatedAt: DateTime!
+}
+
+input CreateChecklistItemInput {
+  description: String!
+  isCompleted: Boolean
+}
+
+input CreateLocationInput {
+  city: String!
+  country: String
+  region: String!
+  streetLine1: String!
+  streetLine2: String
+}
+
+"""Input for creating a new WorkOrder"""
+input CreateWorkOrderInput {
+  assignedTo: ID
+  category: WorkOrderCategory
+  checklist: [CreateChecklistItemInput!]
+  description: String
+  dueDate: DateTime
+  entryContact: String
+  entryContactPhone: String
+  location: CreateLocationInput!
+  priority: WorkOrderPriority
+  scheduledDateTime: DateTime
+}
+
+"""
+Custom DateTime scalar with handling for Date objects and ISO-8601 datetime strings.
+"""
+scalar DateTime
+
+"""A mutation response type for delete operations."""
+type DeleteMutationResponse implements BaseMutationResponse {
+  """
+  A code for the mutation response. This may be an HTTP status code, like '200',
+  or a GraphQLError code, like 'BAD_USER_INPUT', depending on what makes sense
+  for the implementing type.
+  """
+  code: String
+
+  """The ID of the deleted entity."""
+  id: ID!
+
+  """
+  An optional message to provide additional info about the mutation response.
+  """
+  message: String
+
+  """Whether the mutation was successful."""
+  success: Boolean!
+}
+
+"""
+An Invoice represents a request for payment from one User to another. In the
+context of the app, an Invoice is created by a User (the 'createdBy' User) and
+assigned to another User (the 'assignedTo' User).
+"""
+type Invoice {
+  """
+  The Invoice amount, represented as an integer which reflects USD centage (i.e., an 'amount' of 1 = $0.01 USD)
+  """
+  amount: Int!
+
+  """
+  (Immutable) The User to whom the Invoice was assigned, AKA the Invoice's recipient
+  """
+  assignedTo: User!
+
+  """(Immutable) Invoice creation timestamp"""
+  createdAt: DateTime!
+
+  """(Immutable) The User who created/sent the Invoice"""
+  createdBy: User!
+
+  """(Immutable) Invoice ID, in the format of 'INV#{createdBy.id}#{UUID}'"""
+  id: ID!
+
+  """
+  The Invoice status; this field is controlled by the API and can not be directly edited by Users
+  """
+  status: InvoiceStatus!
+
+  """
+  The ID of the most recent successful paymentIntent applied to the Invoice, if any
+  """
+  stripePaymentIntentID: String
+
+  """Timestamp of the most recent Invoice update"""
+  updatedAt: DateTime!
+
+  """
+  A WorkOrder attached to the Invoice which was created by the 'assignedTo' User
+  """
+  workOrder: WorkOrder
+}
+
+input InvoiceInput {
+  amount: Int!
+
+  """The ID of the User to whom the Invoice will be assigned"""
+  assignedTo: ID!
+  workOrderID: ID
+}
+
+enum InvoiceStatus {
+  CLOSED
+  DISPUTED
+  OPEN
+}
+
+"""A Location object."""
+type Location {
+  city: String!
+  country: String!
+  region: String!
+  streetLine1: String!
+  streetLine2: String
+}
+
+type Mutation {
+  cancelWorkOrder(workOrderID: ID!): CancelWorkOrderResponse!
+  createContact(contactUserID: ID!): Contact!
+  createInvite(phoneOrEmail: String!): MutationResponse!
+  createInvoice(invoice: InvoiceInput!): Invoice!
+  createWorkOrder(workOrder: CreateWorkOrderInput!): WorkOrder!
+  deleteContact(contactID: ID!): DeleteMutationResponse!
+  deleteInvoice(invoiceID: ID!): DeleteMutationResponse!
+  payInvoice(invoiceID: ID!): Invoice!
+  setWorkOrderStatusComplete(workOrderID: ID!): WorkOrder!
+  updateInvoiceAmount(amount: Int!, invoiceID: ID!): Invoice!
+  updateProfile(profile: ProfileInput!): Profile!
+  updateWorkOrder(workOrder: UpdateWorkOrderInput!, workOrderID: ID!): WorkOrder!
+}
+
+"""
+A generic mutation response type.
+
+> For `delete` operations/mutations, use `DeleteMutationResponse` instead.
+"""
+type MutationResponse implements BaseMutationResponse {
+  """
+  A code for the mutation response. This may be an HTTP status code, like '200',
+  or a GraphQLError code, like 'BAD_USER_INPUT', depending on what makes sense
+  for the implementing type.
+  """
+  code: String
+
+  """
+  An optional message to provide additional info about the mutation response.
+  """
+  message: String
+
+  """Whether the mutation was successful."""
+  success: Boolean!
+}
+
+type MyInvoicesQueryResponse {
+  assignedToUser: [Invoice!]!
+  createdByUser: [Invoice!]!
+}
+
+type MyWorkOrdersQueryResponse {
+  assignedToUser: [WorkOrder!]!
+  createdByUser: [WorkOrder!]!
+}
+
+"""Profile schema"""
+type Profile {
+  businessName: String
+  displayName: String!
+  familyName: String
+  givenName: String
+  photoUrl: String
+}
+
+input ProfileInput {
+  businessName: String
+  displayName: String
+  familyName: String
+  givenName: String
+  photoUrl: String
+}
+
+"""
+PublicUserFields is an interface which defines publicly-accessible User fields.
+"""
+interface PublicUserFields {
+  createdAt: DateTime!
+
+  """User email address"""
+  email: String!
+
+  """Public-facing handle identifies users to other users (e.g., '@joe')"""
+  handle: String!
+
+  """User or Contact ID"""
+  id: ID!
+
+  """User phone number"""
+  phone: String
+
+  """User Profile object"""
+  profile: Profile!
+  updatedAt: DateTime!
+}
+
+type Query {
+  contact(contactID: ID!): Contact!
+
+  """
+  This query returns the public fields of a User whose handle exactly matches the
+  provided \`handle\` argument. To search for one or more Users whose handle begins
+  with or fuzzy-matches a provided string, use \`searchForUsersByHandle\`.
+  """
+  getUserByHandle(handle: String!): User
+  invoice(invoiceID: ID!): Invoice!
+  myContacts: [Contact!]!
+  myInvoices: MyInvoicesQueryResponse!
+  myProfile: Profile!
+  mySubscription: UserSubscription!
+  myWorkOrders: MyWorkOrdersQueryResponse!
+
+  """
+  This query returns a paginated list of Users whose handle begins with the provided
+  \`handle\` argument, which can be incomplete but must at least contain two characters:
+  the beginning "@", and one character that's either alphanumeric or an underscore.
+  
+  Note that this query is intended to be used in conjunction with a pagination utility
+  like [Apollo's \`fetchMore\` function](https://www.apollographql.com/docs/react/pagination/core-api#the-fetchmore-function).
+  
+  ### ROADMAP:
+  
+  - Matching Algorithm Change: In the future, the Contact selection method used in this
+    query will either be replaced by a fuzzy-matching system based on the Levenshtein-Demerau
+    model, or a cloud-based search service like ElasticSearch. This change will eliminate
+    the \`offset\` restrictions in regard to the value of \`handle\` in follow-up queries.
+  - Response Structure: The response may be converted into an object with keys \`data\` and
+    \`nextOffset\`. The \`data\` key will contain the array of matching Users, and \`nextOffset\`
+    will be the value of the \`offset\` argument to be used in a follow-up query.
+  """
+  searchForUsersByHandle(
+    """The handle search string (minimum 2 characters)"""
+    handle: String!
+
+    """The maximum number of Users to return (default 10, min 10, max 50)"""
+    limit: Int = 10
+
+    """
+    The number of searchable Users to skip before returning results (default 0, min 0).
+    **This argument should only be used if all of the following conditions are true:**
+    
+      1. A previous call to this query returned the maximum number of results (i.e., \`limit\`).
+      2. The User who made the previous call wants to retrieve more results.
+      3. The \`handle\` argument in the previous call is a valid substring of the \`handle\`
+         argument in the subsequent call (e.g., "@foo" followed by "@fooz"). While not enforced,
+         querying "@fooz" followed by "@foo" with an offset may result in matchable users being
+         excluded from the results.
+    """
+    offset: Int = 0
+  ): [User!]!
+  workOrder(workOrderID: ID!): WorkOrder!
+}
+
+"""Names of the currently available Fixit subscription price-models"""
+enum SubscriptionPriceName {
+  """The annual subscription price model"""
+  ANNUAL
+
+  """The monthly subscription price model"""
+  MONTHLY
+
+  """The trial subscription price model"""
+  TRIAL
+}
+
+"""
+The status of a User's Subscription, as provided by Stripe.
+See https://docs.stripe.com/api/subscriptions/object#subscription_object-status
+"""
+enum SubscriptionStatus {
+  """The subscription is active and the user has access to the product"""
+  active
+
+  """
+  The subscription is canceled and the user has lost access to the product
+  """
+  canceled
+
+  """The subscription is incomplete and has not yet expired"""
+  incomplete
+
+  """The subscription is incomplete and has expired"""
+  incomplete_expired
+
+  """
+  The subscription is past due and the user has lost access to the product
+  """
+  past_due
+
+  """
+  The subscription is in a limited trial phase and has access to the product
+  """
+  trialing
+
+  """The subscription is unpaid and the user has lost access to the product"""
+  unpaid
+}
+
+"""Supported "format" values for the `@constraint` directive."""
+enum SupportedConstraintFormat {
+  """Requires the string value to be a valid Contact ID."""
+  contactID
+
+  """
+  Requires the string value to be a valid email address (e.g., `foo.user@gmail.com`).
+  """
+  email
+
+  """
+  Requires the string value to be a valid social-media handle (e.g., `@foo_user`).
+  """
+  handle
+
+  """Requires the string value to be a valid Invoice ID."""
+  invoiceID
+
+  """
+  Requires the string value to be a valid 10-digit U.S. phone number (e.g., `"(123) 456-7890"`
+  or `"1234567890"`). Non-numeric characters are stripped from the value prior to validation,
+  so `"(123) 456-7890"` will be treated the same as `"1234567890"`.
+  """
+  phone
+
+  """
+  Requires the string value to be a valid URL (e.g., `https://example.com`).
+  """
+  url
+
+  """Requires the string value to be a valid User ID."""
+  userID
+
+  """Requires the string value to be a valid UUID of any version."""
+  uuid
+
+  """Requires the string value to be a valid WorkOrder ID."""
+  workOrderID
+}
+
+input UpdateChecklistItemInput {
+  description: String!
+  id: ID
+  isCompleted: Boolean
+}
+
+input UpdateLocationInput {
+  city: String!
+  country: String
+  region: String!
+  streetLine1: String!
+  streetLine2: String
+}
+
+"""Input for updating an existing WorkOrder"""
+input UpdateWorkOrderInput {
+  assignedToUserID: ID
+  category: WorkOrderCategory
+  checklist: [UpdateChecklistItemInput!]
+  description: String
+  dueDate: DateTime
+  entryContact: String
+  entryContactPhone: String
+  location: UpdateLocationInput
+  priority: WorkOrderPriority
+  scheduledDateTime: DateTime
+}
+
+"""
+User is an implementation of the PublicUserFields interface which represents an individual User.
+"""
+type User implements PublicUserFields {
+  """(Immutable) Account creation timestamp"""
+  createdAt: DateTime!
+
+  """User's own email address"""
+  email: String!
+
+  """
+  (Immutable) Public-facing handle identifies users to other users (e.g., '@joe')
+  """
+  handle: String!
+
+  """(Immutable) User ID internally identifies individual User accounts"""
+  id: ID!
+
+  """User's own phone number"""
+  phone: String
+
+  """User's own Profile object"""
+  profile: Profile!
+
+  """Timestamp of the most recent account update"""
+  updatedAt: DateTime!
+}
+
+"""A user's Stripe Connect Account details."""
+type UserStripeConnectAccount {
+  """Whether the user's Stripe Connect Account is enabled for charges"""
+  chargesEnabled: Boolean!
+
+  """(Immutable) UserStripeConnectAccount creation timestamp"""
+  createdAt: DateTime!
+
+  """
+  Whether the user has submitted all required details to set up their Stripe Connect Account
+  """
+  detailsSubmitted: Boolean!
+
+  """(Immutable) The UserStripeConnectAccount's unique ID"""
+  id: ID!
+
+  """Whether the user's Stripe Connect Account is enabled for payouts"""
+  payoutsEnabled: Boolean!
+
+  """Timestamp of the most recent UserStripeConnectAccount update"""
+  updatedAt: DateTime!
+}
+
+"""A user's subscription to a Fixit SaaS product."""
+type UserSubscription {
+  """(Immutable) UserSubscription creation timestamp"""
+  createdAt: DateTime!
+
+  """The timestamp indicating when the current UserSubscription period ends"""
+  currentPeriodEnd: DateTime!
+
+  """(Immutable) The UserSubscription's unique ID"""
+  id: ID!
+
+  """The UserSubscription's price ID, as provided by Stripe"""
+  priceID: String!
+
+  """The UserSubscription's product ID, as provided by Stripe"""
+  productID: String!
+
+  """The UserSubscription's status, as provided by Stripe"""
+  status: SubscriptionStatus!
+
+  """Timestamp of the most recent UserSubscription update"""
+  updatedAt: DateTime!
+}
+
+"""
+A WorkOrder is a request one User submits to another for work to be performed at a location.
+"""
+type WorkOrder {
+  """
+  The User to whom the WorkOrder was assigned, AKA the WorkOrder's recipient
+  """
+  assignedTo: User
+
+  """The category of work to be performed as part of the WorkOrder"""
+  category: WorkOrderCategory
+
+  """The WorkOrder checklist, an array of ChecklistItem objects"""
+  checklist: [ChecklistItem]
+
+  """
+  Notes from the WorkOrder's recipient (this field will be renamed in the future)
+  """
+  contractorNotes: String
+
+  """(Immutable) WorkOrder creation timestamp"""
+  createdAt: DateTime!
+
+  """(Immutable) The User who created/sent the WorkOrder"""
+  createdBy: User!
+
+  """
+  A general description of the work to be performed as part of the WorkOrder
+  """
+  description: String
+
+  """Timestamp of the WorkOrder's due date"""
+  dueDate: DateTime
+
+  """The name of the WorkOrder's entry contact, if any"""
+  entryContact: String
+
+  """The phone number of the WorkOrder's entry contact, if any"""
+  entryContactPhone: String
+
+  """(Immutable) WorkOrder ID, in the format of 'WO#{createdBy.id}#{UUID}'"""
+  id: ID!
+
+  """The location of the job site for the WorkOrder"""
+  location: Location!
+
+  """The WorkOrder priority"""
+  priority: WorkOrderPriority!
+
+  """Timestamp of the WorkOrder's scheduled completion"""
+  scheduledDateTime: DateTime
+
+  """The WorkOrder status"""
+  status: WorkOrderStatus!
+
+  """Timestamp of the most recent WorkOrder update"""
+  updatedAt: DateTime!
+}
+
+"""The category of work to be performed as part of a WorkOrder"""
+enum WorkOrderCategory {
+  """The WorkOrder involves drywall"""
+  DRYWALL
+
+  """The WorkOrder involves electrical"""
+  ELECTRICAL
+
+  """The WorkOrder involves flooring"""
+  FLOORING
+
+  """The WorkOrder involves general maintenance"""
+  GENERAL
+
+  """The WorkOrder involves HVAC"""
+  HVAC
+
+  """The WorkOrder involves landscaping"""
+  LANDSCAPING
+
+  """The WorkOrder involves masonry"""
+  MASONRY
+
+  """The WorkOrder involves painting"""
+  PAINTING
+
+  """The WorkOrder involves paving"""
+  PAVING
+
+  """The WorkOrder involves pest control"""
+  PEST
+
+  """The WorkOrder involves plumbing"""
+  PLUMBING
+
+  """The WorkOrder involves roofing"""
+  ROOFING
+
+  """The WorkOrder involves trash removal"""
+  TRASH
+
+  """
+  The WorkOrder involves turnover, i.e., general 'make-ready' tasks for a new tenant or owner
+  """
+  TURNOVER
+
+  """The WorkOrder involves windows"""
+  WINDOWS
+}
+
+"""The general priority of a WorkOrder"""
+enum WorkOrderPriority {
+  """The WorkOrder is of high priority"""
+  HIGH
+
+  """The WorkOrder is of low priority"""
+  LOW
+
+  """The WorkOrder is of normal priority"""
+  NORMAL
+}
+
+"""The current status of a WorkOrder"""
+enum WorkOrderStatus {
+  """
+  The WorkOrder has been assigned to a recipient but has not yet been started
+  """
+  ASSIGNED
+
+  """The WorkOrder has been cancelled"""
+  CANCELLED
+
+  """The WorkOrder has been completed"""
+  COMPLETE
+
+  """The WorkOrder has been deferred to a later date"""
+  DEFERRED
+
+  """The WorkOrder is in progress"""
+  IN_PROGRESS
+
+  """The WorkOrder has not yet been assigned to a recipient"""
+  UNASSIGNED
+}

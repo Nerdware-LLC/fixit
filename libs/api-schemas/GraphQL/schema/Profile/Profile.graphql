@@ -1,0 +1,26 @@
+"""
+Profile schema
+"""
+type Profile {
+  displayName: String!
+  givenName: String
+  familyName: String
+  businessName: String
+  photoUrl: String
+}
+
+extend type Query {
+  myProfile: Profile!
+}
+
+input ProfileInput {
+  displayName: String
+  givenName: String
+  familyName: String
+  businessName: String
+  photoUrl: String @constraint(format: "url")
+}
+
+extend type Mutation {
+  updateProfile(profile: ProfileInput!): Profile!
+}

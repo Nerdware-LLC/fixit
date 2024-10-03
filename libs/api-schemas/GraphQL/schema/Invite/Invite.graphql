@@ -1,0 +1,9 @@
+###############################################################################
+# Invite is not a concrete type/model, but a way to invite users to join the
+# platform. If/when invite-tracking is implemented into the backend, Invite
+# will become a concrete type.
+###############################################################################
+
+extend type Mutation {
+  createInvite(phoneOrEmail: String!): MutationResponse!
+}
