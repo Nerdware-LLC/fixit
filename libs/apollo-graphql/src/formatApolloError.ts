@@ -3,10 +3,10 @@ import { HTTP_ERROR_METADATA, type BaseHttpError } from "@fixit/http-errors";
 import { logger } from "@fixit/node-logger";
 import type { ApolloServerOptions } from "@apollo/server";
 import type {
-  ApolloServerContext,
   GraphQLErrorExtensions,
   GraphQLFormattedErrorWithExtensions,
-} from "@fixit/apollo-graphql/types";
+} from "@fixit/api-schemas/GraphQL/errors";
+import type { ApolloServerContext } from "./types/ApolloServerContext.js";
 
 /**
  * ### ApolloServer `formatError` function
