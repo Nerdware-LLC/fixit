@@ -1,11 +1,4 @@
-import { isString } from "@nerdware/ts-type-safety-utils";
-
-/**
- * Checks if the provided `value` is a valid UUID string _**of any version**_.
- */
-export const isValidUUID = (value: unknown): value is string => {
-  return isString(value) && UUID_REGEX.test(value);
-};
+import { getValidatorFn } from "@nerdware/ts-string-helpers";
 
 /**
  * Regex for validating UUID strings.
@@ -14,3 +7,8 @@ export const isValidUUID = (value: unknown): value is string => {
  */
 export const UUID_REGEX =
   /^(?:[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/i;
+
+/**
+ * Checks if the provided `value` is a valid UUID string _**of any version**_.
+ */
+export const isValidUUID = getValidatorFn(UUID_REGEX);
