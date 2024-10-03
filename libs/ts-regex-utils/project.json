@@ -1,0 +1,25 @@
+{
+  "name": "ts-regex-utils",
+  "projectType": "library",
+  "sourceRoot": "libs/ts-regex-utils/src",
+  "tags": [],
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "options": {
+        "lintFilePatterns": ["libs/ts-regex-utils/**/*"]
+      }
+    },
+    "typecheck": {
+      "options": {
+        "cwd": "libs/ts-regex-utils"
+      }
+    },
+    "test": {
+      "executor": "@nx/vite:test",
+      "options": {
+        "vitestConfig": "libs/ts-regex-utils/vitest.config.ts"
+      }
+    }
+  }
+}

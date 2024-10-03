@@ -1,0 +1,8 @@
+{
+  "name": "@fixit/ts-regex-utils",
+  "type": "module",
+  "private": true,
+  "exports": {
+    ".": "./src/index.js"
+  }
+}
