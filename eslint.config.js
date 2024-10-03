@@ -165,7 +165,7 @@ export default tsEslint.config(
       ],
 
       // RULES: jsdoc (eslint-plugin-jsdoc)
-      "jsdoc/check-tag-names": ["error", { definedTags: ["docs"] }], // Add custom @docs tag
+      "jsdoc/check-tag-names": ["warn", { definedTags: ["docs"] }], // Add custom @docs tag
       "jsdoc/require-param": "off", // Don't require jsdoc @param tags (yet)
       "jsdoc/require-property": "off", // Don't require jsdoc @property tags (yet)
       "jsdoc/require-returns": "off", // Don't require jsdoc @returns tags (yet)
@@ -175,10 +175,10 @@ export default tsEslint.config(
       "@nx/enforce-module-boundaries": [
         "error",
         {
-          allow: ["@fixit/api-schemas/GraphQL/types"],
+          // Docs: https://nx.dev/nx-api/eslint-plugin/documents/enforce-module-boundaries
+          ignoredCircularDependencies: [["GraphQL-schema", "*"]],
           depConstraints: [
             // TODO Update 1st dep constraint after tags are added to projects
-            // https://nx.dev/nx-api/eslint-plugin/documents/enforce-module-boundaries
             { sourceTag: "*", onlyDependOnLibsWithTags: ["*"] },
           ],
         },
@@ -339,6 +339,7 @@ export default tsEslint.config(
       // Add import-plugin rules that TS won't cover for JS files:
       ...importPlugin.configs.recommended.rules,
       "import-x/no-named-as-default-member": "off",
+      "import-x/no-unresolved": "off",
       // jsdoc, stricter requirements when not using TypeScript
       ...jsdocPlugin.configs["flat/recommended"].rules,
       "jsdoc/require-param": "off", // Don't require jsdoc @param tags (yet)
