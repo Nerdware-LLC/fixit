@@ -1,6 +1,6 @@
 import { getErrorMessage } from "@nerdware/ts-type-safety-utils";
 import { logger } from "@fixit/node-logger";
-import type { GraphQLErrorExtensions } from "@fixit/apollo-graphql/types";
+import type { GraphQLErrorExtensions } from "@fixit/api-schemas/GraphQL/errors";
 import type { Class } from "type-fest";
 
 /**
