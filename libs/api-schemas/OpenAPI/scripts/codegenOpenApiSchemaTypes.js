@@ -16,7 +16,7 @@ import ts from "typescript";
 
 logger.debug("Starting Script ...");
 
-const cwd = validateExecContext();
+const { cwd } = validateExecContext();
 
 /** `<monorepo-root>/libs/api-schemas/OpenAPI` */
 const oasDirPath = pathResolve(cwd, "libs/api-schemas/OpenAPI");
