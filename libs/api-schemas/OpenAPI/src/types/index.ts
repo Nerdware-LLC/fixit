@@ -1,6 +1,6 @@
 import type { CombineUnionOfObjects } from "@fixit/ts-generic-util-types";
 import type { Simplify, RequiredKeysOf } from "type-fest";
-import type { paths, components, operations } from "./__codegen__/openApiSchemaTypes.js";
+import type { paths, components, operations } from "./__generated__.openApiSchemaTypes.js";
 
 export type Paths = Simplify<paths>;
 
