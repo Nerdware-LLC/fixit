@@ -1,11 +1,13 @@
 /**
  * This file is a workaround for a circular dependency issues.
+ *
+ * // TODO Re-organize code to remove circular dependency.
  */
 
 /**
  * ### DUPLICATE EXPORT — This export is a duplicate that resolves a circular dependency issue.
  *
- * The original is defined in `libs/api-schemas/GraphQL/types/__codegen__/graphqlSchemaTypes.ts`.
+ * The original is defined in `libs/api-schemas/GraphQL/`.
  */
 export type SubscriptionPriceName = (typeof FIXIT_SUB_PRICE_NAMES)[number];
 
