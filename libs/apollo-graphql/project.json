@@ -14,12 +14,6 @@
       "options": {
         "cwd": "libs/apollo-graphql"
       }
-    },
-    "test": {
-      "executor": "@nx/vite:test",
-      "options": {
-        "vitestConfig": "libs/apollo-graphql/vitest.config.ts"
-      }
     }
   }
 }
