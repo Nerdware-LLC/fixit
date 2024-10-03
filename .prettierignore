@@ -4,4 +4,5 @@
 **/dist/**/*
 **/coverage/**/*
 
-**/__codegen__/**/*
+# Codegen generated files/dirs:
+**/*__generated__**

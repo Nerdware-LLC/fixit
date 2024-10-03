@@ -29,7 +29,7 @@ export default tsEslint.config(
       "**/coverage/",
       "**/build/",
       "**/dist/",
-      "**/__codegen__/",
+      "**/*__generated__**", // codegen generated files/dirs
     ],
   },
   {
