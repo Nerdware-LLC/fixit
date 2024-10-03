@@ -67,7 +67,7 @@ ${astToString(ast)}`;
 // The TS file in which to write the content:
 const tsOutputFile = pathResolve(
   oasDirPath,
-  "types/__codegen__/openApiSchemaTypes.ts"
+  "src/types/__generated__.openApiSchemaTypes.ts"
 );
 
 logger.debug(`Writing TS output to file: ${tsOutputFile}`);
