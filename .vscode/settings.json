@@ -12,10 +12,10 @@
   "eslint.format.enable": false,
   "eslint.useFlatConfig": true,
 
-  "editor.bracketPairColorization.enabled": false,
-
+  // git
   "git.ignoreLimitWarning": true,
 
+  // json schemas
   "json.schemas": [
     {
       "fileMatch": ["project.json"],
@@ -23,26 +23,6 @@
     }
   ],
 
-  "typescript.tsdk": "node_modules/typescript/lib",
-
-  // vscode-icons
-  "vsicons.associations.files": [
-    {
-      "icon": "nx",
-      "extensions": [],
-      "filenamesGlob": ["nx", "project"],
-      "extensionsGlob": ["json"],
-      "filename": true,
-      "light": true,
-      "format": "FileFormat.svg"
-    },
-    {
-      "icon": "vitest",
-      "filenamesGlob": ["vitest.config", "vitest.*", "vitest.shared-configs"],
-      "extensions": [],
-      "extensionsGlob": ["js", "mjs", "ts", "cjs", "mts", "cts"],
-      "filename": true,
-      "format": "FileFormat.svg"
-    }
-  ]
+  // typescript
+  "typescript.tsdk": "node_modules/typescript/lib"
 }
