@@ -3,7 +3,7 @@
  *
  * - Ensures the CWD is the monorepo root.
  *
- * @returns {string} The absolute path of the CWD, if valid.
+ * @returns {({ cwd: string })} The absolute path of the CWD, if valid.
  * @throws {Error} If the CWD is not the monorepo root.
  */
 export const validateExecContext = () => {
@@ -13,5 +13,5 @@ export const validateExecContext = () => {
   if (!cwd.endsWith("/fixit"))
     throw new Error("This script must be executed from the monorepo root.");
 
-  return cwd;
+  return { cwd };
 };
