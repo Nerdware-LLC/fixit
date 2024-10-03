@@ -1,10 +1,9 @@
 import { sanitizeHandle, isValidHandle } from "@nerdware/ts-string-helpers";
 import { isSafeInteger } from "@nerdware/ts-type-safety-utils";
 import { UserInputError } from "@fixit/http-errors";
-import { usersCache, type UsersCacheEntry } from "@/lib/cache/usersCache.js";
+import { usersCache, type UsersCacheObject } from "@/lib/cache/usersCache.js";
 import { UserService } from "@/services/UserService/index.js";
 import type { Resolvers } from "@fixit/api-schemas/GraphQL/types";
-import type { ContactItem } from "@fixit/dynamodb-models/Contact";
 
 export const resolvers: Resolvers = {
   Query: {
@@ -15,11 +14,7 @@ export const resolvers: Resolvers = {
 
       return await UserService.getUserByHandle({ handle });
     },
-    searchForUsersByHandle: (
-      _parent,
-      { handle: handleArg, limit, offset: startIndex },
-      { user: authenticatedUser }
-    ) => {
+    searchForUsersByHandle: (_parent, { handle: handleArg, limit, offset: startIndex }) => {
       // Sanitize and validate the provided handle, limit, and offset
       handleArg = sanitizeHandle(handleArg);
       if (!isValidHandle(handleArg)) throw new UserInputError(`Invalid value for field: "handle"`);
@@ -32,20 +27,16 @@ export const resolvers: Resolvers = {
       startIndex = Math.max(0, startIndex); // startIndex must be >= 0 (default: 0)
 
       const userCacheEntriesToSearch = usersCache.entries().slice(startIndex);
-      const matchingUsers: Array<ContactItem> = [];
+      const matchingUsers: Array<UsersCacheObject> = [];
 
       // Why not use reduce? Because we want to break out of the loop once we've found enough matches.
       for (let i = 0; i < userCacheEntriesToSearch.length; i++) {
         if (matchingUsers.length >= limit) break;
 
-        const [userHandle, userPublicFields] = userCacheEntriesToSearch[i] as UsersCacheEntry;
+        const [userHandle, userPublicFields] = userCacheEntriesToSearch[i]!;
 
         if (userHandle.startsWith(handleArg)) {
-          matchingUsers.push({
-            ...userPublicFields,
-            userID: authenticatedUser.id,
-            contactUserID: userPublicFields.id,
-          });
+          matchingUsers.push(userPublicFields);
         }
       }
 
