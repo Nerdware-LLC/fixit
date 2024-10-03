@@ -1,6 +1,5 @@
 {
   "name": "OpenAPI-schema",
-  "sourceRoot": "libs/api-schemas/OpenAPI",
   "projectType": "library",
   "tags": ["api", "schema", "openapi"],
   "targets": {
@@ -9,7 +8,22 @@
       "cache": true,
       "inputs": ["default"],
       "options": {
-        "command": "redocly lint --config libs/api-schemas/OpenAPI/redocly.yaml"
+        "commands": [
+          // Lint the YAML OpenAPI schema:
+          "redocly lint --config libs/api-schemas/OpenAPI/redocly.yaml",
+          // Lint TS/JS:
+          "eslint libs/api-schemas/OpenAPI/"
+        ]
+      }
+    },
+    "typecheck": {
+      "executor": "nx:run-commands",
+      "options": {
+        /* For some reason, setting "cwd":"libs/api-schemas/OpenAPI" doesn't work here
+        like it does in the other nx projects' typecheck targets — tsc says the tsconfig
+        file can't be found, even though debugging shows it's right where it's expected.
+        So instead the cmd is re-written to work from the monorepo root. */
+        "command": "npx tsc --project libs/api-schemas/OpenAPI/tsconfig.json --noEmit --skipLibCheck"
       }
     },
     "build": {
