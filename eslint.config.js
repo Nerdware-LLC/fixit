@@ -13,6 +13,15 @@ import tsEslint from "typescript-eslint";
 /* eslint @stylistic/migrate/migrate: "error" */
 
 /**
+ * For some reason, ESLint isn't reading the `engines` field from package.json,
+ * so the Node version is defined here for `eslint-plugin-n` rules.
+ *
+ * Alternatively, `import pkgJson from "./package.json" with { type: "json" };`
+ * can be used to read the package.json file, but that causes node warnings.
+ */
+const NODE_VERSION = ">=20.17.0";
+
+/**
  * This ESLint config can be reviewed using [eslint config-inspector][eslint-config-inspector].
  *
  * > 👉 `npm run eslint-inspector:start`
@@ -145,9 +154,14 @@ export default tsEslint.config(
       "n/no-missing-import": "off", //     Covered by TS, and false positives in monorepos
       "n/no-unpublished-import": "off", // Covered by TS, and false positives in monorepos
       "n/no-process-env": "error",
+      "n/no-unsupported-features/es-builtins": ["error", { version: NODE_VERSION }], // prettier-ignore
+      "n/no-unsupported-features/es-syntax": ["error", { version: NODE_VERSION }], // prettier-ignore
       "n/no-unsupported-features/node-builtins": [
         "error",
-        { allowExperimental: true }, // For module.register in tools/tsconfig-paths-esm-loader
+        {
+          version: NODE_VERSION,
+          allowExperimental: true, // For module.register in tools/tsconfig-paths-esm-loader
+        },
       ],
 
       // RULES: jsdoc (eslint-plugin-jsdoc)
