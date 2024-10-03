@@ -3,8 +3,13 @@
   "type": "module",
   "private": true,
   "exports": {
-    "./OpenAPI/types": "./OpenAPI/types/index.js",
-    "./GraphQL/typeDefs": "./GraphQL/typeDefs/index.js",
-    "./GraphQL/types": "./GraphQL/types/index.js"
+    "./OpenAPI/*": "./OpenAPI/src/*",
+    "./OpenAPI/types": "./OpenAPI/src/types/index.js",
+    "./GraphQL/*": "./GraphQL/src/*",
+    "./GraphQL/directives/constraint": "./GraphQL/src/directives/constraint/index.js",
+    "./GraphQL/errors": "./GraphQL/src/errors/index.js",
+    "./GraphQL/responses": "./GraphQL/src/responses/index.js",
+    "./GraphQL/scalars": "./GraphQL/src/scalars/index.js",
+    "./GraphQL/types": "./GraphQL/src/types/index.js"
   }
 }
