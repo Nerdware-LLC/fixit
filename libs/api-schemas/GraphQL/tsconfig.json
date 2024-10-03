@@ -1,5 +1,18 @@
 {
-  "extends": "../../../tsconfig.json",
+  "extends": "../../../tsconfig.base.json",
 
-  "include": ["scripts", "typeDefs", "types", "./codegen.ts"]
+  "include": ["./*", "scripts", "src"],
+
+  "exclude": [
+    "src/__generated__.zodSchemas.ts" /* <-- The codegen plugin that generates this
+      file currently creates output wherein some schema definitions are used before
+      they are declared, which causes TS to throw errors like:
+
+        Block-scoped variable 'ChecklistItemSchema' used before its declaration.ts(2448)
+
+      This problem is being tracked in the following GitHub Issue:
+      https://github.com/Code-Hex/graphql-codegen-typescript-validation-schema/issues/528
+
+      TODO Rm the above tsconfig exclude once plugin author fixes the var-dec-order issue. */
+  ]
 }
