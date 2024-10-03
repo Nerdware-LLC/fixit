@@ -5,7 +5,7 @@ import { logger } from "@fixit-tools/script-utils/nodejs/logging.js";
  * Executes a Rover CLI's graph command ("check" or "publish") in a child
  * process with the specified graph reference and schema file.
  *
- * @param {"check"|"publish"} graphCmd The Rover graph cmd to execute.
+ * @param {"lint"|"check"|"publish"} graphCmd The Rover graph cmd to execute.
  * @param {string} graphRef The graph reference to use in the Rover command (e.g. "myGraph@current").
  * @param {string} schemaFilePath The path to the schema file to use in the Rover command.
  * @returns {void}
