@@ -1,7 +1,8 @@
 import { Model } from "@nerdware/ddb-single-table";
 import { isString } from "@nerdware/ts-type-safety-utils";
 import { WORK_ORDER_ENUM_CONSTANTS } from "./enumConstants.js";
-import { workOrderModelHelpers as woModelHelpers, WO_SK_PREFIX_STR } from "./helpers.js";
+import { workOrderModelHelpers as woModelHelpers } from "./helpers.js";
+import { WO_SK_PREFIX_STR } from "./regex.js";
 import { Location } from "../Location/index.js";
 import { userModelHelpers } from "../User/helpers.js";
 import { COMMON_ATTRIBUTE_TYPES, COMMON_ATTRIBUTES } from "../_common/modelAttributes.js";

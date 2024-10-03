@@ -8,7 +8,8 @@ import {
   SUBSCRIPTION_PRICE_NAMES as PRICE_NAMES,
   SUBSCRIPTION_PRODUCT_NAMES as PRODUCT_NAMES,
 } from "./enumConstants.js";
-import { subModelHelpers, SUB_SK_PREFIX_STR } from "./helpers.js";
+import { subModelHelpers } from "./helpers.js";
+import { SUB_SK_PREFIX_STR } from "./regex.js";
 import { userModelHelpers } from "../User/helpers.js";
 import { COMMON_ATTRIBUTE_TYPES, COMMON_ATTRIBUTES } from "../_common/modelAttributes.js";
 import { ddbTable } from "../ddbTable.js";

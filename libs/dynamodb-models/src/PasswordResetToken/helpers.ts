@@ -1,21 +1,16 @@
+import { PW_RESET_TOKEN_SK_REGEX, PW_RESET_TOKEN_SK_PREFIX_STR } from "./regex.js";
 import {
   createMapOfStringAttrHelpers,
   createHelpersForStrAttr,
-  getCompoundAttrRegex,
-  DELIMETER,
   type MapOfStringAttrHelpers,
-} from "../_common/index.js";
-
-export const PW_RESET_TOKEN_SK_PREFIX_STR = "PW_RESET_TOKEN";
+} from "../_common/attributeHelpers.js";
+import { DELIMITER } from "../_common/delimiter.js";
 
 const pwResetTokenSKattrHelpers = createHelpersForStrAttr("sk", {
   /** Validation regex for `PasswordResetToken.sk` compound attribute. */
-  regex: getCompoundAttrRegex([
-    PW_RESET_TOKEN_SK_PREFIX_STR,
-    /^[a-f0-9]{96}$/, // Regex pattern for 48-bit hex tokens (96 characters long)
-  ]),
+  regex: PW_RESET_TOKEN_SK_REGEX,
   /** PasswordResetToken "sk" value formatter. */
-  format: (token: string) => `${PW_RESET_TOKEN_SK_PREFIX_STR}${DELIMETER}${token}`,
+  format: (token: string) => `${PW_RESET_TOKEN_SK_PREFIX_STR}${DELIMITER}${token}`,
 });
 
 export const passwordResetTokenModelHelpers = createMapOfStringAttrHelpers({

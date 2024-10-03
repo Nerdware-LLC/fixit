@@ -1,4 +1,4 @@
-import { getCompoundAttrRegex } from "../_common/index.js";
+import { getCompoundAttrRegex } from "../_common/compoundAttributeHelpers.js";
 
 /** Sanitizes a user-provided street-address string by removing any non-permitted chars. */
 export const sanitizeStreetAddress = (value: string): string => {

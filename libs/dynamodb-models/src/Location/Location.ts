@@ -1,6 +1,9 @@
 import { isString } from "@nerdware/ts-type-safety-utils";
 import { LOCATION_COMPOUND_STR_REGEX } from "./helpers.js";
-import { getCompoundAttrString, parseCompoundAttrString } from "../_common/index.js";
+import {
+  getCompoundAttrString,
+  parseCompoundAttrString,
+} from "../_common/compoundAttributeHelpers.js";
 import type { Location as GqlSchemaLocationType } from "@fixit/api-schemas/GraphQL/types";
 
 /**

@@ -1,24 +1,18 @@
 import { isString } from "@nerdware/ts-type-safety-utils";
 import dayjs from "dayjs";
 import { pricesCache } from "@fixit/stripe-client/caches/pricesCache.js";
-import { UNIX_TIMESTAMP_REGEX } from "@fixit/timestamp-utils";
-import { userModelHelpers } from "../User/helpers.js";
-import { createMapOfStringAttrHelpers, getCompoundAttrRegex, DELIMETER } from "../_common/index.js";
-
-export const SUB_SK_PREFIX_STR = "SUBSCRIPTION";
+import { SUB_SK_REGEX, SUB_SK_PREFIX_STR } from "./regex.js";
+import { createMapOfStringAttrHelpers } from "../_common/attributeHelpers.js";
+import { DELIMITER } from "../_common/delimiter.js";
 
 export const subModelHelpers = {
   ...createMapOfStringAttrHelpers({
     sk: {
       /** Validation regex for `UserSubscription.sk` values. */
-      regex: getCompoundAttrRegex([
-        SUB_SK_PREFIX_STR,
-        userModelHelpers.id.regex,
-        UNIX_TIMESTAMP_REGEX,
-      ]),
+      regex: SUB_SK_REGEX,
       /** Returns a formatted UserSubscription "sk" value. */
       format: (userID: string, createdAt: Date) => {
-        return `${SUB_SK_PREFIX_STR}${DELIMETER}${userID}${DELIMETER}${dayjs(createdAt).unix()}`;
+        return `${SUB_SK_PREFIX_STR}${DELIMITER}${userID}${DELIMITER}${dayjs(createdAt).unix()}`;
       },
     },
   }),

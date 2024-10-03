@@ -1,6 +1,7 @@
 import { Model } from "@nerdware/ddb-single-table";
 import { isValidHandle } from "@nerdware/ts-string-helpers";
-import { contactModelHelpers, CONTACT_SK_PREFIX_STR } from "./helpers.js";
+import { contactModelHelpers } from "./helpers.js";
+import { CONTACT_SK_PREFIX_STR } from "./regex.js";
 import { userModelHelpers } from "../User/helpers.js";
 import { COMMON_ATTRIBUTES } from "../_common/modelAttributes.js";
 import { ddbTable } from "../ddbTable.js";

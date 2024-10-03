@@ -1,23 +1,21 @@
-import { isValidHandle } from "@nerdware/ts-string-helpers";
-import { createMapOfStringAttrHelpers, getCompoundAttrRegex, DELIMETER } from "../_common/index.js";
-
-export const USER_ID_PREFIX_STR = "USER";
-export const USER_SK_PREFIX_STR = `${DELIMETER}DATA`;
+import { USER_ID_REGEX, USER_ID_PREFIX_STR, USER_SK_REGEX, USER_SK_PREFIX_STR } from "./regex.js";
+import { createMapOfStringAttrHelpers } from "../_common/attributeHelpers.js";
+import { DELIMITER } from "../_common/delimiter.js";
 
 export const userModelHelpers = createMapOfStringAttrHelpers({
   id: {
     /** Validation regex for User IDs. */
-    regex: getCompoundAttrRegex([USER_ID_PREFIX_STR, isValidHandle._regex]),
+    regex: USER_ID_REGEX,
     /** User "id" value formatter. */
-    format: (handle: string) => `${USER_ID_PREFIX_STR}${DELIMETER}${handle}`,
-    /** Sanitizes a User ID value (permits `handle` chars and the {@link DELIMETER} char). */
+    format: (handle: string) => `${USER_ID_PREFIX_STR}${DELIMITER}${handle}`,
+    /** Sanitizes a User ID value (permits `handle` chars and the {@link DELIMITER} char). */
     sanitize: (str: string) => str.replace(/[^a-zA-Z0-9_@#]/g, ""),
   },
   sk: {
     /** Validation regex for User `sk` attribute values. */
-    regex: getCompoundAttrRegex([USER_SK_PREFIX_STR, USER_ID_PREFIX_STR, isValidHandle._regex]),
+    regex: USER_SK_REGEX,
     /** User "sk" value formatter. */
-    format: (userID: string) => `${USER_SK_PREFIX_STR}${DELIMETER}${userID}`,
+    format: (userID: string) => `${USER_SK_PREFIX_STR}${DELIMITER}${userID}`,
   },
 });
 

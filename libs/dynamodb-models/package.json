@@ -9,14 +9,21 @@
     "./__mocks__/*": "./src/__mocks__/staticMockItems/*",
     "./skTypeGuards": "./src/_common/skTypeGuards.js",
     "./Contact": "./src/Contact/index.js",
+    "./Contact/helpers.js": "./src/Contact/helpers.js",
     "./Invoice": "./src/Invoice/index.js",
+    "./Invoice/helpers.js": "./src/Invoice/helpers.js",
     "./Location": "./src/Location/index.js",
     "./PasswordResetToken": "./src/PasswordResetToken/index.js",
     "./Profile": "./src/Profile/index.js",
+    "./Profile/helpers.js": "./src/Profile/helpers.js",
     "./User": "./src/User/index.js",
+    "./User/helpers.js": "./src/User/helpers.js",
     "./UserLogin": "./src/UserLogin/index.js",
     "./UserStripeConnectAccount": "./src/UserStripeConnectAccount/index.js",
+    "./UserStripeConnectAccount/helpers.js": "./src/UserStripeConnectAccount/helpers.js",
     "./UserSubscription": "./src/UserSubscription/index.js",
-    "./WorkOrder": "./src/WorkOrder/index.js"
+    "./UserSubscription/helpers.js": "./src/UserSubscription/helpers.js",
+    "./WorkOrder": "./src/WorkOrder/index.js",
+    "./WorkOrder/helpers.js": "./src/WorkOrder/helpers.js"
   }
 }
