@@ -1,4 +1,4 @@
-import { DeleteMutationResponse } from "@fixit/apollo-graphql/responses";
+import { DeleteMutationResponse } from "@fixit/api-schemas/GraphQL/responses";
 import { Contact, contactModelHelpers } from "@fixit/dynamodb-models/Contact";
 import { userModelHelpers } from "@fixit/dynamodb-models/User";
 import { ContactService } from "@/services/ContactService/index.js";

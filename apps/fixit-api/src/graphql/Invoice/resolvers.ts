@@ -1,4 +1,4 @@
-import { DeleteMutationResponse } from "@fixit/apollo-graphql/responses";
+import { DeleteMutationResponse } from "@fixit/api-schemas/GraphQL/responses";
 import { invoiceModelHelpers } from "@fixit/dynamodb-models/Invoice";
 import { User } from "@fixit/dynamodb-models/User";
 import { WorkOrder } from "@fixit/dynamodb-models/WorkOrder";
@@ -64,13 +64,17 @@ export const resolvers: Resolvers = {
     },
   },
   Invoice: {
-    createdBy: async ({ createdByUserID }, _args, { user }) => {
+    // FIXME parent param not being typed correctly here in Invoice field resolvers.
+    createdBy: async (parent, _args, { user }) => {
+      const { createdByUserID } = parent;
+
       if (createdByUserID === user.id) return user;
 
       const createdByUser = await User.getItem({ id: createdByUserID });
 
       return createdByUser!;
     },
+    // FIXME parent param not being typed correctly here in Invoice field resolvers.
     assignedTo: async ({ assignedToUserID }, _args, { user }) => {
       if (assignedToUserID === user.id) return user;
 
@@ -78,6 +82,7 @@ export const resolvers: Resolvers = {
 
       return assignedToUser!;
     },
+    // FIXME parent param not being typed correctly here in Invoice field resolvers.
     workOrder: async ({ workOrderID }, _args) => {
       if (!workOrderID) return null;
 

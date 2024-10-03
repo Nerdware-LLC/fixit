@@ -1,5 +1,5 @@
 import { sanitizeEmail, isValidPhone, isValidEmail } from "@nerdware/ts-string-helpers";
-import { MutationResponse } from "@fixit/apollo-graphql/responses";
+import { MutationResponse } from "@fixit/api-schemas/GraphQL/responses";
 import { UserInputError } from "@fixit/http-errors";
 import { pinpointClient } from "@/lib/pinpointClient/index.js";
 import type { Resolvers } from "@fixit/api-schemas/GraphQL/types";

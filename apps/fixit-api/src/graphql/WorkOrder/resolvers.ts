@@ -1,5 +1,5 @@
 import { hasKey } from "@nerdware/ts-type-safety-utils";
-import { DeleteMutationResponse } from "@fixit/apollo-graphql/responses";
+import { DeleteMutationResponse } from "@fixit/api-schemas/GraphQL/responses";
 import { User } from "@fixit/dynamodb-models/User";
 import {
   workOrderModelHelpers,
@@ -52,7 +52,9 @@ export const resolvers: Resolvers = {
         authenticatedUserID: user.id,
       });
 
-      return deleted ? new DeleteMutationResponse({ success: true, id: workOrder.id }) : workOrder;
+      return deleted
+        ? new DeleteMutationResponse({ success: true, id: workOrder.id })
+        : { __typename: "WorkOrder", ...workOrder };
     },
     setWorkOrderStatusComplete: async (_parent, { workOrderID }, { user }) => {
       // Sanitize workOrderID
