@@ -1,0 +1,26 @@
+#####################################################################
+# SHELLCHECK CONFIGS:
+
+# Allow opening any 'source'd file, even if not specified as input
+external-sources=true
+
+#####################################################################
+# SHELLCHECK RULE CUSTOMIZATIONS:
+
+# Allow dynamic paths in source (hard-coded)
+disable=SC1090
+
+# Allow dynamic paths in source (variables)
+disable=SC1091
+
+# Allow "$" in arithmetic expressions
+disable=SC2004
+
+# Allow variables in printf format str
+disable=SC2059
+
+# Allow 1-line declare+assign
+disable=SC2155
+
+# Allow checking $? in if statements
+disable=SC2181
