@@ -15,10 +15,10 @@ repos:
       - id: check-executables-have-shebangs
       - id: check-yaml #             validate yaml file syntax
       - id: end-of-file-fixer #      ensure files end in newline char
-        exclude: .*/__codegen__/.* # don't modify generated code
+        exclude: .*__generated__.* # don't modify generated files/dirs
         exclude_types: [graphql, svg, json]
       - id: trailing-whitespace
-        exclude: .*/__codegen__/.* # don't modify generated code
+        exclude: .*__generated__.* # don't modify generated files/dirs
         args: [--markdown-linebreak-ext=md]
 
       # Security
