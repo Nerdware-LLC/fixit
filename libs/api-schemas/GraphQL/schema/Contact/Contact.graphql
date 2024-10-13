@@ -1,3 +1,6 @@
+#####################################################################
+### CONTACT
+
 """
 Contact is a type which is simply a concrete implementation of the publicly
 accessible user fields defined in the PublicUserFields interface. The Contact
@@ -6,7 +9,7 @@ type represents a user's contact, and is used to manage a user's contacts.
 type Contact implements PublicUserFields {
   # Contact.id format: "CONTACT#{contactUserID}"
   "Contact ID internally identifies a user's contact"
-  id: ID!
+  id: ContactID!
   "Public-facing handle identifies users to other users (e.g., '@joe')"
   handle: String!
   "Contact email address"
@@ -22,17 +25,13 @@ type Contact implements PublicUserFields {
 }
 
 extend type Query {
-  contact(contactID: ID! @constraint(format: "contactID")): Contact!
-
+  contact(contactID: ContactID!): Contact!
   myContacts: [Contact!]!
 }
 
 extend type Mutation {
-  createContact(contactUserID: ID! @constraint(format: "userID")): Contact!
-
-  deleteContact(
-    contactID: ID! @constraint(format: "contactID")
-  ): DeleteMutationResponse!
+  createContact(contactUserID: UserID!): Contact!
+  deleteContact(contactID: ContactID!): DeleteMutationResponse!
 }
 
 ###############################################################################

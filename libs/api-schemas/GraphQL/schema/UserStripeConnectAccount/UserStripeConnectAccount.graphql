@@ -1,3 +1,6 @@
+#####################################################################
+### USER STRIPE CONNECT ACCOUNT
+
 """
 A user's Stripe Connect Account details.
 """
@@ -15,3 +18,5 @@ type UserStripeConnectAccount {
   "Timestamp of the most recent UserStripeConnectAccount update"
   updatedAt: DateTime!
 }
+
+#####################################################################

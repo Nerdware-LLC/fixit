@@ -10,6 +10,7 @@
     "./GraphQL/errors": "./GraphQL/src/errors/index.js",
     "./GraphQL/responses": "./GraphQL/src/responses/index.js",
     "./GraphQL/scalars": "./GraphQL/src/scalars/index.js",
-    "./GraphQL/types": "./GraphQL/src/types/index.js"
+    "./GraphQL/scalars/*": "./GraphQL/src/scalars/*",
+    "./GraphQL/types": "./GraphQL/src/types/index.js",
   }
 }

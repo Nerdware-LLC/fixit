@@ -1,3 +1,6 @@
+#####################################################################
+### LOCATION
+
 """
 A Location object.
 """
@@ -9,18 +12,12 @@ type Location {
   country: String!
 }
 
-input CreateLocationInput {
+input LocationInput {
   streetLine1: String!
   streetLine2: String
   city: String!
   region: String!
-  country: String
+  country: String = USA
 }
 
-input UpdateLocationInput {
-  streetLine1: String!
-  streetLine2: String
-  city: String!
-  region: String!
-  country: String
-}
+#####################################################################

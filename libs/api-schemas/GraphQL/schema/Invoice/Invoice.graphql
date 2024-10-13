@@ -1,3 +1,6 @@
+#####################################################################
+### INVOICE
+
 """
 An Invoice represents a request for payment from one User to another. In the
 context of the app, an Invoice is created by a User (the 'createdBy' User) and
@@ -5,7 +8,7 @@ assigned to another User (the 'assignedTo' User).
 """
 type Invoice {
   "(Immutable) Invoice ID, in the format of 'INV#{createdBy.id}#{UUID}'"
-  id: ID!
+  id: InvoiceID!
   "(Immutable) The User who created/sent the Invoice"
   createdBy: User!
   "(Immutable) The User to whom the Invoice was assigned, AKA the Invoice's recipient"
@@ -30,12 +33,11 @@ enum InvoiceStatus {
   DISPUTED
 }
 
-####################################################################
+#####################################################################
 ### QUERIES
 
 extend type Query {
-  invoice(invoiceID: ID! @constraint(format: "invoiceID")): Invoice!
-
+  invoice(invoiceID: InvoiceID!): Invoice!
   myInvoices: MyInvoicesQueryResponse!
 }
 
@@ -46,31 +48,23 @@ type MyInvoicesQueryResponse {
   assignedToUser: [Invoice!]!
 }
 
-####################################################################
+#####################################################################
 ### MUTATIONS
 
 extend type Mutation {
   createInvoice(invoice: InvoiceInput!): Invoice!
-
-  updateInvoiceAmount(
-    invoiceID: ID! @constraint(format: "invoiceID")
-    amount: Int!
-  ): Invoice!
-
-  payInvoice(invoiceID: ID! @constraint(format: "invoiceID")): Invoice!
-
-  deleteInvoice(
-    invoiceID: ID! @constraint(format: "invoiceID")
-  ): DeleteMutationResponse!
+  updateInvoiceAmount(invoiceID: InvoiceID!, amount: Int!): Invoice!
+  payInvoice(invoiceID: InvoiceID!): Invoice!
+  deleteInvoice(invoiceID: InvoiceID!): DeleteMutationResponse!
 }
 
 # MUTATION INPUT TYPES
 
 input InvoiceInput {
   "The ID of the User to whom the Invoice will be assigned"
-  assignedTo: ID! @constraint(format: "userID")
+  assignedToUserID: UserID!
   amount: Int!
-  workOrderID: ID @constraint(format: "workOrderID")
+  workOrderID: WorkOrderID
 }
 
-####################################################################
+#####################################################################

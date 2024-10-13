@@ -1,3 +1,6 @@
+#####################################################################
+### PROFILE
+
 """
 Profile schema
 """
@@ -24,3 +27,5 @@ input ProfileInput {
 extend type Mutation {
   updateProfile(profile: ProfileInput!): Profile!
 }
+
+#####################################################################

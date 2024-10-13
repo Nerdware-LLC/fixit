@@ -1,9 +1,12 @@
+#####################################################################
+### USER
+
 """
 User is an implementation of the PublicUserFields interface which represents an individual User.
 """
 type User implements PublicUserFields {
   "(Immutable) User ID internally identifies individual User accounts"
-  id: ID!
+  id: UserID!
   "(Immutable) Public-facing handle identifies users to other users (e.g., '@joe')"
   handle: String!
   "User's own email address"
@@ -62,3 +65,5 @@ extend type Query {
     offset: Int = 0
   ): [User!]!
 }
+
+#####################################################################

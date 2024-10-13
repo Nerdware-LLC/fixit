@@ -41,10 +41,10 @@ interface BaseMutationResponse {
 """Mutation response for setting a WorkOrder's status to CANCELLED"""
 union CancelWorkOrderResponse = DeleteMutationResponse | WorkOrder
 
-"""A checklist item."""
+"""A WorkOrder checklist item."""
 type ChecklistItem {
   description: String!
-  id: ID!
+  id: WorkOrderChecklistItemID!
   isCompleted: Boolean!
 }
 
@@ -64,7 +64,7 @@ type Contact implements PublicUserFields {
   handle: String!
 
   """Contact ID internally identifies a user's contact"""
-  id: ID!
+  id: ContactID!
 
   """Contact phone number"""
   phone: String
@@ -76,30 +76,28 @@ type Contact implements PublicUserFields {
   updatedAt: DateTime!
 }
 
+"""
+Custom ContactID scalar that encapsulates sanitization+validation logic
+for `Contact` ID strings.
+"""
+scalar ContactID
+
 input CreateChecklistItemInput {
   description: String!
-  isCompleted: Boolean
-}
-
-input CreateLocationInput {
-  city: String!
-  country: String
-  region: String!
-  streetLine1: String!
-  streetLine2: String
+  isCompleted: Boolean = false
 }
 
 """Input for creating a new WorkOrder"""
 input CreateWorkOrderInput {
-  assignedTo: ID
+  assignedToUserID: UserID
   category: WorkOrderCategory
   checklist: [CreateChecklistItemInput!]
   description: String
   dueDate: DateTime
   entryContact: String
   entryContactPhone: String
-  location: CreateLocationInput!
-  priority: WorkOrderPriority
+  location: LocationInput!
+  priority: WorkOrderPriority = NORMAL
   scheduledDateTime: DateTime
 }
 
@@ -152,7 +150,7 @@ type Invoice {
   createdBy: User!
 
   """(Immutable) Invoice ID, in the format of 'INV#{createdBy.id}#{UUID}'"""
-  id: ID!
+  id: InvoiceID!
 
   """
   The Invoice status; this field is controlled by the API and can not be directly edited by Users
@@ -173,12 +171,18 @@ type Invoice {
   workOrder: WorkOrder
 }
 
+"""
+Custom InvoiceID scalar that encapsulates sanitization+validation logic
+for _internal_ `Invoice` ID strings (_not_ Stripe invoice IDs).
+"""
+scalar InvoiceID
+
 input InvoiceInput {
   amount: Int!
 
   """The ID of the User to whom the Invoice will be assigned"""
-  assignedTo: ID!
-  workOrderID: ID
+  assignedToUserID: UserID!
+  workOrderID: WorkOrderID
 }
 
 enum InvoiceStatus {
@@ -196,19 +200,27 @@ type Location {
   streetLine2: String
 }
 
+input LocationInput {
+  city: String!
+  country: String
+  region: String!
+  streetLine1: String!
+  streetLine2: String
+}
+
 type Mutation {
-  cancelWorkOrder(workOrderID: ID!): CancelWorkOrderResponse!
-  createContact(contactUserID: ID!): Contact!
+  cancelWorkOrder(workOrderID: WorkOrderID!): CancelWorkOrderResponse!
+  createContact(contactUserID: UserID!): Contact!
   createInvite(phoneOrEmail: String!): MutationResponse!
   createInvoice(invoice: InvoiceInput!): Invoice!
   createWorkOrder(workOrder: CreateWorkOrderInput!): WorkOrder!
-  deleteContact(contactID: ID!): DeleteMutationResponse!
-  deleteInvoice(invoiceID: ID!): DeleteMutationResponse!
-  payInvoice(invoiceID: ID!): Invoice!
-  setWorkOrderStatusComplete(workOrderID: ID!): WorkOrder!
-  updateInvoiceAmount(amount: Int!, invoiceID: ID!): Invoice!
+  deleteContact(contactID: ContactID!): DeleteMutationResponse!
+  deleteInvoice(invoiceID: InvoiceID!): DeleteMutationResponse!
+  payInvoice(invoiceID: InvoiceID!): Invoice!
+  setWorkOrderStatusComplete(workOrderID: WorkOrderID!): WorkOrder!
+  updateInvoiceAmount(amount: Int!, invoiceID: InvoiceID!): Invoice!
   updateProfile(profile: ProfileInput!): Profile!
-  updateWorkOrder(workOrder: UpdateWorkOrderInput!, workOrderID: ID!): WorkOrder!
+  updateWorkOrder(workOrder: UpdateWorkOrderInput!, workOrderID: WorkOrderID!): WorkOrder!
 }
 
 """
@@ -284,7 +296,7 @@ interface PublicUserFields {
 }
 
 type Query {
-  contact(contactID: ID!): Contact!
+  contact(contactID: ContactID!): Contact!
 
   """
   This query returns the public fields of a User whose handle exactly matches the
@@ -292,7 +304,7 @@ type Query {
   with or fuzzy-matches a provided string, use \`searchForUsersByHandle\`.
   """
   getUserByHandle(handle: String!): User
-  invoice(invoiceID: ID!): Invoice!
+  invoice(invoiceID: InvoiceID!): Invoice!
   myContacts: [Contact!]!
   myInvoices: MyInvoicesQueryResponse!
   myProfile: Profile!
@@ -337,7 +349,7 @@ type Query {
     """
     offset: Int = 0
   ): [User!]!
-  workOrder(workOrderID: ID!): WorkOrder!
+  workOrder(workOrderID: WorkOrderID!): WorkOrder!
 }
 
 """Names of the currently available Fixit subscription price-models"""
@@ -387,9 +399,6 @@ enum SubscriptionStatus {
 
 """Supported "format" values for the `@constraint` directive."""
 enum SupportedConstraintFormat {
-  """Requires the string value to be a valid Contact ID."""
-  contactID
-
   """
   Requires the string value to be a valid email address (e.g., `foo.user@gmail.com`).
   """
@@ -399,9 +408,6 @@ enum SupportedConstraintFormat {
   Requires the string value to be a valid social-media handle (e.g., `@foo_user`).
   """
   handle
-
-  """Requires the string value to be a valid Invoice ID."""
-  invoiceID
 
   """
   Requires the string value to be a valid 10-digit U.S. phone number (e.g., `"(123) 456-7890"`
@@ -415,41 +421,27 @@ enum SupportedConstraintFormat {
   """
   url
 
-  """Requires the string value to be a valid User ID."""
-  userID
-
   """Requires the string value to be a valid UUID of any version."""
   uuid
-
-  """Requires the string value to be a valid WorkOrder ID."""
-  workOrderID
 }
 
 input UpdateChecklistItemInput {
   description: String!
-  id: ID
-  isCompleted: Boolean
-}
-
-input UpdateLocationInput {
-  city: String!
-  country: String
-  region: String!
-  streetLine1: String!
-  streetLine2: String
+  id: WorkOrderChecklistItemID
+  isCompleted: Boolean = false
 }
 
 """Input for updating an existing WorkOrder"""
 input UpdateWorkOrderInput {
-  assignedToUserID: ID
+  assignedToUserID: UserID
   category: WorkOrderCategory
   checklist: [UpdateChecklistItemInput!]
   description: String
   dueDate: DateTime
   entryContact: String
   entryContactPhone: String
-  location: UpdateLocationInput
-  priority: WorkOrderPriority
+  location: LocationInput
+  priority: WorkOrderPriority = NORMAL
   scheduledDateTime: DateTime
 }
 
@@ -469,7 +461,7 @@ type User implements PublicUserFields {
   handle: String!
 
   """(Immutable) User ID internally identifies individual User accounts"""
-  id: ID!
+  id: UserID!
 
   """User's own phone number"""
   phone: String
@@ -480,6 +472,12 @@ type User implements PublicUserFields {
   """Timestamp of the most recent account update"""
   updatedAt: DateTime!
 }
+
+"""
+Custom UserID scalar that encapsulates sanitization+validation logic
+for `User` ID strings.
+"""
+scalar UserID
 
 """A user's Stripe Connect Account details."""
 type UserStripeConnectAccount {
@@ -569,7 +567,7 @@ type WorkOrder {
   entryContactPhone: String
 
   """(Immutable) WorkOrder ID, in the format of 'WO#{createdBy.id}#{UUID}'"""
-  id: ID!
+  id: WorkOrderID!
 
   """The location of the job site for the WorkOrder"""
   location: Location!
@@ -636,6 +634,18 @@ enum WorkOrderCategory {
   """The WorkOrder involves windows"""
   WINDOWS
 }
+
+"""
+Custom WorkOrderChecklistItemID scalar that encapsulates sanitization+validation logic
+for `WorkOrderChecklistItem` ID strings.
+"""
+scalar WorkOrderChecklistItemID
+
+"""
+Custom WorkOrderID scalar that encapsulates sanitization+validation logic
+for internal `WorkOrder` ID strings.
+"""
+scalar WorkOrderID
 
 """The general priority of a WorkOrder"""
 enum WorkOrderPriority {

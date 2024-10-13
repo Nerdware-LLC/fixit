@@ -1,19 +1,24 @@
+#####################################################################
+### CHECKLIST
+
 """
-A checklist item.
+A WorkOrder checklist item.
 """
 type ChecklistItem {
-  id: ID!
+  id: WorkOrderChecklistItemID!
   description: String!
   isCompleted: Boolean!
 }
 
 input CreateChecklistItemInput {
   description: String!
-  isCompleted: Boolean
+  isCompleted: Boolean = false
 }
 
 input UpdateChecklistItemInput {
-  id: ID
+  id: WorkOrderChecklistItemID
   description: String!
-  isCompleted: Boolean
+  isCompleted: Boolean = false
 }
+
+#####################################################################

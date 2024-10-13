@@ -1,3 +1,12 @@
-export * from "./scalarResolverFactory.js";
+// General Scalars
+export * from "./DateTime.js";
 
-// FIXME delete this file/dir if the new gql-codgegen stuff works out.
+// ID Scalars
+export * from "./ContactID.js";
+export * from "./InvoiceID.js";
+export * from "./UserID.js";
+export * from "./WorkOrderChecklistItemID.js";
+export * from "./WorkOrderID.js";
+
+// GQL Scalar Resolvers
+export * from "./resolvers.js";

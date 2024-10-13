@@ -25,9 +25,6 @@ directive @constraint(
 Supported "format" values for the `@constraint` directive.
 """
 enum SupportedConstraintFormat {
-  ###################################################################
-  # MISC FORMATS:
-
   "Requires the string value to be a valid email address (e.g., `foo.user@gmail.com`)."
   email
   "Requires the string value to be a valid social-media handle (e.g., `@foo_user`)."
@@ -42,16 +39,4 @@ enum SupportedConstraintFormat {
   url
   "Requires the string value to be a valid UUID of any version."
   uuid
-
-  ###################################################################
-  # ID-BASED FORMATS:
-
-  "Requires the string value to be a valid Contact ID."
-  contactID
-  "Requires the string value to be a valid Invoice ID."
-  invoiceID
-  "Requires the string value to be a valid User ID."
-  userID
-  "Requires the string value to be a valid WorkOrder ID."
-  workOrderID
 }

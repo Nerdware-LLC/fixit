@@ -1,0 +1,42 @@
+#####################################################################
+### GENERAL SCALARS:
+
+"""
+Custom DateTime scalar with handling for Date objects and ISO-8601 datetime strings.
+"""
+scalar DateTime
+
+#####################################################################
+### ID SCALARS:
+
+"""
+Custom ContactID scalar that encapsulates sanitization+validation logic
+for `Contact` ID strings.
+"""
+scalar ContactID
+
+"""
+Custom InvoiceID scalar that encapsulates sanitization+validation logic
+for _internal_ `Invoice` ID strings (_not_ Stripe invoice IDs).
+"""
+scalar InvoiceID
+
+"""
+Custom UserID scalar that encapsulates sanitization+validation logic
+for `User` ID strings.
+"""
+scalar UserID
+
+"""
+Custom WorkOrderID scalar that encapsulates sanitization+validation logic
+for internal `WorkOrder` ID strings.
+"""
+scalar WorkOrderID
+
+"""
+Custom WorkOrderChecklistItemID scalar that encapsulates sanitization+validation logic
+for `WorkOrderChecklistItem` ID strings.
+"""
+scalar WorkOrderChecklistItemID
+
+#####################################################################

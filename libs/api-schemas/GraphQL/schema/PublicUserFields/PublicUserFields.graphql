@@ -1,3 +1,6 @@
+#####################################################################
+### PULIC USER FIELDS
+
 """
 PublicUserFields is an interface which defines publicly-accessible User fields.
 """
@@ -15,3 +18,5 @@ interface PublicUserFields {
   createdAt: DateTime!
   updatedAt: DateTime!
 }
+
+#####################################################################

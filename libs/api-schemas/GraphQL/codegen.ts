@@ -1,18 +1,14 @@
 import { defineConfig } from "@eddeee888/gcg-typescript-resolver-files";
 import { isValidPhone } from "@nerdware/ts-string-helpers";
-import { CONTACT_SK_REGEX_PATTERN_STR } from "../../dynamodb-models/src/Contact/regex.js";
-import { INVOICE_SK_REGEX_PATTERN_STR } from "../../dynamodb-models/src/Invoice/regex.js";
-import { USER_ID_REGEX_PATTERN_STR } from "../../dynamodb-models/src/User/regex.js";
-import { WO_SK_REGEX_PATTERN_STR } from "../../dynamodb-models/src/WorkOrder/regex.js";
 import { HANDLE_REGEX_PATTERN_STR } from "../../dynamodb-models/src/_common/regex.js";
 import type { CodegenConfig } from "@graphql-codegen/cli";
 import type { TypeScriptPluginConfig } from "@graphql-codegen/typescript";
 import type { ValidationSchemaPluginConfig } from "graphql-codegen-typescript-validation-schema";
 
-// LIB PATHS:
+/** The path to the GraphQL schema lib */
 const LIB_GQL = "libs/api-schemas/GraphQL";
 
-// typescript plugin configs used by all output targets:
+/** typescript plugin configs used by all output targets */
 const SHARED_TS_PLUGIN_CONFIGS: TypeScriptPluginConfig = {
   enumsAsTypes: true,
   useTypeImports: true,
@@ -20,7 +16,7 @@ const SHARED_TS_PLUGIN_CONFIGS: TypeScriptPluginConfig = {
   namingConvention: "change-case#pascalCase",
   maybeValue: "T | null",
   defaultScalarType: "unknown", // default: `any`
-  // Don't put "scalars" here, the preset requires "scalarsOverrides" instead.
+  // Don't put "scalars" here, the preset requires "scalarsOverrides" instead (see below).
 };
 
 /**
@@ -46,8 +42,15 @@ const codegenConfig: CodegenConfig = {
       fixObjectTypeResolvers: "disabled", // Don't diff GQL-types with their mapped types.
       scalarsModule: false, //               Don't use scalars from the `graphql-scalars` package.
       scalarsOverrides: {
+        // GENERAL SCALARS:
         ID: { type: "string" },
         DateTime: { type: "Date" },
+        // ID SCALARS:
+        ContactID: { type: "string" },
+        InvoiceID: { type: "string" },
+        UserID: { type: "string" },
+        WorkOrderID: { type: "string" },
+        WorkOrderChecklistItemID: { type: "string" },
       },
       typesPluginsConfig: {
         // PLUGIN CONFIGS — typescript:
@@ -68,24 +71,30 @@ const codegenConfig: CodegenConfig = {
     }),
 
     // ZOD VALIDATION SCHEMA
-    [`${LIB_GQL}/src/__generated__.zodSchemas.ts`]: {
+    [`${LIB_GQL}/src/validation/__generated__.zodSchemas.ts`]: {
       plugins: ["typescript-validation-schema"],
       config: {
         emitLegacyCommonJSImports: false,
         // PLUGIN CONFIGS — typescript:
         ...SHARED_TS_PLUGIN_CONFIGS,
         scalars: {
+          // GENERAL SCALARS:
           ID: "string",
           DateTime: "Date",
+          // ID SCALARS:
+          ContactID: "string",
+          InvoiceID: "string",
+          UserID: "string",
+          WorkOrderID: "string",
+          WorkOrderChecklistItemID: "string",
         },
         // PLUGIN CONFIGS — typescript-validation-schema:
         schema: "zod",
         importFrom: "@fixit/api-schemas/GraphQL/types",
         validationSchemaExportType: "const",
-        notAllowEmptyString: true,
         withObjectType: true,
         scalarSchemas: {
-          ID: "z.string().min(1)",
+          ID: "z.string()",
           DateTime: "z.date()",
         },
         directives: {
@@ -105,11 +114,6 @@ const codegenConfig: CodegenConfig = {
               phone: ["regex", `/${isValidPhone._regex.source}/`, "Invalid phone number"],
               url: "url",
               uuid: "uuid",
-              // format, ID-BASED FORMATS:
-              contactID: ["regex", `/^${CONTACT_SK_REGEX_PATTERN_STR}$/`, "Invalid Contact ID"],
-              invoiceID: ["regex", `/^${INVOICE_SK_REGEX_PATTERN_STR}$/`, "Invalid Invoice ID"],
-              userID: ["regex", `/^${USER_ID_REGEX_PATTERN_STR}$/`, "Invalid User ID"],
-              workOrderID: ["regex", `/^${WO_SK_REGEX_PATTERN_STR}$/`, "Invalid WorkOrder ID"],
             },
             // NUMERIC CONSTRAINTS:
             min: "min", // alias of zod.number().gte()

@@ -23,8 +23,33 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean; }
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
+  /**
+   * Custom ContactID scalar that encapsulates sanitization+validation logic
+   * for `Contact` ID strings.
+   */
+  ContactID: { input: string; output: string; }
   /** Custom DateTime scalar with handling for Date objects and ISO-8601 datetime strings. */
   DateTime: { input: Date; output: Date; }
+  /**
+   * Custom InvoiceID scalar that encapsulates sanitization+validation logic
+   * for _internal_ `Invoice` ID strings (_not_ Stripe invoice IDs).
+   */
+  InvoiceID: { input: string; output: string; }
+  /**
+   * Custom UserID scalar that encapsulates sanitization+validation logic
+   * for `User` ID strings.
+   */
+  UserID: { input: string; output: string; }
+  /**
+   * Custom WorkOrderChecklistItemID scalar that encapsulates sanitization+validation logic
+   * for `WorkOrderChecklistItem` ID strings.
+   */
+  WorkOrderChecklistItemID: { input: string; output: string; }
+  /**
+   * Custom WorkOrderID scalar that encapsulates sanitization+validation logic
+   * for internal `WorkOrder` ID strings.
+   */
+  WorkOrderID: { input: string; output: string; }
 };
 
 /** An interface for mutation-response types. */
@@ -44,11 +69,11 @@ export type BaseMutationResponse = {
 /** Mutation response for setting a WorkOrder's status to CANCELLED */
 export type CancelWorkOrderResponse = DeleteMutationResponse | WorkOrder;
 
-/** A checklist item. */
+/** A WorkOrder checklist item. */
 export type ChecklistItem = {
   __typename?: 'ChecklistItem';
   description: Scalars['String']['output'];
-  id: Scalars['ID']['output'];
+  id: Scalars['WorkOrderChecklistItemID']['output'];
   isCompleted: Scalars['Boolean']['output'];
 };
 
@@ -66,7 +91,7 @@ export type Contact = PublicUserFields & {
   /** Public-facing handle identifies users to other users (e.g., '@joe') */
   handle: Scalars['String']['output'];
   /** Contact ID internally identifies a user's contact */
-  id: Scalars['ID']['output'];
+  id: Scalars['ContactID']['output'];
   /** Contact phone number */
   phone?: Maybe<Scalars['String']['output']>;
   /** Contact Profile object */
@@ -80,24 +105,16 @@ export type CreateChecklistItemInput = {
   isCompleted?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
-export type CreateLocationInput = {
-  city: Scalars['String']['input'];
-  country?: InputMaybe<Scalars['String']['input']>;
-  region: Scalars['String']['input'];
-  streetLine1: Scalars['String']['input'];
-  streetLine2?: InputMaybe<Scalars['String']['input']>;
-};
-
 /** Input for creating a new WorkOrder */
 export type CreateWorkOrderInput = {
-  assignedTo?: InputMaybe<Scalars['ID']['input']>;
+  assignedToUserID?: InputMaybe<Scalars['UserID']['input']>;
   category?: InputMaybe<WorkOrderCategory>;
   checklist?: InputMaybe<Array<CreateChecklistItemInput>>;
   description?: InputMaybe<Scalars['String']['input']>;
   dueDate?: InputMaybe<Scalars['DateTime']['input']>;
   entryContact?: InputMaybe<Scalars['String']['input']>;
   entryContactPhone?: InputMaybe<Scalars['String']['input']>;
-  location: CreateLocationInput;
+  location: LocationInput;
   priority?: InputMaybe<WorkOrderPriority>;
   scheduledDateTime?: InputMaybe<Scalars['DateTime']['input']>;
 };
@@ -135,7 +152,7 @@ export type Invoice = {
   /** (Immutable) The User who created/sent the Invoice */
   createdBy: User;
   /** (Immutable) Invoice ID, in the format of 'INV#{createdBy.id}#{UUID}' */
-  id: Scalars['ID']['output'];
+  id: Scalars['InvoiceID']['output'];
   /** The Invoice status; this field is controlled by the API and can not be directly edited by Users */
   status: InvoiceStatus;
   /** The ID of the most recent successful paymentIntent applied to the Invoice, if any */
@@ -149,8 +166,8 @@ export type Invoice = {
 export type InvoiceInput = {
   amount: Scalars['Int']['input'];
   /** The ID of the User to whom the Invoice will be assigned */
-  assignedTo: Scalars['ID']['input'];
-  workOrderID?: InputMaybe<Scalars['ID']['input']>;
+  assignedToUserID: Scalars['UserID']['input'];
+  workOrderID?: InputMaybe<Scalars['WorkOrderID']['input']>;
 };
 
 export type InvoiceStatus =
@@ -166,6 +183,14 @@ export type Location = {
   region: Scalars['String']['output'];
   streetLine1: Scalars['String']['output'];
   streetLine2?: Maybe<Scalars['String']['output']>;
+};
+
+export type LocationInput = {
+  city: Scalars['String']['input'];
+  country?: InputMaybe<Scalars['String']['input']>;
+  region: Scalars['String']['input'];
+  streetLine1: Scalars['String']['input'];
+  streetLine2?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type Mutation = {
@@ -186,12 +211,12 @@ export type Mutation = {
 
 
 export type MutationCancelWorkOrderArgs = {
-  workOrderID: Scalars['ID']['input'];
+  workOrderID: Scalars['WorkOrderID']['input'];
 };
 
 
 export type MutationCreateContactArgs = {
-  contactUserID: Scalars['ID']['input'];
+  contactUserID: Scalars['UserID']['input'];
 };
 
 
@@ -211,28 +236,28 @@ export type MutationCreateWorkOrderArgs = {
 
 
 export type MutationDeleteContactArgs = {
-  contactID: Scalars['ID']['input'];
+  contactID: Scalars['ContactID']['input'];
 };
 
 
 export type MutationDeleteInvoiceArgs = {
-  invoiceID: Scalars['ID']['input'];
+  invoiceID: Scalars['InvoiceID']['input'];
 };
 
 
 export type MutationPayInvoiceArgs = {
-  invoiceID: Scalars['ID']['input'];
+  invoiceID: Scalars['InvoiceID']['input'];
 };
 
 
 export type MutationSetWorkOrderStatusCompleteArgs = {
-  workOrderID: Scalars['ID']['input'];
+  workOrderID: Scalars['WorkOrderID']['input'];
 };
 
 
 export type MutationUpdateInvoiceAmountArgs = {
   amount: Scalars['Int']['input'];
-  invoiceID: Scalars['ID']['input'];
+  invoiceID: Scalars['InvoiceID']['input'];
 };
 
 
@@ -243,7 +268,7 @@ export type MutationUpdateProfileArgs = {
 
 export type MutationUpdateWorkOrderArgs = {
   workOrder: UpdateWorkOrderInput;
-  workOrderID: Scalars['ID']['input'];
+  workOrderID: Scalars['WorkOrderID']['input'];
 };
 
 /**
@@ -350,7 +375,7 @@ export type Query = {
 
 
 export type QueryContactArgs = {
-  contactID: Scalars['ID']['input'];
+  contactID: Scalars['ContactID']['input'];
 };
 
 
@@ -360,7 +385,7 @@ export type QueryGetUserByHandleArgs = {
 
 
 export type QueryInvoiceArgs = {
-  invoiceID: Scalars['ID']['input'];
+  invoiceID: Scalars['InvoiceID']['input'];
 };
 
 
@@ -372,7 +397,7 @@ export type QuerySearchForUsersByHandleArgs = {
 
 
 export type QueryWorkOrderArgs = {
-  workOrderID: Scalars['ID']['input'];
+  workOrderID: Scalars['WorkOrderID']['input'];
 };
 
 /** Names of the currently available Fixit subscription price-models */
@@ -406,14 +431,10 @@ export type SubscriptionStatus =
 
 /** Supported "format" values for the `@constraint` directive. */
 export type SupportedConstraintFormat =
-  /** Requires the string value to be a valid Contact ID. */
-  | 'contactID'
   /** Requires the string value to be a valid email address (e.g., `foo.user@gmail.com`). */
   | 'email'
   /** Requires the string value to be a valid social-media handle (e.g., `@foo_user`). */
   | 'handle'
-  /** Requires the string value to be a valid Invoice ID. */
-  | 'invoiceID'
   /**
    * Requires the string value to be a valid 10-digit U.S. phone number (e.g., `"(123) 456-7890"`
    * or `"1234567890"`). Non-numeric characters are stripped from the value prior to validation,
@@ -422,37 +443,25 @@ export type SupportedConstraintFormat =
   | 'phone'
   /** Requires the string value to be a valid URL (e.g., `https://example.com`). */
   | 'url'
-  /** Requires the string value to be a valid User ID. */
-  | 'userID'
   /** Requires the string value to be a valid UUID of any version. */
-  | 'uuid'
-  /** Requires the string value to be a valid WorkOrder ID. */
-  | 'workOrderID';
+  | 'uuid';
 
 export type UpdateChecklistItemInput = {
   description: Scalars['String']['input'];
-  id?: InputMaybe<Scalars['ID']['input']>;
+  id?: InputMaybe<Scalars['WorkOrderChecklistItemID']['input']>;
   isCompleted?: InputMaybe<Scalars['Boolean']['input']>;
-};
-
-export type UpdateLocationInput = {
-  city: Scalars['String']['input'];
-  country?: InputMaybe<Scalars['String']['input']>;
-  region: Scalars['String']['input'];
-  streetLine1: Scalars['String']['input'];
-  streetLine2?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** Input for updating an existing WorkOrder */
 export type UpdateWorkOrderInput = {
-  assignedToUserID?: InputMaybe<Scalars['ID']['input']>;
+  assignedToUserID?: InputMaybe<Scalars['UserID']['input']>;
   category?: InputMaybe<WorkOrderCategory>;
   checklist?: InputMaybe<Array<UpdateChecklistItemInput>>;
   description?: InputMaybe<Scalars['String']['input']>;
   dueDate?: InputMaybe<Scalars['DateTime']['input']>;
   entryContact?: InputMaybe<Scalars['String']['input']>;
   entryContactPhone?: InputMaybe<Scalars['String']['input']>;
-  location?: InputMaybe<UpdateLocationInput>;
+  location?: InputMaybe<LocationInput>;
   priority?: InputMaybe<WorkOrderPriority>;
   scheduledDateTime?: InputMaybe<Scalars['DateTime']['input']>;
 };
@@ -467,7 +476,7 @@ export type User = PublicUserFields & {
   /** (Immutable) Public-facing handle identifies users to other users (e.g., '@joe') */
   handle: Scalars['String']['output'];
   /** (Immutable) User ID internally identifies individual User accounts */
-  id: Scalars['ID']['output'];
+  id: Scalars['UserID']['output'];
   /** User's own phone number */
   phone?: Maybe<Scalars['String']['output']>;
   /** User's own Profile object */
@@ -536,7 +545,7 @@ export type WorkOrder = {
   /** The phone number of the WorkOrder's entry contact, if any */
   entryContactPhone?: Maybe<Scalars['String']['output']>;
   /** (Immutable) WorkOrder ID, in the format of 'WO#{createdBy.id}#{UUID}' */
-  id: Scalars['ID']['output'];
+  id: Scalars['WorkOrderID']['output'];
   /** The location of the job site for the WorkOrder */
   location: Location;
   /** The WorkOrder priority */
@@ -692,18 +701,20 @@ export type ResolversTypes = ResolversObject<{
   Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>;
   CancelWorkOrderResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['CancelWorkOrderResponse']>;
   ChecklistItem: ResolverTypeWrapper<ChecklistItem>;
-  ID: ResolverTypeWrapper<Scalars['ID']['output']>;
   Contact: ResolverTypeWrapper<ContactItem>;
+  ContactID: ResolverTypeWrapper<Scalars['ContactID']['output']>;
   CreateChecklistItemInput: CreateChecklistItemInput;
-  CreateLocationInput: CreateLocationInput;
   CreateWorkOrderInput: CreateWorkOrderInput;
   DateTime: ResolverTypeWrapper<Scalars['DateTime']['output']>;
   DeleteMutationResponse: ResolverTypeWrapper<DeleteMutationResponse>;
+  ID: ResolverTypeWrapper<Scalars['ID']['output']>;
   Invoice: ResolverTypeWrapper<InvoiceItem>;
   Int: ResolverTypeWrapper<Scalars['Int']['output']>;
+  InvoiceID: ResolverTypeWrapper<Scalars['InvoiceID']['output']>;
   InvoiceInput: InvoiceInput;
   InvoiceStatus: ResolverTypeWrapper<'OPEN' | 'CLOSED' | 'DISPUTED'>;
   Location: ResolverTypeWrapper<Location>;
+  LocationInput: LocationInput;
   Mutation: ResolverTypeWrapper<{}>;
   MutationResponse: ResolverTypeWrapper<MutationResponse>;
   MyInvoicesQueryResponse: ResolverTypeWrapper<Omit<MyInvoicesQueryResponse, 'assignedToUser' | 'createdByUser'> & { assignedToUser: Array<ResolversTypes['Invoice']>, createdByUser: Array<ResolversTypes['Invoice']> }>;
@@ -714,15 +725,17 @@ export type ResolversTypes = ResolversObject<{
   Query: ResolverTypeWrapper<{}>;
   SubscriptionPriceName: ResolverTypeWrapper<'ANNUAL' | 'MONTHLY' | 'TRIAL'>;
   SubscriptionStatus: ResolverTypeWrapper<'active' | 'incomplete' | 'incomplete_expired' | 'trialing' | 'past_due' | 'canceled' | 'unpaid'>;
-  SupportedConstraintFormat: ResolverTypeWrapper<'email' | 'handle' | 'phone' | 'url' | 'uuid' | 'contactID' | 'invoiceID' | 'userID' | 'workOrderID'>;
+  SupportedConstraintFormat: ResolverTypeWrapper<'email' | 'handle' | 'phone' | 'url' | 'uuid'>;
   UpdateChecklistItemInput: UpdateChecklistItemInput;
-  UpdateLocationInput: UpdateLocationInput;
   UpdateWorkOrderInput: UpdateWorkOrderInput;
   User: ResolverTypeWrapper<User>;
+  UserID: ResolverTypeWrapper<Scalars['UserID']['output']>;
   UserStripeConnectAccount: ResolverTypeWrapper<UserStripeConnectAccountItem>;
   UserSubscription: ResolverTypeWrapper<UserSubscriptionItem>;
   WorkOrder: ResolverTypeWrapper<WorkOrderItem>;
   WorkOrderCategory: ResolverTypeWrapper<'DRYWALL' | 'ELECTRICAL' | 'FLOORING' | 'GENERAL' | 'HVAC' | 'LANDSCAPING' | 'MASONRY' | 'PAINTING' | 'PAVING' | 'PEST' | 'PLUMBING' | 'ROOFING' | 'TRASH' | 'TURNOVER' | 'WINDOWS'>;
+  WorkOrderChecklistItemID: ResolverTypeWrapper<Scalars['WorkOrderChecklistItemID']['output']>;
+  WorkOrderID: ResolverTypeWrapper<Scalars['WorkOrderID']['output']>;
   WorkOrderPriority: ResolverTypeWrapper<'LOW' | 'NORMAL' | 'HIGH'>;
   WorkOrderStatus: ResolverTypeWrapper<'UNASSIGNED' | 'ASSIGNED' | 'IN_PROGRESS' | 'DEFERRED' | 'CANCELLED' | 'COMPLETE'>;
 }>;
@@ -734,17 +747,19 @@ export type ResolversParentTypes = ResolversObject<{
   Boolean: Scalars['Boolean']['output'];
   CancelWorkOrderResponse: ResolversUnionTypes<ResolversParentTypes>['CancelWorkOrderResponse'];
   ChecklistItem: ChecklistItem;
-  ID: Scalars['ID']['output'];
   Contact: ContactItem;
+  ContactID: Scalars['ContactID']['output'];
   CreateChecklistItemInput: CreateChecklistItemInput;
-  CreateLocationInput: CreateLocationInput;
   CreateWorkOrderInput: CreateWorkOrderInput;
   DateTime: Scalars['DateTime']['output'];
   DeleteMutationResponse: DeleteMutationResponse;
+  ID: Scalars['ID']['output'];
   Invoice: InvoiceItem;
   Int: Scalars['Int']['output'];
+  InvoiceID: Scalars['InvoiceID']['output'];
   InvoiceInput: InvoiceInput;
   Location: Location;
+  LocationInput: LocationInput;
   Mutation: {};
   MutationResponse: MutationResponse;
   MyInvoicesQueryResponse: Omit<MyInvoicesQueryResponse, 'assignedToUser' | 'createdByUser'> & { assignedToUser: Array<ResolversParentTypes['Invoice']>, createdByUser: Array<ResolversParentTypes['Invoice']> };
@@ -754,12 +769,14 @@ export type ResolversParentTypes = ResolversObject<{
   PublicUserFields: PublicUserFieldsCodegenMapper;
   Query: {};
   UpdateChecklistItemInput: UpdateChecklistItemInput;
-  UpdateLocationInput: UpdateLocationInput;
   UpdateWorkOrderInput: UpdateWorkOrderInput;
   User: User;
+  UserID: Scalars['UserID']['output'];
   UserStripeConnectAccount: UserStripeConnectAccountItem;
   UserSubscription: UserSubscriptionItem;
   WorkOrder: WorkOrderItem;
+  WorkOrderChecklistItemID: Scalars['WorkOrderChecklistItemID']['output'];
+  WorkOrderID: Scalars['WorkOrderID']['output'];
 }>;
 
 export type ConstraintDirectiveArgs = {
@@ -790,7 +807,7 @@ export type CancelWorkOrderResponseResolvers<ContextType = ApolloServerContext, 
 
 export type ChecklistItemResolvers<ContextType = ApolloServerContext, ParentType extends ResolversParentTypes['ChecklistItem'] = ResolversParentTypes['ChecklistItem']> = ResolversObject<{
   description?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['WorkOrderChecklistItemID'], ParentType, ContextType>;
   isCompleted?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
@@ -799,12 +816,16 @@ export type ContactResolvers<ContextType = ApolloServerContext, ParentType exten
   createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
   email?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   handle?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['ContactID'], ParentType, ContextType>;
   phone?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   profile?: Resolver<ResolversTypes['Profile'], ParentType, ContextType>;
   updatedAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
+
+export interface ContactIdScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['ContactID'], any> {
+  name: 'ContactID';
+}
 
 export interface DateTimeScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['DateTime'], any> {
   name: 'DateTime';
@@ -823,13 +844,17 @@ export type InvoiceResolvers<ContextType = ApolloServerContext, ParentType exten
   assignedTo?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
   createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
   createdBy?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
-  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['InvoiceID'], ParentType, ContextType>;
   status?: Resolver<ResolversTypes['InvoiceStatus'], ParentType, ContextType>;
   stripePaymentIntentID?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   updatedAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
   workOrder?: Resolver<Maybe<ResolversTypes['WorkOrder']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
+
+export interface InvoiceIdScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['InvoiceID'], any> {
+  name: 'InvoiceID';
+}
 
 export type InvoiceStatusResolvers = EnumResolverSignature<{ CLOSED?: any, DISPUTED?: any, OPEN?: any }, ResolversTypes['InvoiceStatus']>;
 
@@ -913,18 +938,22 @@ export type SubscriptionPriceNameResolvers = EnumResolverSignature<{ ANNUAL?: an
 
 export type SubscriptionStatusResolvers = EnumResolverSignature<{ active?: any, canceled?: any, incomplete?: any, incomplete_expired?: any, past_due?: any, trialing?: any, unpaid?: any }, ResolversTypes['SubscriptionStatus']>;
 
-export type SupportedConstraintFormatResolvers = EnumResolverSignature<{ contactID?: any, email?: any, handle?: any, invoiceID?: any, phone?: any, url?: any, userID?: any, uuid?: any, workOrderID?: any }, ResolversTypes['SupportedConstraintFormat']>;
+export type SupportedConstraintFormatResolvers = EnumResolverSignature<{ email?: any, handle?: any, phone?: any, url?: any, uuid?: any }, ResolversTypes['SupportedConstraintFormat']>;
 
 export type UserResolvers<ContextType = ApolloServerContext, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = ResolversObject<{
   createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
   email?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   handle?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['UserID'], ParentType, ContextType>;
   phone?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   profile?: Resolver<ResolversTypes['Profile'], ParentType, ContextType>;
   updatedAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
+
+export interface UserIdScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['UserID'], any> {
+  name: 'UserID';
+}
 
 export type UserStripeConnectAccountResolvers<ContextType = ApolloServerContext, ParentType extends ResolversParentTypes['UserStripeConnectAccount'] = ResolversParentTypes['UserStripeConnectAccount']> = ResolversObject<{
   chargesEnabled?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
@@ -958,7 +987,7 @@ export type WorkOrderResolvers<ContextType = ApolloServerContext, ParentType ext
   dueDate?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
   entryContact?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   entryContactPhone?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['WorkOrderID'], ParentType, ContextType>;
   location?: Resolver<ResolversTypes['Location'], ParentType, ContextType>;
   priority?: Resolver<ResolversTypes['WorkOrderPriority'], ParentType, ContextType>;
   scheduledDateTime?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
@@ -969,6 +998,14 @@ export type WorkOrderResolvers<ContextType = ApolloServerContext, ParentType ext
 
 export type WorkOrderCategoryResolvers = EnumResolverSignature<{ DRYWALL?: any, ELECTRICAL?: any, FLOORING?: any, GENERAL?: any, HVAC?: any, LANDSCAPING?: any, MASONRY?: any, PAINTING?: any, PAVING?: any, PEST?: any, PLUMBING?: any, ROOFING?: any, TRASH?: any, TURNOVER?: any, WINDOWS?: any }, ResolversTypes['WorkOrderCategory']>;
 
+export interface WorkOrderChecklistItemIdScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['WorkOrderChecklistItemID'], any> {
+  name: 'WorkOrderChecklistItemID';
+}
+
+export interface WorkOrderIdScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['WorkOrderID'], any> {
+  name: 'WorkOrderID';
+}
+
 export type WorkOrderPriorityResolvers = EnumResolverSignature<{ HIGH?: any, LOW?: any, NORMAL?: any }, ResolversTypes['WorkOrderPriority']>;
 
 export type WorkOrderStatusResolvers = EnumResolverSignature<{ ASSIGNED?: any, CANCELLED?: any, COMPLETE?: any, DEFERRED?: any, IN_PROGRESS?: any, UNASSIGNED?: any }, ResolversTypes['WorkOrderStatus']>;
@@ -978,9 +1015,11 @@ export type Resolvers<ContextType = ApolloServerContext> = ResolversObject<{
   CancelWorkOrderResponse?: CancelWorkOrderResponseResolvers<ContextType>;
   ChecklistItem?: ChecklistItemResolvers<ContextType>;
   Contact?: ContactResolvers<ContextType>;
+  ContactID?: GraphQLScalarType;
   DateTime?: GraphQLScalarType;
   DeleteMutationResponse?: DeleteMutationResponseResolvers<ContextType>;
   Invoice?: InvoiceResolvers<ContextType>;
+  InvoiceID?: GraphQLScalarType;
   InvoiceStatus?: InvoiceStatusResolvers;
   Location?: LocationResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
@@ -994,10 +1033,13 @@ export type Resolvers<ContextType = ApolloServerContext> = ResolversObject<{
   SubscriptionStatus?: SubscriptionStatusResolvers;
   SupportedConstraintFormat?: SupportedConstraintFormatResolvers;
   User?: UserResolvers<ContextType>;
+  UserID?: GraphQLScalarType;
   UserStripeConnectAccount?: UserStripeConnectAccountResolvers<ContextType>;
   UserSubscription?: UserSubscriptionResolvers<ContextType>;
   WorkOrder?: WorkOrderResolvers<ContextType>;
   WorkOrderCategory?: WorkOrderCategoryResolvers;
+  WorkOrderChecklistItemID?: GraphQLScalarType;
+  WorkOrderID?: GraphQLScalarType;
   WorkOrderPriority?: WorkOrderPriorityResolvers;
   WorkOrderStatus?: WorkOrderStatusResolvers;
 }>;

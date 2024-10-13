@@ -1,4 +1,0 @@
-"""
-Custom DateTime scalar with handling for Date objects and ISO-8601 datetime strings.
-"""
-scalar DateTime

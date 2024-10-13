@@ -1,3 +1,6 @@
+#####################################################################
+### USER SUBSCRIPTION
+
 """
 A user's subscription to a Fixit SaaS product.
 """
@@ -52,3 +55,5 @@ enum SubscriptionPriceName {
 extend type Query {
   mySubscription: UserSubscription!
 }
+
+#####################################################################

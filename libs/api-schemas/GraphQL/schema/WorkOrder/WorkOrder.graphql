@@ -1,9 +1,12 @@
+#####################################################################
+### WORK ORDER
+
 """
 A WorkOrder is a request one User submits to another for work to be performed at a location.
 """
 type WorkOrder {
   "(Immutable) WorkOrder ID, in the format of 'WO#{createdBy.id}#{UUID}'"
-  id: ID!
+  id: WorkOrderID!
   "(Immutable) The User who created/sent the WorkOrder"
   createdBy: User!
   "The User to whom the WorkOrder was assigned, AKA the WorkOrder's recipient"
@@ -98,11 +101,11 @@ enum WorkOrderCategory {
   WINDOWS
 }
 
-####################################################################
+#####################################################################
 ### QUERIES
 
 extend type Query {
-  workOrder(workOrderID: ID! @constraint(format: "workOrderID")): WorkOrder!
+  workOrder(workOrderID: WorkOrderID!): WorkOrder!
   myWorkOrders: MyWorkOrdersQueryResponse!
 }
 
@@ -113,33 +116,29 @@ type MyWorkOrdersQueryResponse {
   assignedToUser: [WorkOrder!]!
 }
 
-####################################################################
+#####################################################################
 ### MUTATIONS
 
 extend type Mutation {
   createWorkOrder(workOrder: CreateWorkOrderInput!): WorkOrder!
 
   updateWorkOrder(
-    workOrderID: ID! @constraint(format: "workOrderID")
+    workOrderID: WorkOrderID!
     workOrder: UpdateWorkOrderInput!
   ): WorkOrder!
 
-  cancelWorkOrder(
-    workOrderID: ID! @constraint(format: "workOrderID")
-  ): CancelWorkOrderResponse!
+  cancelWorkOrder(workOrderID: WorkOrderID!): CancelWorkOrderResponse!
 
-  setWorkOrderStatusComplete(
-    workOrderID: ID! @constraint(format: "workOrderID")
-  ): WorkOrder!
+  setWorkOrderStatusComplete(workOrderID: WorkOrderID!): WorkOrder!
 }
 
 # MUTATION INPUT TYPES
 
 "Input for creating a new WorkOrder"
 input CreateWorkOrderInput {
-  assignedTo: ID @constraint(format: "userID")
-  priority: WorkOrderPriority
-  location: CreateLocationInput!
+  assignedToUserID: UserID
+  priority: WorkOrderPriority = NORMAL
+  location: LocationInput!
   category: WorkOrderCategory
   description: String
   checklist: [CreateChecklistItemInput!]
@@ -151,9 +150,9 @@ input CreateWorkOrderInput {
 
 "Input for updating an existing WorkOrder"
 input UpdateWorkOrderInput {
-  assignedToUserID: ID @constraint(format: "userID")
-  priority: WorkOrderPriority
-  location: UpdateLocationInput
+  assignedToUserID: UserID
+  priority: WorkOrderPriority = NORMAL
+  location: LocationInput
   category: WorkOrderCategory
   description: String
   checklist: [UpdateChecklistItemInput!]
@@ -168,4 +167,4 @@ input UpdateWorkOrderInput {
 "Mutation response for setting a WorkOrder's status to CANCELLED"
 union CancelWorkOrderResponse = WorkOrder | DeleteMutationResponse
 
-####################################################################
+#####################################################################
