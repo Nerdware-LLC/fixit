@@ -12,5 +12,6 @@
     "./GraphQL/scalars": "./GraphQL/src/scalars/index.js",
     "./GraphQL/scalars/*": "./GraphQL/src/scalars/*",
     "./GraphQL/types": "./GraphQL/src/types/index.js",
+    "./GraphQL/validation": "./GraphQL/src/validation/index.js"
   }
 }
