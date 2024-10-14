@@ -1,3 +1,4 @@
+import { isString } from "@nerdware/ts-type-safety-utils";
 import { getCompoundAttrRegex } from "../_common/compoundAttributeHelpers.js";
 
 /** Sanitizes a user-provided street-address string by removing any non-permitted chars. */
@@ -6,8 +7,8 @@ export const sanitizeStreetAddress = (value: string): string => {
 };
 
 /** Returns a boolean indicating whether a user-provided street-address string is valid. */
-export const isValidStreetAddress = (value: string): boolean => {
-  return /^[\p{Script=Latin}\s\d'.:,#-]{2,}$/iu.test(value);
+export const isValidStreetAddress = (value?: unknown): boolean => {
+  return isString(value) && /^[\p{Script=Latin}\s\d'.:,#-]{2,}$/iu.test(value);
 };
 
 /**
