@@ -2,11 +2,11 @@ import eslintJS from "@eslint/js";
 import nxPlugin from "@nx/eslint-plugin";
 import stylisticPlugin from "@stylistic/eslint-plugin";
 import stylisticPluginMigrate from "@stylistic/eslint-plugin-migrate";
+import vitestPlugin from "@vitest/eslint-plugin";
 import eslintConfigPrettier from "eslint-config-prettier";
 import importPlugin from "eslint-plugin-import-x";
 import jsdocPlugin from "eslint-plugin-jsdoc";
 import nodePlugin from "eslint-plugin-n";
-import vitestPlugin from "eslint-plugin-vitest";
 import globals from "globals";
 import tsEslint from "typescript-eslint";
 
