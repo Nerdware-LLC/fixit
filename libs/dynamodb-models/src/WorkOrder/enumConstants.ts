@@ -5,7 +5,7 @@ import type {
 } from "@fixit/api-schemas/GraphQL/types";
 
 /**
- * A map of all work order enums.
+ * A map of all WorkOrder enums.
  */
 export const WORK_ORDER_ENUM_CONSTANTS = {
   PRIORITIES: [
