@@ -63,7 +63,7 @@ const codegenConfig: CodegenConfig = {
         mappers: {
           Contact: "@fixit/dynamodb-models/Contact#ContactItem",
           Invoice: "@fixit/dynamodb-models/Invoice#InvoiceItem",
-          PublicUserFields: "@fixit/api-schemas/GraphQL/types/PublicUserFieldsCodegenMapper.js#PublicUserFieldsCodegenMapper",
+          PublicUserFields: "@fixit/api-schemas/GraphQL/types/PublicUserFieldsCodegen.js#PublicUserFieldsCodegenMapper",
           UserSubscription: "@fixit/dynamodb-models/UserSubscription#UserSubscriptionItem",
           UserStripeConnectAccount: "@fixit/dynamodb-models/UserStripeConnectAccount#UserStripeConnectAccountItem",
           WorkOrder: "@fixit/dynamodb-models/WorkOrder#WorkOrderItem",
