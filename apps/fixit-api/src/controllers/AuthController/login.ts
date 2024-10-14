@@ -8,6 +8,7 @@ import {
 } from "@nerdware/ts-string-helpers";
 import { hasKey } from "@nerdware/ts-type-safety-utils";
 import { z as zod } from "zod";
+import { getStringTransformer } from "@fixit/api-schemas/GraphQL/validation/helpers/getStringTransformer.js";
 import { ApiController } from "@/controllers/ApiController.js";
 import { AuthService } from "@/services/AuthService/index.js";
 import type { ParsedGoogleOAuth2IDTokenFields } from "@/services/AuthService/GoogleOAuth2IDToken.js";
@@ -17,24 +18,47 @@ import type { ParsedGoogleOAuth2IDTokenFields } from "@/services/AuthService/Goo
  */
 export const loginReqBodyZodSchema = zod
   .object({
-    email: zod.string().toLowerCase().transform(sanitizeEmail).refine(isValidEmail),
+    email: zod
+      .string()
+      .toLowerCase()
+      .transform(
+        getStringTransformer({
+          fieldDescription: "email",
+          sanitize: sanitizeEmail,
+          isValid: isValidEmail,
+        })
+      ),
     password: zod
       .string()
       .optional()
-      .transform((value) => (value ? sanitizePassword(value) : value))
-      .refine((value) => (value ? isValidPassword(value) : value === undefined)),
+      .transform(
+        getStringTransformer({
+          fieldDescription: "password",
+          sanitize: sanitizePassword,
+          isValid: isValidPassword,
+        })
+      ),
     googleIDToken: zod
       .string()
       .optional()
-      .transform((value) => (value ? sanitizeJWT(value) : value))
-      .refine((value) => (value ? isValidJWT(value) : value === undefined)),
+      .transform(
+        getStringTransformer({
+          fieldDescription: "googleIDToken",
+          sanitize: sanitizeJWT,
+          isValid: isValidJWT,
+        })
+      ),
     expoPushToken: zod
       .string()
       .optional()
-      .transform((value) => (value ? sanitizeJWT(value) : value))
-      .refine((value) => (value ? isValidJWT(value) : value === undefined)),
+      .transform(
+        getStringTransformer({
+          fieldDescription: "expoPushToken",
+          sanitize: sanitizeJWT,
+          isValid: isValidJWT,
+        })
+      ),
   })
-  .strict()
   .refine(
     // Require either a `password` or `googleIDToken`:
     (reqBody) => hasKey(reqBody, "password") || hasKey(reqBody, "googleIDToken"),

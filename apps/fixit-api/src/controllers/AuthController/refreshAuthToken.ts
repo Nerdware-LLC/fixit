@@ -1,5 +1,6 @@
 import { sanitizeJWT, isValidJWT } from "@nerdware/ts-string-helpers";
 import { z as zod } from "zod";
+import { getStringTransformer } from "@fixit/api-schemas/GraphQL/validation/helpers/getStringTransformer.js";
 import { ApiController } from "@/controllers/ApiController.js";
 import { AuthService } from "@/services/AuthService/index.js";
 
@@ -10,16 +11,18 @@ import { AuthService } from "@/services/AuthService/index.js";
  */
 export const refreshAuthToken = ApiController<"/auth/token">(
   // Req body schema:
-  zod
-    .object({
-      expoPushToken: zod
-        .string()
-        .optional()
-        .transform((value) => (value ? sanitizeJWT(value) : value))
-        .refine((value) => (value ? isValidJWT(value) : value === undefined)),
-    })
-    .strict()
-    .optional(),
+  zod.object({
+    expoPushToken: zod
+      .string()
+      .optional()
+      .transform(
+        getStringTransformer({
+          fieldDescription: "expoPushToken",
+          sanitize: sanitizeJWT,
+          isValid: isValidJWT,
+        })
+      ),
+  }),
   // Controller logic:
   async (req, res) => {
     // Validate and decode the AuthToken from the 'Authorization' header:

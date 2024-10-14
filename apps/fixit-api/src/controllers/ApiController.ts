@@ -1,6 +1,5 @@
 import { getTypeSafeError } from "@nerdware/ts-type-safety-utils";
 import { UserInputError } from "@fixit/http-errors";
-import type { ZodObjectWithShape } from "@/types/zod.js";
 import type {
   Paths,
   RestApiEndpoint,
@@ -9,9 +8,10 @@ import type {
   RestApiRequestBodyByPath,
   RestApiResponseByPath,
 } from "@fixit/api-schemas/OpenAPI/types";
+import type { ZodObjectWithShape } from "@fixit/zod-helpers/types";
 import type { RequestHandler } from "express";
-import type { SetReturnType } from "type-fest";
-import type { ZodEffects, ZodRecord, ZodOptional } from "zod";
+import type { SetReturnType, UndefinedOnPartialDeep } from "type-fest";
+import type { ZodRecord, ZodEffects } from "zod";
 
 /**
  * An API `RequestHandler` with `req` and `res` typed to match the {@link RestApiEndpoint} param.
@@ -34,20 +34,14 @@ export type ApiRequestHandler<Path extends RestApiEndpoint> = SetReturnType<
 /**
  * The `reqBodyZodSchema` param type for the {@link apiController} function.
  */
-type ReqBodyZodSchemaParam<
-  Path extends RestApiPOSTendpoint,
-  Schema extends ZodObjectOptionalOnUndefined<
-    RestApiRequestBodyByPath[Path]
-  > = ZodObjectOptionalOnUndefined<RestApiRequestBodyByPath[Path]>,
-> = Schema | ZodEffects<Schema> | ZodRecord;
-
-/**
- * Adds `ZodOptional` to `req.body` typings when `req.body` is optional.
- */
-type ZodObjectOptionalOnUndefined<ReqBody extends Record<string, unknown> | undefined> =
-  undefined extends ReqBody
-    ? ZodOptional<ZodObjectWithShape<NonNullable<ReqBody>>>
-    : ZodObjectWithShape<NonNullable<ReqBody>>;
+type ReqBodyZodSchemaParam<Path extends RestApiPOSTendpoint> =
+  RestApiRequestBodyByPath[Path] extends infer ReqBody
+    ? ReqBody extends Record<string, unknown>
+      ?
+          | ZodObjectWithShape<UndefinedOnPartialDeep<ReqBody>>
+          | ZodEffects<ZodObjectWithShape<UndefinedOnPartialDeep<ReqBody>>>
+      : ZodRecord
+    : never;
 
 /**
  * Parameters of the {@link apiController} function.
@@ -90,7 +84,7 @@ export const ApiController: ApiController = <Path extends RestApiEndpoint>(
     // Wrap controllerArg with req.body sanitization+validation logic:
     controller = async (req, res, next) => {
       try {
-        const validatedReqBody = zodReqBodySchema.parse(req.body);
+        const validatedReqBody = zodReqBodySchema.parse(req.body ?? {});
 
         req.body = validatedReqBody as Path extends keyof RestApiRequestBodyByPath
           ? RestApiRequestBodyByPath[Path]
