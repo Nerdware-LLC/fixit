@@ -1,6 +1,6 @@
+import { profileInputZodSchema } from "@fixit/api-schemas/GraphQL/validation";
 import { Profile } from "@fixit/dynamodb-models/Profile";
 import { User } from "@fixit/dynamodb-models/User";
-import { createProfileZodSchema } from "./helpers.js";
 import type { Resolvers } from "@fixit/api-schemas/GraphQL/types";
 
 export const resolvers: Resolvers = {
@@ -14,7 +14,7 @@ export const resolvers: Resolvers = {
   Mutation: {
     updateProfile: async (_parent, { profile: profileInput }, { user }) => {
       // Sanitize and validate the provided profileInput
-      profileInput = createProfileZodSchema.parse(profileInput);
+      profileInput = profileInputZodSchema.parse(profileInput);
 
       const result = await User.updateItem(
         { id: user.id },

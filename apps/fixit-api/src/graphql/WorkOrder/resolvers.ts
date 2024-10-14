@@ -1,12 +1,15 @@
 import { hasKey } from "@nerdware/ts-type-safety-utils";
 import { DeleteMutationResponse } from "@fixit/api-schemas/GraphQL/responses";
+import {
+  createWorkOrderInputZodSchema,
+  updateWorkOrderInputZodSchema,
+} from "@fixit/api-schemas/GraphQL/validation";
 import { User } from "@fixit/dynamodb-models/User";
 import {
   workOrderModelHelpers,
   WORK_ORDER_STATUSES as WO_STATUSES,
 } from "@fixit/dynamodb-models/WorkOrder";
 import { WorkOrderService } from "@/services/WorkOrderService/index.js";
-import { createWorkOrderZodSchema, updateWorkOrderZodSchema } from "./helpers.js";
 import type { Resolvers } from "@fixit/api-schemas/GraphQL/types";
 
 export const resolvers: Resolvers = {
@@ -24,7 +27,7 @@ export const resolvers: Resolvers = {
   Mutation: {
     createWorkOrder: async (_parent, { workOrder: createWorkOrderInput }, { user }) => {
       // Sanitize and validate the provided createWorkOrderInput
-      createWorkOrderInput = createWorkOrderZodSchema.parse(createWorkOrderInput);
+      createWorkOrderInput = createWorkOrderInputZodSchema.parse(createWorkOrderInput);
 
       return await WorkOrderService.createWorkOrder({
         createdByUserID: user.id,
@@ -35,7 +38,7 @@ export const resolvers: Resolvers = {
       // Sanitize workOrderID
       workOrderID = workOrderModelHelpers.id.sanitizeAndValidate(workOrderID);
       // Sanitize and validate the provided woInput
-      woInput = updateWorkOrderZodSchema.parse(woInput);
+      woInput = updateWorkOrderInputZodSchema.parse(woInput);
 
       return await WorkOrderService.updateWorkOrder({
         workOrderID,

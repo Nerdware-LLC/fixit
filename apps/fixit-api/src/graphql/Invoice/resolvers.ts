@@ -1,10 +1,10 @@
 import { DeleteMutationResponse } from "@fixit/api-schemas/GraphQL/responses";
+import { invoiceInputZodSchema } from "@fixit/api-schemas/GraphQL/validation";
 import { invoiceModelHelpers } from "@fixit/dynamodb-models/Invoice";
 import { User } from "@fixit/dynamodb-models/User";
 import { WorkOrder } from "@fixit/dynamodb-models/WorkOrder";
 import { UserInputError } from "@fixit/http-errors";
 import { InvoiceService } from "@/services/InvoiceService/index.js";
-import { createInvoiceZodSchema } from "./helpers.js";
 import type { Resolvers } from "@fixit/api-schemas/GraphQL/types";
 
 export const resolvers: Resolvers = {
@@ -20,9 +20,9 @@ export const resolvers: Resolvers = {
     },
   },
   Mutation: {
-    createInvoice: async (_parent, { invoice: invoiceInput }, { user }) => {
+    createInvoice: async (_parent, { invoice: rawInvoiceInput }, { user }) => {
       // Sanitize and validate the provided invoiceInput
-      invoiceInput = createInvoiceZodSchema.parse(invoiceInput);
+      const invoiceInput = invoiceInputZodSchema.parse(rawInvoiceInput);
 
       return await InvoiceService.createInvoice({
         createdByUserID: user.id,
@@ -64,7 +64,6 @@ export const resolvers: Resolvers = {
     },
   },
   Invoice: {
-    // FIXME parent param not being typed correctly here in Invoice field resolvers.
     createdBy: async (parent, _args, { user }) => {
       const { createdByUserID } = parent;
 
@@ -74,7 +73,6 @@ export const resolvers: Resolvers = {
 
       return createdByUser!;
     },
-    // FIXME parent param not being typed correctly here in Invoice field resolvers.
     assignedTo: async ({ assignedToUserID }, _args, { user }) => {
       if (assignedToUserID === user.id) return user;
 
@@ -82,7 +80,6 @@ export const resolvers: Resolvers = {
 
       return assignedToUser!;
     },
-    // FIXME parent param not being typed correctly here in Invoice field resolvers.
     workOrder: async ({ workOrderID }, _args) => {
       if (!workOrderID) return null;
 
