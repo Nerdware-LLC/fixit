@@ -13,6 +13,8 @@ yarn-*.log*
 .nx/workspace-data
 tmp
 lerna-*.log*
+# Tmp nx files that don't get cleaned up unless this is here:
+vite.config.ts.timestamp-*
 
 # Build files
 build/
