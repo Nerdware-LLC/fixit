@@ -4,6 +4,6 @@
   "include": ["./*", "src"],
 
   "compilerOptions": {
-    "types": ["vitest/globals"]
+    "types": ["@fixit/global-types", "vitest/globals"]
   }
 }

@@ -1,0 +1,14 @@
+{
+  "name": "@fixit/global-types",
+  "type": "module",
+  "private": true,
+  "types": "./src/globals.d.ts",
+  "exports": {
+    ".": {
+      "types": "./src/globals.d.ts"
+    },
+    "./*": {
+      "types": "./src/*"
+    }
+  }
+}

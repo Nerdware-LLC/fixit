@@ -1,6 +1,6 @@
 import type { Algorithm } from "jsonwebtoken";
 import type { Stripe } from "stripe";
-import type { JsonValue, OmitIndexSignature, OverrideProperties } from "type-fest";
+import type { OmitIndexSignature, OverrideProperties } from "type-fest";
 
 declare global {
   namespace NodeJS {
@@ -41,16 +41,6 @@ declare global {
       readonly GOOGLE_OAUTH_CLIENT_ID?: string | undefined;
       readonly GOOGLE_OAUTH_CLIENT_SECRET?: string | undefined;
     }
-  }
-
-  /**
-   * This declaration adds a `JSON.parse` overload that replaces `any` with {@link JsonValue}.
-   */
-  interface JSON {
-    parse(
-      text: JsonValue,
-      reviver?: (this: typeof JSON, key: string, value: unknown) => unknown
-    ): JsonValue;
   }
 }
 

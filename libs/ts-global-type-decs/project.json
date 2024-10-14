@@ -1,0 +1,19 @@
+{
+  "name": "ts-global-type-decs",
+  "projectType": "library",
+  "sourceRoot": "libs/ts-global-type-decs/src",
+  "tags": [],
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "options": {
+        "lintFilePatterns": ["libs/ts-global-type-decs/**/*"]
+      }
+    },
+    "typecheck": {
+      "options": {
+        "cwd": "libs/ts-global-type-decs"
+      }
+    }
+  }
+}

@@ -4,7 +4,12 @@
   "include": ["./*", "src", "__mocks__"],
 
   "compilerOptions": {
-    "types": ["node", "stripe-event-types", "vitest/globals"],
+    "types": [
+      "node",
+      "@fixit/global-types",
+      "stripe-event-types",
+      "vitest/globals"
+    ],
     "paths": {
       "@fixit/*": ["libs/*"],
       "@/*": ["apps/fixit-api/src/*"]
