@@ -195,7 +195,7 @@ export const queryUserItems = async ({
       const {
         email = "", // These defaults shouldn't be necessary, but are included for type-safety
         phone = "",
-        profile = { displayName: contact.handle }, // displayName defaults to handle if n/a
+        profile = {},
       } = usersCache.get(contact.handle) ?? {};
 
       return {
@@ -204,7 +204,10 @@ export const queryUserItems = async ({
         handle: contact.handle,
         email,
         phone,
-        profile,
+        profile: {
+          displayName: contact.handle, // displayName defaults to handle if n/a
+          ...profile,
+        },
         createdAt: contact.createdAt,
         updatedAt: contact.updatedAt,
       };
