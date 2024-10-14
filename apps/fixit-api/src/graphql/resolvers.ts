@@ -1,3 +1,4 @@
+import * as customScalars from "@fixit/api-schemas/GraphQL/scalars";
 import * as contact from "./Contact/resolvers.js";
 import * as invite from "./Invite/resolvers.js";
 import * as invoice from "./Invoice/resolvers.js";
@@ -6,7 +7,6 @@ import * as publicUserFields from "./PublicUserFields/resolvers.js";
 import * as user from "./User/resolvers.js";
 import * as userSubscription from "./UserSubscription/resolvers.js";
 import * as workOrder from "./WorkOrder/resolvers.js";
-import * as customScalars from "./_scalars/resolvers.js";
 import type { Resolvers } from "@fixit/api-schemas/GraphQL/types";
 
 /**
