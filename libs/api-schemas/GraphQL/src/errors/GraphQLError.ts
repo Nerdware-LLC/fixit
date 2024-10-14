@@ -17,16 +17,18 @@ export type GraphQLErrorExtensions = GraphQLErrorCustomExtensions;
  *
  * See https://www.apollographql.com/docs/apollo-server/data/errors/#custom-errors
  */
-export type GraphQLErrorCustomExtensions = {
-  code: GraphQLErrorCode;
-  http: GraphQLErrorCustomHttpExtension | null;
+export type GraphQLErrorCustomExtensions<StatusCode extends number = number> = {
+  http: GraphQLErrorCustomHttpExtension<StatusCode> | null;
+  code: StatusCode extends keyof GraphQLErrorStatusCodeMap
+    ? GraphQLErrorStatusCodeMap[StatusCode]
+    : GraphQLErrorStatusCodeMap[keyof GraphQLErrorStatusCodeMap];
 };
 
 /**
  * GraphQLError custom `http` extension for providing client error responses
  * with traditional HTTP error status codes (`extensions.http.status`).
  */
-export type GraphQLErrorCustomHttpExtension = {
+export type GraphQLErrorCustomHttpExtension<StatusCode extends number = number> = {
   /**
    * The {@link GraphQLErrorHttpStatusCode|HTTP status code} for the error.
    * - `400` — Bad User Input
@@ -36,7 +38,7 @@ export type GraphQLErrorCustomHttpExtension = {
    * - `404` — Resource Not Found
    * - `500` — Internal Server Error
    */
-  status: number;
+  status: StatusCode;
 };
 
 /**
