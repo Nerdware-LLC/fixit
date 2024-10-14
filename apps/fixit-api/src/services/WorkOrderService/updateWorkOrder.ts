@@ -50,13 +50,14 @@ export const updateWorkOrder = async ({
   Location's are stored as compound-string attributes, they can not be partially
   updated, i.e., if it's desirable to only change `streetLine1`, it can not be
   updated without all the other Location fields being provided as well. */
-  const { location, ...woFieldsToUpdate } = update;
+  const { assignedToUserID, location, ...woFieldsToUpdate } = update;
 
   const updatedWO = await WorkOrder.updateItem(
     { id: existingWO.id, createdByUserID: existingWO.createdByUserID },
     {
       update: {
         ...woFieldsToUpdate,
+        ...(assignedToUserID && { assignedToUserID }),
         ...(location && { location: Location.fromParams(location) }),
         status: upToDateStatus,
       },
