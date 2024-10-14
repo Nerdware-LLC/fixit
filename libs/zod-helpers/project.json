@@ -1,0 +1,25 @@
+{
+  "name": "zod-helpers",
+  "projectType": "library",
+  "sourceRoot": "libs/zod-helpers/src",
+  "tags": [],
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "options": {
+        "lintFilePatterns": ["libs/zod-helpers/**/*"]
+      }
+    },
+    "typecheck": {
+      "options": {
+        "cwd": "libs/zod-helpers"
+      }
+    },
+    "test": {
+      "executor": "@nx/vite:test",
+      "options": {
+        "vitestConfig": "libs/zod-helpers/vitest.config.ts"
+      }
+    }
+  }
+}

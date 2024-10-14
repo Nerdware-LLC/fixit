@@ -9,12 +9,17 @@ import type { CreateWorkOrderInput } from "@fixit/api-schemas/GraphQL/types";
 export const createWorkOrder = async (
   woInput: { createdByUserID: string } & CreateWorkOrderInput
 ) => {
-  const { createdByUserID, assignedTo = "UNASSIGNED", location, ...createWorkOrderInput } = woInput;
+  const {
+    createdByUserID,
+    assignedToUserID = "UNASSIGNED",
+    location,
+    ...createWorkOrderInput
+  } = woInput;
 
   const newWO = await WorkOrder.createItem({
     createdByUserID,
-    assignedToUserID: assignedTo,
-    status: assignedTo === "UNASSIGNED" ? "UNASSIGNED" : "ASSIGNED",
+    assignedToUserID,
+    status: assignedToUserID === "UNASSIGNED" ? "UNASSIGNED" : "ASSIGNED",
     location: Location.fromParams(location),
     ...createWorkOrderInput,
   });

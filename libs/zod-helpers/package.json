@@ -1,0 +1,9 @@
+{
+  "name": "@fixit/zod-helpers",
+  "type": "module",
+  "private": true,
+  "exports": {
+    ".": "./src/index.js",
+    "./types": "./src/types/index.js"
+  }
+}
