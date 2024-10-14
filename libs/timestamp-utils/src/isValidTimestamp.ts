@@ -2,6 +2,11 @@ import { isSafeInteger } from "@nerdware/ts-type-safety-utils";
 import dayjs, { type ConfigType as DayJsCtorParamType } from "dayjs";
 
 /**
+ * This file contains timestamp utils which use `dayjs` to offer greater
+ * flexibility in regard to timestamp format.
+ */
+
+/**
  * This type reflects values that can be converted to a valid DayJS timestamp.
  *
  * The `dayjs` constructor accepts {@link DayJsCtorParamType|multiple arg types};

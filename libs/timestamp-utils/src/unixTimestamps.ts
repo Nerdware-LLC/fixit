@@ -4,7 +4,8 @@
 export const unixTimestampToDate = (unix: number) => new Date(unix * 1000);
 
 /**
- * Regex pattern for validating Unix timestamps. See {@link UNIX_TIMESTAMP_REGEX} for more info.
+ * Regex pattern string for validating Unix timestamps.
+ * See {@link UNIX_TIMESTAMP_REGEX} for more info.
  */
 export const UNIX_TIMESTAMP_REGEX_PATTERN_STR = "[1-9]\\d{8,9}";
 
