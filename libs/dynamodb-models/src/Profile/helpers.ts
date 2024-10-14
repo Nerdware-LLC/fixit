@@ -10,15 +10,17 @@ import { isString } from "@nerdware/ts-type-safety-utils";
  * - `handle` characters:
  *   - `0-9`, `@`, and `_`
  */
-export const sanitizeDisplayName = (displayName?: string | null) => {
-  return displayName ? displayName.trim().replace(/[^\s\p{Script=Latin}0-9@_'.-]/giu, "") : "";
+export const sanitizeDisplayName = (displayName: string) => {
+  return displayName.trim().replace(/[^\s\p{Script=Latin}0-9@_'.-]/giu, "");
 };
 
 /**
  * Returns `true` if `displayName` is a valid `Profile` name value or a valid `handle`.
  */
-export const isValidDisplayName = (displayName: string) => {
-  return isValidName(displayName) || isValidHandle(displayName);
+export const isValidDisplayName = (displayName?: unknown) => {
+  return isString(displayName)
+    ? isValidName(displayName) || isValidHandle(displayName)
+    : false; // prettier-ignore
 };
 
 /**
