@@ -12,7 +12,7 @@ import type {
   ItemCreationParameters,
   ModelSchemaOptions,
 } from "@nerdware/ddb-single-table";
-import type { OverrideProperties } from "type-fest";
+import type { OverrideProperties, UndefinedOnPartialDeep } from "type-fest";
 
 /**
  * WorkOrder Model
@@ -150,9 +150,11 @@ export type WorkOrderItem = OverrideProperties<
 >;
 
 /** `WorkOrder` item params for `createItem()`. */
-export type WorkOrderItemCreationParams = OverrideProperties<
-  ItemCreationParameters<typeof WorkOrderModel.schema>,
-  { assignedToUserID: string | null; location: Location }
+export type WorkOrderItemCreationParams = UndefinedOnPartialDeep<
+  OverrideProperties<
+    ItemCreationParameters<typeof WorkOrderModel.schema>,
+    { assignedToUserID: string | null; location: Location }
+  >
 >;
 
 /** The shape of a raw/unaliased `WorkOrder` object in the DB. */
