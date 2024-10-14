@@ -1,5 +1,6 @@
+// @ts-nocheck
 import { z } from 'zod'
-import type { WorkOrderStatus, UserSubscription, UserStripeConnectAccount, UpdateLocationInput, UpdateChecklistItemInput, SupportedConstraintFormat, SubscriptionStatus, SubscriptionPriceName, User, ProfileInput, Profile, MyWorkOrdersQueryResponse, MyInvoicesQueryResponse, MutationResponse, Location, InvoiceStatus, InvoiceInput, WorkOrderPriority, WorkOrderCategory, WorkOrder, Invoice, UpdateWorkOrderInput, CreateWorkOrderInput, CreateLocationInput, CreateChecklistItemInput, Contact, ChecklistItem, DeleteMutationResponse, BaseMutationResponse, PublicUserFields } from '@fixit/api-schemas/GraphQL/types'
+import type { WorkOrderStatus, UserSubscription, UserStripeConnectAccount, UpdateChecklistItemInput, SupportedConstraintFormat, SubscriptionStatus, SubscriptionPriceName, User, ProfileInput, Profile, MyWorkOrdersQueryResponse, MyInvoicesQueryResponse, MutationResponse, LocationInput, Location, InvoiceStatus, InvoiceInput, WorkOrderPriority, WorkOrderCategory, WorkOrder, Invoice, UpdateWorkOrderInput, CreateWorkOrderInput, CreateChecklistItemInput, Contact, ChecklistItem, DeleteMutationResponse, BaseMutationResponse, PublicUserFields } from '@fixit/api-schemas/GraphQL/types'
 
 type Properties<T> = Required<{
   [K in keyof T]: z.ZodType<T[K], any, T[K]>;
@@ -13,7 +14,7 @@ export const definedNonNullAnySchema = z.any().refine((v) => isDefinedNonNullAny
 
 export const WorkOrderStatusSchema = z.enum(['ASSIGNED', 'CANCELLED', 'COMPLETE', 'DEFERRED', 'IN_PROGRESS', 'UNASSIGNED']);
 
-export const SupportedConstraintFormatSchema = z.enum(['contactID', 'email', 'handle', 'invoiceID', 'phone', 'url', 'userID', 'uuid', 'workOrderID']);
+export const SupportedConstraintFormatSchema = z.enum(['email', 'handle', 'phone', 'url', 'uuid']);
 
 export const SubscriptionStatusSchema = z.enum(['active', 'canceled', 'incomplete', 'incomplete_expired', 'past_due', 'trialing', 'unpaid']);
 
@@ -29,9 +30,9 @@ export const UserSubscriptionSchema: z.ZodObject<Properties<UserSubscription>> =
     __typename: z.literal('UserSubscription').optional(),
     createdAt: z.date(),
     currentPeriodEnd: z.date(),
-    id: z.string().min(1).min(1),
-    priceID: z.string().min(1),
-    productID: z.string().min(1),
+    id: z.string(),
+    priceID: z.string(),
+    productID: z.string(),
     status: SubscriptionStatusSchema,
     updatedAt: z.date()
 });
@@ -41,31 +42,23 @@ export const UserStripeConnectAccountSchema: z.ZodObject<Properties<UserStripeCo
     chargesEnabled: z.boolean(),
     createdAt: z.date(),
     detailsSubmitted: z.boolean(),
-    id: z.string().min(1).min(1),
+    id: z.string(),
     payoutsEnabled: z.boolean(),
     updatedAt: z.date()
 });
 
-export const UpdateLocationInputSchema: z.ZodObject<Properties<UpdateLocationInput>> = z.object({
-    city: z.string().min(1),
-    country: z.string().nullish(),
-    region: z.string().min(1),
-    streetLine1: z.string().min(1),
-    streetLine2: z.string().nullish()
-});
-
 export const UpdateChecklistItemInputSchema: z.ZodObject<Properties<UpdateChecklistItemInput>> = z.object({
-    description: z.string().min(1),
-    id: z.string().min(1).nullish(),
-    isCompleted: z.boolean().nullish()
+    description: z.string(),
+    id: z.string().nullish(),
+    isCompleted: z.boolean().default(false).nullish()
 });
 
 export const UserSchema: z.ZodObject<Properties<User>> = z.object({
     __typename: z.literal('User').optional(),
     createdAt: z.date(),
-    email: z.string().min(1),
-    handle: z.string().min(1),
-    id: z.string().min(1).min(1),
+    email: z.string(),
+    handle: z.string(),
+    id: z.string(),
     phone: z.string().nullish(),
     profile: ProfileSchema,
     updatedAt: z.date()
@@ -82,7 +75,7 @@ export const ProfileInputSchema: z.ZodObject<Properties<ProfileInput>> = z.objec
 export const ProfileSchema: z.ZodObject<Properties<Profile>> = z.object({
     __typename: z.literal('Profile').optional(),
     businessName: z.string().nullish(),
-    displayName: z.string().min(1),
+    displayName: z.string(),
     familyName: z.string().nullish(),
     givenName: z.string().nullish(),
     photoUrl: z.string().nullish()
@@ -107,19 +100,27 @@ export const MutationResponseSchema: z.ZodObject<Properties<MutationResponse>> =
     success: z.boolean()
 });
 
+export const LocationInputSchema: z.ZodObject<Properties<LocationInput>> = z.object({
+    city: z.string(),
+    country: z.string().nullish(),
+    region: z.string(),
+    streetLine1: z.string(),
+    streetLine2: z.string().nullish()
+});
+
 export const LocationSchema: z.ZodObject<Properties<Location>> = z.object({
     __typename: z.literal('Location').optional(),
-    city: z.string().min(1),
-    country: z.string().min(1),
-    region: z.string().min(1),
-    streetLine1: z.string().min(1),
+    city: z.string(),
+    country: z.string(),
+    region: z.string(),
+    streetLine1: z.string(),
     streetLine2: z.string().nullish()
 });
 
 export const InvoiceInputSchema: z.ZodObject<Properties<InvoiceInput>> = z.object({
     amount: z.number(),
-    assignedTo: z.string().min(1).regex(/^USER#@[a-zA-Z0-9_]{3,50}$/, "Invalid User ID").min(1),
-    workOrderID: z.string().min(1).regex(/^WO#USER#@[a-zA-Z0-9_]{3,50}#(?:[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/, "Invalid WorkOrder ID").nullish()
+    assignedToUserID: z.string(),
+    workOrderID: z.string().nullish()
 });
 
 export const WorkOrderSchema: z.ZodObject<Properties<WorkOrder>> = z.object({
@@ -134,7 +135,7 @@ export const WorkOrderSchema: z.ZodObject<Properties<WorkOrder>> = z.object({
     dueDate: z.date().nullish(),
     entryContact: z.string().nullish(),
     entryContactPhone: z.string().nullish(),
-    id: z.string().min(1).min(1),
+    id: z.string(),
     location: LocationSchema,
     priority: WorkOrderPrioritySchema,
     scheduledDateTime: z.date().nullish(),
@@ -148,7 +149,7 @@ export const InvoiceSchema: z.ZodObject<Properties<Invoice>> = z.object({
     assignedTo: UserSchema,
     createdAt: z.date(),
     createdBy: UserSchema,
-    id: z.string().min(1).min(1),
+    id: z.string(),
     status: InvoiceStatusSchema,
     stripePaymentIntentID: z.string().nullish(),
     updatedAt: z.date(),
@@ -156,50 +157,42 @@ export const InvoiceSchema: z.ZodObject<Properties<Invoice>> = z.object({
 });
 
 export const UpdateWorkOrderInputSchema: z.ZodObject<Properties<UpdateWorkOrderInput>> = z.object({
-    assignedToUserID: z.string().min(1).regex(/^USER#@[a-zA-Z0-9_]{3,50}$/, "Invalid User ID").nullish(),
+    assignedToUserID: z.string().nullish(),
     category: WorkOrderCategorySchema.nullish(),
     checklist: z.array(z.lazy(() => UpdateChecklistItemInputSchema)).nullish(),
     description: z.string().nullish(),
     dueDate: z.date().nullish(),
     entryContact: z.string().nullish(),
     entryContactPhone: z.string().nullish(),
-    location: z.lazy(() => UpdateLocationInputSchema.nullish()),
-    priority: WorkOrderPrioritySchema.nullish(),
+    location: z.lazy(() => LocationInputSchema.nullish()),
+    priority: WorkOrderPrioritySchema.default("NORMAL").nullish(),
     scheduledDateTime: z.date().nullish()
 });
 
 export const CreateWorkOrderInputSchema: z.ZodObject<Properties<CreateWorkOrderInput>> = z.object({
-    assignedTo: z.string().min(1).regex(/^USER#@[a-zA-Z0-9_]{3,50}$/, "Invalid User ID").nullish(),
+    assignedToUserID: z.string().nullish(),
     category: WorkOrderCategorySchema.nullish(),
     checklist: z.array(z.lazy(() => CreateChecklistItemInputSchema)).nullish(),
     description: z.string().nullish(),
     dueDate: z.date().nullish(),
     entryContact: z.string().nullish(),
     entryContactPhone: z.string().nullish(),
-    location: z.lazy(() => CreateLocationInputSchema),
-    priority: WorkOrderPrioritySchema.nullish(),
+    location: z.lazy(() => LocationInputSchema),
+    priority: WorkOrderPrioritySchema.default("NORMAL").nullish(),
     scheduledDateTime: z.date().nullish()
 });
 
-export const CreateLocationInputSchema: z.ZodObject<Properties<CreateLocationInput>> = z.object({
-    city: z.string().min(1),
-    country: z.string().nullish(),
-    region: z.string().min(1),
-    streetLine1: z.string().min(1),
-    streetLine2: z.string().nullish()
-});
-
 export const CreateChecklistItemInputSchema: z.ZodObject<Properties<CreateChecklistItemInput>> = z.object({
-    description: z.string().min(1),
-    isCompleted: z.boolean().nullish()
+    description: z.string(),
+    isCompleted: z.boolean().default(false).nullish()
 });
 
 export const ContactSchema: z.ZodObject<Properties<Contact>> = z.object({
     __typename: z.literal('Contact').optional(),
     createdAt: z.date(),
-    email: z.string().min(1),
-    handle: z.string().min(1),
-    id: z.string().min(1).min(1),
+    email: z.string(),
+    handle: z.string(),
+    id: z.string(),
     phone: z.string().nullish(),
     profile: ProfileSchema,
     updatedAt: z.date()
@@ -207,15 +200,15 @@ export const ContactSchema: z.ZodObject<Properties<Contact>> = z.object({
 
 export const ChecklistItemSchema: z.ZodObject<Properties<ChecklistItem>> = z.object({
     __typename: z.literal('ChecklistItem').optional(),
-    description: z.string().min(1),
-    id: z.string().min(1).min(1),
+    description: z.string(),
+    id: z.string(),
     isCompleted: z.boolean()
 });
 
 export const DeleteMutationResponseSchema: z.ZodObject<Properties<DeleteMutationResponse>> = z.object({
     __typename: z.literal('DeleteMutationResponse').optional(),
     code: z.string().nullish(),
-    id: z.string().min(1).min(1),
+    id: z.string(),
     message: z.string().nullish(),
     success: z.boolean()
 });
@@ -230,9 +223,9 @@ export const BaseMutationResponseSchema: z.ZodObject<Properties<BaseMutationResp
 
 export const PublicUserFieldsSchema: z.ZodObject<Properties<PublicUserFields>> = z.object({
     createdAt: z.date(),
-    email: z.string().min(1),
-    handle: z.string().min(1),
-    id: z.string().min(1).min(1),
+    email: z.string(),
+    handle: z.string(),
+    id: z.string(),
     phone: z.string().nullish(),
     profile: ProfileSchema,
     updatedAt: z.date()

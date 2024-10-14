@@ -1,13 +1,13 @@
 import type { GraphQLResolveInfo, GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql';
 import type { ContactItem } from '@fixit/dynamodb-models/Contact';
 import type { InvoiceItem } from '@fixit/dynamodb-models/Invoice';
-import type { PublicUserFieldsCodegenMapper } from '@fixit/api-schemas/GraphQL/types/PublicUserFieldsCodegenMapper.js';
+import type { PublicUserFieldsCodegenMapper } from '@fixit/api-schemas/GraphQL/types/PublicUserFieldsCodegen.js';
 import type { UserSubscriptionItem } from '@fixit/dynamodb-models/UserSubscription';
 import type { UserStripeConnectAccountItem } from '@fixit/dynamodb-models/UserStripeConnectAccount';
 import type { WorkOrderItem } from '@fixit/dynamodb-models/WorkOrder';
 import type { ApolloServerContext } from '@fixit/apollo-graphql/types';
-export type Maybe<T> = T | null;
-export type InputMaybe<T> = T | null;
+export type Maybe<T> = T | null | undefined;
+export type InputMaybe<T> = T | null | undefined;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
@@ -71,7 +71,6 @@ export type CancelWorkOrderResponse = DeleteMutationResponse | WorkOrder;
 
 /** A WorkOrder checklist item. */
 export type ChecklistItem = {
-  __typename?: 'ChecklistItem';
   description: Scalars['String']['output'];
   id: Scalars['WorkOrderChecklistItemID']['output'];
   isCompleted: Scalars['Boolean']['output'];
@@ -83,7 +82,6 @@ export type ChecklistItem = {
  * type represents a user's contact, and is used to manage a user's contacts.
  */
 export type Contact = PublicUserFields & {
-  __typename?: 'Contact';
   /** (Immutable) Contact creation timestamp */
   createdAt: Scalars['DateTime']['output'];
   /** Contact email address */
@@ -121,7 +119,6 @@ export type CreateWorkOrderInput = {
 
 /** A mutation response type for delete operations. */
 export type DeleteMutationResponse = BaseMutationResponse & {
-  __typename?: 'DeleteMutationResponse';
   /**
    * A code for the mutation response. This may be an HTTP status code, like '200',
    * or a GraphQLError code, like 'BAD_USER_INPUT', depending on what makes sense
@@ -142,7 +139,6 @@ export type DeleteMutationResponse = BaseMutationResponse & {
  * assigned to another User (the 'assignedTo' User).
  */
 export type Invoice = {
-  __typename?: 'Invoice';
   /** The Invoice amount, represented as an integer which reflects USD centage (i.e., an 'amount' of 1 = $0.01 USD) */
   amount: Scalars['Int']['output'];
   /** (Immutable) The User to whom the Invoice was assigned, AKA the Invoice's recipient */
@@ -177,7 +173,6 @@ export type InvoiceStatus =
 
 /** A Location object. */
 export type Location = {
-  __typename?: 'Location';
   city: Scalars['String']['output'];
   country: Scalars['String']['output'];
   region: Scalars['String']['output'];
@@ -194,7 +189,6 @@ export type LocationInput = {
 };
 
 export type Mutation = {
-  __typename?: 'Mutation';
   cancelWorkOrder: CancelWorkOrderResponse;
   createContact: Contact;
   createInvite: MutationResponse;
@@ -277,7 +271,6 @@ export type MutationUpdateWorkOrderArgs = {
  * > For `delete` operations/mutations, use `DeleteMutationResponse` instead.
  */
 export type MutationResponse = BaseMutationResponse & {
-  __typename?: 'MutationResponse';
   /**
    * A code for the mutation response. This may be an HTTP status code, like '200',
    * or a GraphQLError code, like 'BAD_USER_INPUT', depending on what makes sense
@@ -291,20 +284,17 @@ export type MutationResponse = BaseMutationResponse & {
 };
 
 export type MyInvoicesQueryResponse = {
-  __typename?: 'MyInvoicesQueryResponse';
   assignedToUser: Array<Invoice>;
   createdByUser: Array<Invoice>;
 };
 
 export type MyWorkOrdersQueryResponse = {
-  __typename?: 'MyWorkOrdersQueryResponse';
   assignedToUser: Array<WorkOrder>;
   createdByUser: Array<WorkOrder>;
 };
 
 /** Profile schema */
 export type Profile = {
-  __typename?: 'Profile';
   businessName?: Maybe<Scalars['String']['output']>;
   displayName: Scalars['String']['output'];
   familyName?: Maybe<Scalars['String']['output']>;
@@ -337,7 +327,6 @@ export type PublicUserFields = {
 };
 
 export type Query = {
-  __typename?: 'Query';
   contact: Contact;
   /**
    * This query returns the public fields of a User whose handle exactly matches the
@@ -468,7 +457,6 @@ export type UpdateWorkOrderInput = {
 
 /** User is an implementation of the PublicUserFields interface which represents an individual User. */
 export type User = PublicUserFields & {
-  __typename?: 'User';
   /** (Immutable) Account creation timestamp */
   createdAt: Scalars['DateTime']['output'];
   /** User's own email address */
@@ -487,7 +475,6 @@ export type User = PublicUserFields & {
 
 /** A user's Stripe Connect Account details. */
 export type UserStripeConnectAccount = {
-  __typename?: 'UserStripeConnectAccount';
   /** Whether the user's Stripe Connect Account is enabled for charges */
   chargesEnabled: Scalars['Boolean']['output'];
   /** (Immutable) UserStripeConnectAccount creation timestamp */
@@ -504,7 +491,6 @@ export type UserStripeConnectAccount = {
 
 /** A user's subscription to a Fixit SaaS product. */
 export type UserSubscription = {
-  __typename?: 'UserSubscription';
   /** (Immutable) UserSubscription creation timestamp */
   createdAt: Scalars['DateTime']['output'];
   /** The timestamp indicating when the current UserSubscription period ends */
@@ -523,7 +509,6 @@ export type UserSubscription = {
 
 /** A WorkOrder is a request one User submits to another for work to be performed at a location. */
 export type WorkOrder = {
-  __typename?: 'WorkOrder';
   /** The User to whom the WorkOrder was assigned, AKA the WorkOrder's recipient */
   assignedTo?: Maybe<User>;
   /** The category of work to be performed as part of the WorkOrder */

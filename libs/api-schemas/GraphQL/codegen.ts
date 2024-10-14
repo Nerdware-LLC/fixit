@@ -13,8 +13,9 @@ const SHARED_TS_PLUGIN_CONFIGS: TypeScriptPluginConfig = {
   enumsAsTypes: true,
   useTypeImports: true,
   strictScalars: true, // throw on unknown/invalid scalar types
+  skipTypename: true, // don't add `__typename` to generated types
   namingConvention: "change-case#pascalCase",
-  maybeValue: "T | null",
+  maybeValue: "T | null | undefined",
   defaultScalarType: "unknown", // default: `any`
   // Don't put "scalars" here, the preset requires "scalarsOverrides" instead (see below).
 };
