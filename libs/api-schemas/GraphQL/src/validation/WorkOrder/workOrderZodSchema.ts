@@ -11,16 +11,18 @@ import { WorkOrderIDGraphQLScalar } from "@fixit/api-schemas/GraphQL/scalars/Wor
 import { checklistItemZodSchema } from "../Checklist/checklistItemZodSchema.js";
 import { locationZodSchema } from "../Location/locationZodSchema.js";
 import { userZodSchema } from "../User/userZodSchema.js";
-import { WorkOrderSchema as gend_WorkOrderSchema } from "../__generated__.zodSchemas.js";
-import { getStringTransformer } from "../helpers/getStringTransformer.js";
+import { WorkOrderSchema as getGenerated_WorkOrderSchema } from "../__generated__.zodSchemas.js";
+import { getStringTransformer } from "../helpers.js";
 import type { WorkOrder } from "@fixit/api-schemas/GraphQL/types";
 import type { ZodObjectWithShape } from "@fixit/zod-helpers/types";
+
+const baseSchema = getGenerated_WorkOrderSchema();
 
 /**
  * Zod schema for {@link WorkOrder} objects.
  */
-export const workOrderZodSchema: ZodObjectWithShape<WorkOrder> = gend_WorkOrderSchema.extend({
-  id: gend_WorkOrderSchema.shape.id.transform(
+export const workOrderZodSchema: ZodObjectWithShape<WorkOrder> = baseSchema.extend({
+  id: baseSchema.shape.id.transform(
     getStringTransformer({
       fieldDescription: "work order ID",
       sanitize: WorkOrderIDGraphQLScalar.sanitize,
@@ -30,28 +32,28 @@ export const workOrderZodSchema: ZodObjectWithShape<WorkOrder> = gend_WorkOrderS
   createdBy: userZodSchema,
   assignedTo: userZodSchema.nullish(),
   checklist: zod.array(checklistItemZodSchema).nullish(),
-  contractorNotes: gend_WorkOrderSchema.shape.contractorNotes.transform(
+  contractorNotes: baseSchema.shape.contractorNotes.transform(
     getStringTransformer({
       fieldDescription: "contractor notes",
       sanitize: sanitizeText,
       isValid: isValidText,
     })
   ),
-  description: gend_WorkOrderSchema.shape.description.transform(
+  description: baseSchema.shape.description.transform(
     getStringTransformer({
       fieldDescription: "work order description",
       sanitize: sanitizeText,
       isValid: isValidText,
     })
   ),
-  entryContact: gend_WorkOrderSchema.shape.entryContact.transform(
+  entryContact: baseSchema.shape.entryContact.transform(
     getStringTransformer({
       fieldDescription: "entry contact",
       sanitize: sanitizeName,
       isValid: isValidName,
     })
   ),
-  entryContactPhone: gend_WorkOrderSchema.shape.entryContactPhone.transform(
+  entryContactPhone: baseSchema.shape.entryContactPhone.transform(
     getStringTransformer({
       fieldDescription: "entry contact phone number",
       sanitize: sanitizePhone,

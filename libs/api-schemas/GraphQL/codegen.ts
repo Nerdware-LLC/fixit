@@ -92,7 +92,8 @@ const codegenConfig: CodegenConfig = {
         // PLUGIN CONFIGS — typescript-validation-schema:
         schema: "zod",
         importFrom: "@fixit/api-schemas/GraphQL/types",
-        validationSchemaExportType: "const",
+        // TODO Switch validationSchemaExportType back to "const" once they fix the var-used-before-defined bug.
+        validationSchemaExportType: "function",
         withObjectType: true,
         scalarSchemas: {
           ID: "z.string()",
