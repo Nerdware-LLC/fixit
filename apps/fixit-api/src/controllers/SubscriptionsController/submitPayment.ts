@@ -1,7 +1,7 @@
 import { sanitizeAlphabetic } from "@nerdware/ts-string-helpers";
 import { isString } from "@nerdware/ts-type-safety-utils";
 import { z as zod } from "zod";
-import { getStringTransformer } from "@fixit/api-schemas/GraphQL/validation/helpers/getStringTransformer.js";
+import { getStringTransformer } from "@fixit/api-schemas/GraphQL/validation/helpers.js";
 import { SUBSCRIPTION_ENUMS } from "@fixit/dynamodb-models/UserSubscription";
 import { promoCodesCache } from "@fixit/stripe-client/caches/promoCodesCache.js";
 import { isValidStripeID, sanitizeStripeID } from "@fixit/stripe-client/helpers";

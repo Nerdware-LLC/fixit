@@ -8,7 +8,7 @@ import {
 } from "@nerdware/ts-string-helpers";
 import { hasKey } from "@nerdware/ts-type-safety-utils";
 import { z as zod } from "zod";
-import { getStringTransformer } from "@fixit/api-schemas/GraphQL/validation/helpers/getStringTransformer.js";
+import { getStringTransformer } from "@fixit/api-schemas/GraphQL/validation/helpers.js";
 import { ApiController } from "@/controllers/ApiController.js";
 import { AuthService } from "@/services/AuthService/index.js";
 import type { ParsedGoogleOAuth2IDTokenFields } from "@/services/AuthService/GoogleOAuth2IDToken.js";

@@ -1,6 +1,6 @@
 import { sanitizeJWT, isValidJWT } from "@nerdware/ts-string-helpers";
 import { z as zod } from "zod";
-import { getStringTransformer } from "@fixit/api-schemas/GraphQL/validation/helpers/getStringTransformer.js";
+import { getStringTransformer } from "@fixit/api-schemas/GraphQL/validation/helpers.js";
 import { ApiController } from "@/controllers/ApiController.js";
 import { AuthService } from "@/services/AuthService/index.js";
 
