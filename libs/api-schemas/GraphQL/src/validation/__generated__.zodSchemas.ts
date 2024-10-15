@@ -1,6 +1,5 @@
-// @ts-nocheck
 import { z } from 'zod'
-import type { WorkOrderStatus, UserSubscription, UserStripeConnectAccount, UpdateChecklistItemInput, SupportedConstraintFormat, SubscriptionStatus, SubscriptionPriceName, User, ProfileInput, Profile, MyWorkOrdersQueryResponse, MyInvoicesQueryResponse, MutationResponse, LocationInput, Location, InvoiceStatus, InvoiceInput, WorkOrderPriority, WorkOrderCategory, WorkOrder, Invoice, UpdateWorkOrderInput, CreateWorkOrderInput, CreateChecklistItemInput, Contact, ChecklistItem, DeleteMutationResponse, BaseMutationResponse, PublicUserFields } from '@fixit/api-schemas/GraphQL/types'
+import type { UserSubscription, UserStripeConnectAccount, UpdateChecklistItemInput, User, ProfileInput, Profile, MyWorkOrdersQueryResponse, MyInvoicesQueryResponse, MutationResponse, LocationInput, Location, InvoiceInput, WorkOrder, Invoice, UpdateWorkOrderInput, CreateWorkOrderInput, CreateChecklistItemInput, Contact, ChecklistItem, DeleteMutationResponse, BaseMutationResponse, PublicUserFields } from '@fixit/api-schemas/GraphQL/types'
 
 type Properties<T> = Required<{
   [K in keyof T]: z.ZodType<T[K], any, T[K]>;
@@ -53,6 +52,15 @@ export const UpdateChecklistItemInputSchema: z.ZodObject<Properties<UpdateCheckl
     isCompleted: z.boolean().default(false).nullish()
 });
 
+export const ProfileSchema: z.ZodObject<Properties<Profile>> = z.object({
+  __typename: z.literal('Profile').optional(),
+  businessName: z.string().nullish(),
+  displayName: z.string(),
+  familyName: z.string().nullish(),
+  givenName: z.string().nullish(),
+  photoUrl: z.string().nullish()
+});
+
 export const UserSchema: z.ZodObject<Properties<User>> = z.object({
     __typename: z.literal('User').optional(),
     createdAt: z.date(),
@@ -70,27 +78,6 @@ export const ProfileInputSchema: z.ZodObject<Properties<ProfileInput>> = z.objec
     familyName: z.string().nullish(),
     givenName: z.string().nullish(),
     photoUrl: z.string().url().nullish()
-});
-
-export const ProfileSchema: z.ZodObject<Properties<Profile>> = z.object({
-    __typename: z.literal('Profile').optional(),
-    businessName: z.string().nullish(),
-    displayName: z.string(),
-    familyName: z.string().nullish(),
-    givenName: z.string().nullish(),
-    photoUrl: z.string().nullish()
-});
-
-export const MyWorkOrdersQueryResponseSchema: z.ZodObject<Properties<MyWorkOrdersQueryResponse>> = z.object({
-    __typename: z.literal('MyWorkOrdersQueryResponse').optional(),
-    assignedToUser: z.array(WorkOrderSchema),
-    createdByUser: z.array(WorkOrderSchema)
-});
-
-export const MyInvoicesQueryResponseSchema: z.ZodObject<Properties<MyInvoicesQueryResponse>> = z.object({
-    __typename: z.literal('MyInvoicesQueryResponse').optional(),
-    assignedToUser: z.array(InvoiceSchema),
-    createdByUser: z.array(InvoiceSchema)
 });
 
 export const MutationResponseSchema: z.ZodObject<Properties<MutationResponse>> = z.object({
@@ -121,6 +108,13 @@ export const InvoiceInputSchema: z.ZodObject<Properties<InvoiceInput>> = z.objec
     amount: z.number(),
     assignedToUserID: z.string(),
     workOrderID: z.string().nullish()
+});
+
+export const ChecklistItemSchema: z.ZodObject<Properties<ChecklistItem>> = z.object({
+  __typename: z.literal('ChecklistItem').optional(),
+  description: z.string(),
+  id: z.string(),
+  isCompleted: z.boolean()
 });
 
 export const WorkOrderSchema: z.ZodObject<Properties<WorkOrder>> = z.object({
@@ -198,13 +192,6 @@ export const ContactSchema: z.ZodObject<Properties<Contact>> = z.object({
     updatedAt: z.date()
 });
 
-export const ChecklistItemSchema: z.ZodObject<Properties<ChecklistItem>> = z.object({
-    __typename: z.literal('ChecklistItem').optional(),
-    description: z.string(),
-    id: z.string(),
-    isCompleted: z.boolean()
-});
-
 export const DeleteMutationResponseSchema: z.ZodObject<Properties<DeleteMutationResponse>> = z.object({
     __typename: z.literal('DeleteMutationResponse').optional(),
     code: z.string().nullish(),
@@ -229,4 +216,16 @@ export const PublicUserFieldsSchema: z.ZodObject<Properties<PublicUserFields>> =
     phone: z.string().nullish(),
     profile: ProfileSchema,
     updatedAt: z.date()
+});
+
+export const MyWorkOrdersQueryResponseSchema: z.ZodObject<Properties<MyWorkOrdersQueryResponse>> = z.object({
+  __typename: z.literal('MyWorkOrdersQueryResponse').optional(),
+  assignedToUser: z.array(WorkOrderSchema),
+  createdByUser: z.array(WorkOrderSchema)
+});
+
+export const MyInvoicesQueryResponseSchema: z.ZodObject<Properties<MyInvoicesQueryResponse>> = z.object({
+  __typename: z.literal('MyInvoicesQueryResponse').optional(),
+  assignedToUser: z.array(InvoiceSchema),
+  createdByUser: z.array(InvoiceSchema)
 });
