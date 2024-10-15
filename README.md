@@ -6,13 +6,15 @@ Fixit is a SaaS product that provides users with powerful tools for managing mai
 
 Author: [Trevor Anderson](https://github.com/trevor-anderson), Solopreneur & Founder of [Nerdware](https://github.com/Nerdware-LLC)
 
-[<img src=".github/assets/powered_by_Stripe_blurple.svg" height="22" style="position:relative;top:1px;" alt="Powered by Stripe" />](https://stripe.com/ "Check out Stripe")
+[<img src="docs/images/powered_by_Stripe_blurple.svg" height="22" style="position:relative;top:1px;" alt="Powered by Stripe" />](https://stripe.com/ "Check out Stripe")
 &nbsp;
 [![GraphQL][graphql-badge]](https://graphql.org/ "graphql.org")
 &nbsp;
 [![Apollo][apollo-badge]](https://www.apollographql.com/ "apollographql.com")
 &nbsp;
 [![OpenAPI][open-api-badge]](https://spec.openapis.org/oas/latest.html "spec.openapis.org/oas/latest")
+&nbsp;
+[![Express][express-badge]](https://expressjs.com/ "expressjs.com")
 &nbsp;
 [![pre-commit][pre-commit-badge]](https://pre-commit.com "pre-commit.com")
 &nbsp;
@@ -23,6 +25,7 @@ Author: [Trevor Anderson](https://github.com/trevor-anderson), Solopreneur & Fou
 [graphql-badge]: https://img.shields.io/badge/GraphQL-E10098.svg?logo=graphql&logoColor=E10098&labelColor=454545
 [apollo-badge]: https://img.shields.io/badge/Apollo_Server_v4-311C87.svg?logo=apollo-graphql&labelColor=454545
 [open-api-badge]: https://img.shields.io/badge/OpenAPI%20v3.1-609531?logo=openapiinitiative&labelColor=454545
+[express-badge]: https://img.shields.io/badge/Express_v4-7B7B7B.svg?logo=express&logoColor=FFF&labelColor=454545
 [pre-commit-badge]: https://img.shields.io/badge/pre--commit-F8B424.svg?logo=pre-commit&logoColor=F8B424&labelColor=454545
 [license-badge]: https://img.shields.io/badge/license-Proprietary-000080.svg?labelColor=454545
 
@@ -30,6 +33,9 @@ Author: [Trevor Anderson](https://github.com/trevor-anderson), Solopreneur & Fou
 <br>
 
 - [🗺️ Project Overview](#️-project-overview)
+- [📦 CI/CD Pipeline](#-cicd-pipeline)
+  - [GitHub Actions](#github-actions)
+  - [Git Workflow](#git-workflow)
 - [📝 License](#-license)
 - [💬 Contact](#-contact)
 
@@ -40,6 +46,8 @@ The Fixit API provides a robust, scalable, and secure backend for the Fixit SaaS
 > [!NOTE]
 >
 > ### Quick Links
+>
+> <!-- FIXME Update this section -->
 >
 > <table align="center">
 >   <tr>
@@ -73,6 +81,31 @@ The Fixit API provides a robust, scalable, and secure backend for the Fixit SaaS
 >   </td>
 >   </tr>
 > </table>
+
+## 📦 CI/CD Pipeline
+
+<!-- An outline of this process is below. -->
+
+<!-- TODO Add screenshot image of pipeline_production workflow in action -->
+
+### GitHub Actions
+
+<!-- TODO Ensure below paths are right once GH Actions files have the "FIXME_" prefix rm'd -->
+
+This project's CI/CD pipeline uses GitHub Actions to [test](/.github/workflows/fixit-api.test.yaml), [release](/.github/workflows/fixit-api.release.yaml), and [deploy](/.github/workflows/fixit-api.deploy.yaml) code changes.
+
+### Git Workflow
+
+This project uses uses [GitHub Flow](https://guides.github.com/introduction/flow/) to deploy two live environments - staging and production - both of which are associated with a Git branch for releases:
+
+| Environment | Release Branch |                   Permits `git push`                   |
+| :---------- | :------------: | :----------------------------------------------------: |
+| staging     |      next      | <span style="color:#66FF00;font-size:1.5rem;">✓</span> |
+| production  |      main      |                           ❌                           |
+
+Project versioning and the [CHANGELOG.md](./CHANGELOG.md) are managed automatically via GitHub Actions and nx.
+
+For more information on how new code is integrated and deployed, check out the guide to [CONTRIBUTING](./CONTRIBUTING.md).
 
 ## 📝 License
 

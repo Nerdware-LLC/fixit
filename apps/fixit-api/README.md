@@ -1,17 +1,18 @@
 <div align="center">
 
-[<img src=".github/assets/Fixit_API_repo_banner.png" alt="Repo banner" />](https://www.youtube.com/@nerdware-io)
+[<img src="../../docs/images/Fixit_API_repo_banner.png" alt="Repo banner" />](https://www.youtube.com/@nerdware-io)
 
 Fixit is a SaaS product that provides users with powerful tools for managing maintenance and repair workflows, including in-app payments powered by [Stripe](https://stripe.com/). This repo is home to the dual-protocol Fixit API – built on NodeJS, ExpressJS, and Apollo GraphQL.
 
 Author: [Trevor Anderson](https://github.com/trevor-anderson), Solopreneur & Founder of [Nerdware](https://github.com/Nerdware-LLC)
 
-[<img src=".github/assets/powered_by_Stripe_blurple.svg" height="22" style="position:relative;top:1px;" alt="Powered by Stripe" />](https://stripe.com/ "Check out Stripe")
+[<img src="https://github.com/Nerdware-LLC/fixit/blob/main/docs/images/powered_by_Stripe_blurple.svg" height="22" style="position:relative;top:1px;" alt="Powered by Stripe" />](https://stripe.com/ "Check out Stripe")
 &nbsp;
-[![Test Workflow][gh-test-badge]](.github/workflows/test.yaml "View Test Workflow")
-&nbsp;
-[![CodeCov][codecov-badge]](https://codecov.io/gh/Nerdware-LLC/fixit-api "codecov.io: Coverage Report")
-&nbsp;
+
+<!-- FIXME Uncomment the 2 below lines once the link has been updated for monorepo
+[![CodeCov][codecov-badge]](https://codecov.io/gh/Nerdware-LLC/fixit "codecov.io: Coverage Report")
+&nbsp; -->
+
 [![GraphQL][graphql-badge]](https://graphql.org/ "graphql.org")
 &nbsp;
 [![Apollo][apollo-badge]](https://www.apollographql.com/ "apollographql.com")
@@ -22,20 +23,17 @@ Author: [Trevor Anderson](https://github.com/trevor-anderson), Solopreneur & Fou
 &nbsp;
 [![pre-commit][pre-commit-badge]](https://pre-commit.com "pre-commit.com")
 &nbsp;
-[![semantic-release][semantic-badge]](https://github.com/semantic-release/semantic-release "github.com: semantic-release")
-&nbsp;
 [![License: Proprietary][license-badge]](/LICENSE "View License")
 
 <!--   BADGE LINKS   -->
 
-[gh-test-badge]: https://github.com/Nerdware-LLC/fixit-api/actions/workflows/test.yaml/badge.svg?branch=main
-[codecov-badge]: https://codecov.io/gh/Nerdware-LLC/fixit-api/graph/badge.svg?token=L6GXTG836B
+<!-- FIXME Update the path/token [codecov-badge]: https://codecov.io/gh/Nerdware-LLC/fixit-api/graph/badge.svg?token=L6GXTG836B -->
+
 [graphql-badge]: https://img.shields.io/badge/GraphQL-E10098.svg?logo=graphql&logoColor=E10098&labelColor=454545
 [apollo-badge]: https://img.shields.io/badge/Apollo_Server_v4-311C87.svg?logo=apollo-graphql&labelColor=454545
 [open-api-badge]: https://img.shields.io/badge/OpenAPI%20v3.1-609531?logo=openapiinitiative&labelColor=454545
 [express-badge]: https://img.shields.io/badge/Express_v4-7B7B7B.svg?logo=express&logoColor=FFF&labelColor=454545
 [pre-commit-badge]: https://img.shields.io/badge/pre--commit-F8B424.svg?logo=pre-commit&logoColor=F8B424&labelColor=454545
-[semantic-badge]: https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-blue.svg
 [license-badge]: https://img.shields.io/badge/license-Proprietary-000080.svg?labelColor=454545
 
 </div>
@@ -52,7 +50,6 @@ Author: [Trevor Anderson](https://github.com/trevor-anderson), Solopreneur & Fou
   - [Single Table Design](#single-table-design)
 - [📦 CI/CD Pipeline](#-cicd-pipeline)
   - [GitHub Actions](#github-actions)
-  - [Git Workflow](#git-workflow)
   - [Codegen](#codegen)
 - [📝 License](#-license)
 - [💬 Contact](#-contact)
@@ -64,6 +61,8 @@ The Fixit API provides a robust, scalable, and secure backend for the Fixit SaaS
 > [!NOTE]
 >
 > ### Quick Links
+>
+> <!-- FIXME Update this section -->
 >
 > <table align="center">
 >   <tr>
@@ -280,24 +279,13 @@ This API uses a single DynamoDB table with primary keys `pk` and `sk`, along wit
 
 ### GitHub Actions
 
-This project's CI/CD pipeline uses GitHub Actions to [test](/.github/workflows/test.yaml), [release](/.github/workflows/release.yaml), and [deploy](/.github/workflows/deploy.yaml) code changes.
+<!-- TODO Ensure below paths are right once GH Actions files have the "FIXME_" prefix rm'd -->
 
-1. [`Test`](/.github/workflows/test.yaml) - Runs test suites, adds test and coverage info to PRs, and updates [CodeCov](https://about.codecov.io/).
-2. [`Release`](/.github/workflows/release.yaml) - Creates a new GitHub release using [Semantic Release](https://github.com/semantic-release/semantic-release#readme).
-3. [`Deploy`](/.github/workflows/deploy.yaml) - Builds a Docker image, pushes it to [Amazon ECR](https://aws.amazon.com/ecr/), and updates the [ECS Task Definition](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definitions.html) and associated [ECS Service](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs_services.html).
+This project's CI/CD pipeline uses GitHub Actions to [test](/.github/workflows/fixit-api.test.yaml), [release](/.github/workflows/fixit-api.release.yaml), and [deploy](/.github/workflows/fixit-api.deploy.yaml) code changes.
 
-### Git Workflow
-
-This project uses uses [GitHub Flow](https://guides.github.com/introduction/flow/) to deploy two live environments - staging and production - both of which are associated with a Git branch for releases:
-
-| Environment | Release Branch |                   Permits `git push`                   |
-| :---------- | :------------: | :----------------------------------------------------: |
-| staging     |      next      | <span style="color:#66FF00;font-size:1.5rem;">✓</span> |
-| production  |      main      |                           ❌                           |
-
-Project versioning and the [CHANGELOG.md](./CHANGELOG.md) are managed automatically via GitHub Actions and [Semantic Release](https://github.com/semantic-release/semantic-release#readme).
-
-For more information on how new code is integrated and deployed, check out the guide to [CONTRIBUTING](./CONTRIBUTING.md).
+1. [`Test`](/.github/workflows/fixit-api.test.yaml) - Runs test suites, adds test and coverage info to PRs, and updates [CodeCov](https://about.codecov.io/).
+2. [`Release`](/.github/workflows/fixit-api.release.yaml) - Creates a new GitHub release using [Semantic Release](https://github.com/semantic-release/semantic-release#readme).
+3. [`Deploy`](/.github/workflows/fixit-api.deploy.yaml) - Builds a Docker image, pushes it to [Amazon ECR](https://aws.amazon.com/ecr/), and updates the [ECS Task Definition](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definitions.html) and associated [ECS Service](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs_services.html).
 
 ### Codegen
 
