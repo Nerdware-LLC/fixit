@@ -41,6 +41,15 @@
         "main": "apps/fixit-api/src/index.ts",
         "tsConfig": "apps/fixit-api/tsconfig.build.json"
       }
+    },
+    "bundle": {
+      "executor": "nx:run-commands",
+      "cache": true,
+      "inputs": ["default", "{workspaceRoot}/dist/apps/fixit-api"],
+      "options": {
+        "command": "docker build -f apps/fixit-api/Dockerfile --progress=plain -t fixit-api-test:latest .",
+        "color": true
+      }
     }
   }
 }

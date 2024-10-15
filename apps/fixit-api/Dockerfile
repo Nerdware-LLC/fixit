@@ -4,7 +4,7 @@
 #
 # This Dockerfile is used to create a production image for the Fixit API AWS
 # ECS Service. The image is built in two stages:
-#     1. builder:  creates the dist/ build artifact for "prod" build stage
+#     1. builder:  organizes nx dist/ artifacts for "prod" build stage
 #     2. prod:     creates the final "prod" image for ECS tasks
 #
 # After being uploaded to the AWS ECR image repo by the relevant GitHub Action,
@@ -14,28 +14,22 @@
 # STAGE: builder
 
 # Source image: NodeJS v20 (https://hub.docker.com/_/node)
-FROM node:20 as builder
+FROM node:20 AS builder
 
 # Explicitly set workdir
 WORKDIR /home/node/app
 
-# Copy over files needed to create the dist build
-COPY package*.json tsconfig*.json? npm-shrinkwrap.json? .swcrc ./
+# Copy over files needed to create the dist build:
+COPY dist/apps/fixit-api/* ./
 
-# Install all dependencies (dev deps are needed to create the dist build)
-RUN npm ci --include=dev
-
-# Copy over src files (this is done after `npm ci` to take advantage of caching)
-COPY src src/
-
-# Create dist/ for "prod" stage and remove dev dependencies
-RUN npm run build && npm prune --production
+# Install prod runtime dependencies (pruned for good measure)
+RUN npm ci --omit=dev && npm prune --production
 
 #------------------------------------------------------------------------------
 # STAGE: prod
 
 # This build stage creates the final "prod" image for ECS tasks
-FROM node:20-slim as prod
+FROM node:20-slim AS prod
 
 # Expose desired port
 EXPOSE 80
@@ -58,16 +52,16 @@ ENTRYPOINT ["/tini", "--"]
 # Copy over the package.json
 COPY --from=builder /home/node/app/package.json ./
 
-# Copy over only the dist files needed in production
-COPY --from=builder /home/node/app/dist ./dist/
+# Copy over only the dist file needed in production
+COPY --from=builder /home/node/app/index.js ./index.js
 
-# # Copy over only the pruned node_modules from builder stage
+# Copy over only the pruned node_modules from builder stage
 COPY --from=builder /home/node/app/node_modules ./node_modules/
 
 # Set non-root user (this step must be after tini-setup)
 USER node
 
 # Run the API directly with node executable
-CMD ["node", "dist/index.js"]
+CMD ["node", "./index.js"]
 
 ###############################################################################
