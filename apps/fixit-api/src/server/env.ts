@@ -1,5 +1,45 @@
-import type { ProcessEnvCustomFields } from "@/types/globals.js";
-import type { Except } from "type-fest";
+/**
+ * Typing for the application {@link ENV} object.
+ */
+export type EnvObject = Readonly<{
+  NODE_ENV: string;
+  IS_DEV: boolean;
+  IS_PROD: boolean;
+  IS_DEPLOYED_ENV: boolean;
+  PROJECT_VERSION?: string;
+  // SERVER
+  PROTOCOL: string;
+  DOMAIN: string;
+  PORT: number;
+  API_BASE_URL: string;
+  API_FULL_URL: string;
+  // WEB CLIENT
+  WEB_CLIENT_URL: string;
+  // AWS
+  AWS_REGION: string;
+  DYNAMODB_REGION: string;
+  DYNAMODB_TABLE_NAME: string;
+  DYNAMODB_ENDPOINT: string | undefined;
+  PINPOINT_PROJECT_ID: string;
+  SES_EMAIL_ADDRESS: string;
+  // AUTH
+  JWT_PRIVATE_KEY: string;
+  JWT_ALGORITHM: string;
+  JWT_ISSUER: string;
+  JWT_EXPIRES_IN: string;
+  BCRYPT_SALT_ROUNDS: number;
+  UUID_NAMESPACE: string;
+  // SENTRY
+  SENTRY_DSN: string | undefined;
+  // STRIPE
+  STRIPE_API_VERSION: string;
+  STRIPE_PUBLISHABLE_KEY: string;
+  STRIPE_SECRET_KEY: string;
+  STRIPE_WEBHOOKS_SECRET: string;
+  // GOOGLE
+  GOOGLE_OAUTH_CLIENT_ID: string;
+  GOOGLE_OAUTH_CLIENT_SECRET: string;
+}>;
 
 const {
   npm_package_version,
@@ -63,6 +103,10 @@ if (
   throw new Error("Missing required environment variables");
 }
 
+/**
+ * The {@link ENV} object contains all environment variables used by the app, as well as
+ * values derived from env vars (e.g., `API_BASE_URL` combines `PROTOCOL` and `DOMAIN`).
+ */
 export const ENV = {
   NODE_ENV,
   IS_DEV: NODE_ENV === "development",
@@ -101,18 +145,3 @@ export const ENV = {
   GOOGLE_OAUTH_CLIENT_ID,
   GOOGLE_OAUTH_CLIENT_SECRET,
 } as const satisfies EnvObject;
-
-/**
- * The {@link ENV} object contains all environment variables used by the app, as well as
- * values derived from env vars (e.g., `API_BASE_URL` combines `PROTOCOL` and `DOMAIN`).
- */
-export type EnvObject = Readonly<
-  Except<ProcessEnvCustomFields, "npm_package_version"> & {
-    IS_DEV: boolean;
-    IS_PROD: boolean;
-    IS_DEPLOYED_ENV: boolean;
-    PROJECT_VERSION?: string; // Optional
-    API_BASE_URL: string;
-    API_FULL_URL: string;
-  }
->;
