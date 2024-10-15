@@ -15,6 +15,8 @@ if (!DYNAMODB_TABLE_NAME || !DYNAMODB_REGION) {
   throw new Error("Missing required environment variables");
 }
 
+const IS_DEV = NODE_ENV === "development";
+
 export const ddbTable = new Table({
   tableName: DYNAMODB_TABLE_NAME,
   tableKeysSchema,
@@ -22,7 +24,7 @@ export const ddbTable = new Table({
     region: DYNAMODB_REGION,
     ...(DYNAMODB_ENDPOINT && { endpoint: DYNAMODB_ENDPOINT }),
     // dynamodb-local is used in dev
-    ...(NODE_ENV === "development" && {
+    ...(IS_DEV && {
       credentials: {
         accessKeyId: "local",
         secretAccessKey: "local",
@@ -35,3 +37,16 @@ export const ddbTable = new Table({
     isEnabledInDeployedEnvs: true,
   }),
 });
+
+// In DEV, ensure the target DDB table is connected and configured:
+if (IS_DEV) {
+  await ddbTable.ensureTableIsActive({
+    createIfNotExists: {
+      BillingMode: "PROVISIONED",
+      ProvisionedThroughput: {
+        ReadCapacityUnits: 5,
+        WriteCapacityUnits: 5,
+      },
+    },
+  });
+}
